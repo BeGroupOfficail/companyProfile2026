@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
+
+
+button.dt-button,div.dt-button,a.dt-button ,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+    padding: 0.75em 2em;
+    font-size: 1.1em;
+    color: #393939 !important;
+    background-color: color-mix(in oklch, transparent, var(--primary_color) 7%) !important;
+    background-image: none;
+    border: 0 !important;
+    border-radius: 7px;
+}
+
+[dir='rtl'] .form-control.is-invalid,[dir='rtl'] .was-validated .form-control:invalid {
+        background-position: left calc(.375em + .3875rem) center;
+ }
+
+.flex-column-fluid{
+    flex: none;
+}
+.app-main{
+    justify-content: space-between;
+}
+button.dt-button:hover:not(.disabled), div.dt-button:hover:not(.disabled), a.dt-button:hover:not(.disabled){
+    background-color: var(--primary_color) !important;
+    color: #fff !important;
+    background-image: none;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border-color: #F1F1F4 !important;
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03);
+    height: 40px;
+}
+#kt_app_content_container .form-check-input {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+.top-70{
+    top:70% !important
+}
+.dataTables_filter input::placeholder{
+    content: "search";
+}
+
+
+.h-25px {
+    height: 90px !important;
+}
+.w-25px.h-25px{
+    height: 25px !important;
+}
+.fv-row.w-50.flex-md-root,
+.fv-row.w-100.flex-md-root{
+    margin-bottom: 20px
+}
+.form-control ,
+.select2-container--bootstrap5 .select2-selection--single,
+.tox .tox-edit-area__iframe,
+.select2-container--bootstrap5 .select2-selection--multiple{
+    background-color:  #eeeeee4a !important;
+}
+body{
+    max-width: 100%;
+    overflow-x: hidden;
+}
+.tox:not([dir=rtl]) {
+    direction: rtl !important;
+    position: relative !important;
+}
+.form-control:focus{
+    background-color: #fff !important;
+}
+[ dir = "rtl" ] body{
+    font-family: "Almarai", sans-serif;
+    font-weight: 400;
+}
+[ dir = "rtl" ] .select2-container--open .select2-dropdown {
+    inset-inline-start: unset;
+    left: 0;
+}
+[ dir = "rtl" ] .image-input [data-kt-image-input-action] {
+    transform: translate(50%, -50%);
+}
+[ dir = "rtl" ] .form-select {
+    background-position: left 1rem center;
+    padding: .775rem 1rem .775rem 3rem;
+}
+[ dir = "rtl" ]  .translate-middle {
+    transform: translate(50%, -50%) !important;
+}
+
+.dropzone.dz-clickable .dz-message, .dropzone.dz-clickable .dz-message * {
+    line-height: 39px;
+    justify-content: center;
+
+}
+.dropzone {
+    border: 2px dashed #1A84FF !important;
+}
+
+table.dataTable tfoot td, table.dataTable tfoot th, table.dataTable thead td, table.dataTable thead th {
+    text-align: start;
+}
+
+.login.flex-column-fluid , login .flex-column-fluid , .login .d-flex.flex-center.flex-column.flex-column-fluid.pb-15.pb-lg-20
+{
+    flex: 1 0 auto;
+}
+
+.low-opacity{
+    opacity :0.05;
+    border: 1px dashed;
+}
+.t-l-opacity{
+    color: #999;
+    font-size: 0.75rem !important;
+}
+[ dir ="rtl" ] .drawer.drawer-start {
+    transform: translateX(100%);
+}
+[ dir ="rtl" ]  .drawer.drawer-on {
+    transform: translateX(0%);
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px dashed #ccc;
+}
+.flatpickr-months .flatpickr-next-month.flatpickr-next-month,
+.flatpickr-months .flatpickr-prev-month.flatpickr-next-month {
+    width: 40px;
+}
+.flatpickr-months .flatpickr-next-month.flatpickr-next-month,
+.flatpickr-months .flatpickr-prev-month.flatpickr-next-month {
+    inset-inline-end: 1rem;
+    inset-inline-start: unset;
+    background: var(--bs-gray-100);
+}
+.flatpickr-months .flatpickr-next-month.flatpickr-prev-month,
+.flatpickr-months .flatpickr-prev-month.flatpickr-prev-month {
+    inset-inline-start: 1rem;
+    background: var(--bs-gray-100);
+}
+
+
+.dataTables_wrapper .dt-buttons {
+    margin-bottom: 1rem;
+}
+.table-responsive {
+    overflow-x: auto;
+}
+
+
+/* Container for the search box */
+.top-filter {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 10px;
+}
+
+/* Style the search input */
+.top-filter .dataTables_filter input {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px; /* Rounded corners */
+    padding: 8px 15px 8px 40px; /* Space for icon */
+    font-size: 0.9rem;
+    width: 200px; /* Adjustable width */
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: all 0.3s ease;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23999" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>'); /* Search icon */
+    background-repeat: no-repeat;
+    background-position: 12px center;
+    background-size: 16px;
+}
+
+/* Placeholder styling */
+.top-filter .dataTables_filter input::placeholder {
+    color: #aaa;
+}
+
+/* Hover and focus effects */
+.top-filter .dataTables_filter input:hover {
+    border-color: #b0b0b0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.top-filter .dataTables_filter input:focus {
+    outline: none;
+    border-color: #007bff; /* Bootstrap primary color */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Remove default DataTables label (optional) */
+.top-filter .dataTables_filter label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 0; /* Remove default margin */
+}
+
+/* Hide the label text but keep the input */
+.top-filter .dataTables_filter label::before {
+    content: none; /* Remove "Search:" text */
+}
+table.dataTable thead .sorting{
+    background-image: none;
+    font-weight: 700;
+}
+table.dataTable td{
+    color: #777  !important;
+}
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc{
+    background-image: none !important;
+}
+.form-check-custom{
+    padding-inline-start: 0 !important;
+}
+.top-length .dataTables_length{
+    width: 100%;
+    margin-bottom: 15px;
+}
+#categories-table_wrapper.dataTables_wrapper .dataTables_length select{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-color: #eee;
+}
+/* RTL support for Arabic */
+html[dir="rtl"] .top-filter {
+    justify-content: flex-start;
+}
+
+html[dir="rtl"] .top-filter .dataTables_filter input {
+    padding: 8px 40px 8px 15px; /* Adjust padding for RTL */
+    background-position: right 12px center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .top-filter {
+        justify-content: flex-start;
+        padding: 0;
+    }
+
+    .top-filter .dataTables_filter input {
+        width: 100%; /* Full width on mobile */
+        margin-bottom: 10px;
+    }
+}
+
+
+.sorting::after {
+    content: "\2195"; /* Up/down arrow (↕) */
+}
+.sorting_asc::after {
+    content: "\2191"; /* Up arrow (↑) */
+}
+.sorting_desc::after {
+    content: "\2193"; /* Down arrow (↓) */
+}
+
+#pages-table thead th {
+    font-weight: 700 !important; /* Bold */
+}
+
+/* Default cursor for the drag handle */
+.order-form {
+    cursor: move; /* Use 'move' cursor for draggable items */
+}
+
+/* Optional: Change cursor when hovering */
+.order-form:hover {
+    cursor: grab; /* 'grab' cursor for modern browsers */
+}
+
+/* Optional: Change cursor when actively dragging */
+.order-form:active {
+    cursor: grabbing; /* 'grabbing' cursor when clicking/dragging */
+}
+
+.card.card-flush{
+    padding-top:40px !important;
+}
+
+
+
+
+
+
+
+
