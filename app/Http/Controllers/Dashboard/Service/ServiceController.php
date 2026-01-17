@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard\Service;
 use App\DataTables\Service\ServiceDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Service\ServiceRequest;
-use App\Models\Dashboard\Service;
+use App\Models\Dashboard\Service\Service;
 use App\Services\Dashboard\Service\ServiceService;
 use Illuminate\Http\Request;
 
@@ -22,7 +22,7 @@ class ServiceController extends Controller
         $this->middleware('can:services.update')->only('update');
         $this->middleware('can:services.delete')->only('destroy');
     }
-  
+
     public function index(ServiceDataTable $dataTable)
     {
         return $dataTable->render('Dashboard.Services.index');
@@ -65,9 +65,10 @@ class ServiceController extends Controller
      */
     public function update(ServiceRequest $request, Service $service)
     {
+        // dd($request->all());
         try {
             $dataValidated = $request->validated();
-            $this->serviceService->update($request, $dataValidated, $service);
+            $this->serviceService->update($request, $dataValidated,  $service);
 
             return redirect()->route('services.index')->with(['success' => __('messages.your_item_added_successfully')]);
         } catch (\Exception $e) {

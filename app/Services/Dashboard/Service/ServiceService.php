@@ -3,7 +3,8 @@
 namespace App\Services\Dashboard\Service;
 
 use App\Helper\Media;
-use App\Models\Dashboard\Service;
+use App\Helper\SoftDeleteHelper;
+use App\Models\Dashboard\Service\Service;
 use Illuminate\Support\Facades\DB;
 
 class ServiceService
@@ -60,8 +61,9 @@ class ServiceService
         }
     }
 
-    public function update($request, $dataValidated, $service)
+    public function update($request, $dataValidated, Service $service)
     {
+        // dd($dataValidated);
         DB::beginTransaction();
 
         try {
@@ -72,11 +74,14 @@ class ServiceService
                 'home' => data_get($dataValidated, 'home', 0),
                 'menu' => data_get($dataValidated, 'menu', 0),
                 'index' => data_get($dataValidated, 'index', 0),
+                'alt_image' => data_get($dataValidated, 'alt_image'),
+
             ];
 
 
             // Update the category with the new validated data
             $service->update($data);
+            // dd($service);
 
             // Handle translations for fields (name, slug, meta_title, meta_desc, desc)
             $service->handleTranslations(
@@ -103,25 +108,29 @@ class ServiceService
 
     public function deleteServices($selectedIds)
     {
-        $services = Service::whereIn('id', $selectedIds)->get();
-
         DB::beginTransaction();
         try {
-            foreach ($services as $service) {
-                // Delete associated image if it exists
-                if ($service->image) {
-                    Media::removeFile('services', $service->image);
+            $trashedServices = Service::onlyTrashed()->whereIn('id', $selectedIds)->get();
+            $activeServices = Service::whereIn('id', $selectedIds)->get();
+
+            if ($trashedServices->isNotEmpty()) {
+                foreach ($trashedServices as $service) {
+                    if ($service->image) {
+                        Media::removeFile('services', $service->image);
+                    }
                 }
+                Service::onlyTrashed()
+                    ->whereIn('id', $trashedServices->pluck('id'))
+                    ->forceDelete();
             }
-            $deleted = Service::whereIn('id', $selectedIds)->delete();
+            if ($activeServices->isNotEmpty()) {
+                SoftDeleteHelper::deleteWithEvents(Service::class, $activeServices->pluck('id')->toArray());
+            }
 
             DB::commit();
-
-            return $deleted > 0;
-
+            return true;
         } catch (\Exception $e) {
             DB::rollBack();
-
             return false;
         }
     }
