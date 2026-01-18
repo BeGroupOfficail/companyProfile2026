@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Http\Requests\Dashboard\Service;
+namespace App\Http\Requests\Dashboard\Project;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ServiceRequest extends FormRequest
+class ProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class ServiceRequest extends FormRequest
         return [
             'name_en' => ['required', 'string', 'max:255'],
             'name_ar' => ['required', 'string', 'max:255'],
-            'parent_id' => ['nullable','exists:services,id'],
+            'service_id' => ['nullable','exists:services,id'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,gif,bmp,webp', 'max:3096'],
             'alt_image' => ['nullable', 'string', 'max:255'],
             'slug_en' => ['nullable', 'string'],

@@ -25,12 +25,14 @@ class ClientRequest extends FormRequest
         return [
             'name_en' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
+            'link' => ['nullable', 'url'],
             'types' => ['required', 'string', 'max:50','in:clients,partners,accreditations'],
             'desc_en' => ['nullable', 'string'],
             'desc_ar' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,gif,bmp,webp', 'max:3096'],
             'alt_image' => ['nullable', 'string', 'max:255'],
             'status' => ['nullable', 'in:published,inactive'],
+            'home' => ['nullable', 'in:published,inactive'],
         ];
     }
 }

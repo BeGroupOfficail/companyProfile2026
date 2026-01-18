@@ -118,7 +118,7 @@ class AlbumImageService
     /////// upload images///////////////
     public function uploadImages($request){
         $request->validate([
-            'file' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:3096' // 3MB max
+            'file' => 'required|file|image|mimes:jpeg,png,jpg,gif,webp|max:3096' // 3MB max
         ]);
 
         try {

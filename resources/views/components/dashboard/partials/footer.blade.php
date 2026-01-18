@@ -5,7 +5,7 @@
     <div class="app-container  container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3 ">
         <!--begin::Copyright-->
         <div class="text-gray-900 order-2 order-md-1">
-            <p>All Rights Reserved , Developed and Designed by <a href="https://bedigital.com.sa">Be Group</a></p>
+            <p>All Rights Reserved , Developed and Designed by <a href="javascript:void(0);">{{$settings->site_name}}</a></p>
         </div>
         <!--end::Copyright-->
 
@@ -13,7 +13,7 @@
         <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
             @foreach ($pages->take(3) as $page)
                 <li class="menu-item">
-                    <a href="{{ LaravelLocalization::localizeUrl('pages/' . $page->slug) }}" target="_blank" class="menu-link px-2">{{ $page->name }}</a>
+                    <a href="{{ LaravelLocalization::localizeUrl('page/' . $page->slug) }}" target="_blank" class="menu-link px-2">{{ $page->name }}</a>
                 </li>
             @endforeach
 

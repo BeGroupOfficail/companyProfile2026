@@ -133,4 +133,6 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
+    'country' => env('APP_COUNTRY', 'saudi'),
+
 ];

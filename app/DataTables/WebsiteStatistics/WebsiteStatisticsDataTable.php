@@ -22,6 +22,11 @@ class WebsiteStatisticsDataTable extends DataTable
             ->addColumn('title_en', fn($row) => $row->getTranslation('title','en') ?? '')
             ->addColumn('title_ar', fn($row) => $row->getTranslation('title','ar') ?? '')
 
+            // Render image columns directly (e.g., image, icon)
+            ->addColumn('image', function($row){
+                return $this->renderImage($row->image, 'websiteStatistic', 100);
+            })
+
             // Render action-specific columns directly
             ->addColumn('actions', fn($row) => $this->renderActions($row))
 
@@ -55,7 +60,7 @@ class WebsiteStatisticsDataTable extends DataTable
             })
 
             // Make sure to treat columns as raw HTML
-            ->rawColumns(['checkbox','actions', 'status'])
+            ->rawColumns(['checkbox','image','actions', 'status'])
             ->setRowId('id');
     }
 
@@ -68,6 +73,14 @@ class WebsiteStatisticsDataTable extends DataTable
         $modelName = 'website_statistics';
         return view('components.dashboard.partials.actions_dropdown', compact('editUrl','routeName','modelName'))->render();
     }
+
+    // Render images in a modular and reusable way
+    protected function renderImage($imageName, $imageType, $width = 40)
+    {
+        $imageUrl = $imageName ? asset("uploads/$imageType/$imageName"): asset('assets/dashboard/media/noimage.png');
+        return '<div class="symbol symbol-circle symbol-50px overflow-hidden me-3"><div class="symbol-label"><img src="' . $imageUrl . '" border="0" width="' . $width . '" class="img-rounded" />  </div> </div>';
+    }
+
 
     protected function renderStatus($row)
     {
@@ -154,7 +167,9 @@ class WebsiteStatisticsDataTable extends DataTable
             Column::make('id'),
             Column::make('title_en')->title(__('dash.title_en')),
             Column::make('title_ar')->title(__('dash.title_ar')),
+
             Column::make('count')->title(__('dash.count')),
+            Column::make('image')->title(__('dash.image')),
             Column::make('status')->title(__('dash.status'))->addClass('status-cell'),
             Column::make('actions')->title(__('dash.actions'))->addClass('text-end'),
         ];

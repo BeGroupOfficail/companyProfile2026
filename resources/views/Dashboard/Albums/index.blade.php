@@ -10,7 +10,7 @@
 
             <!--begin::Table-->
             <div class="dt-container dt-bootstrap5 dt-empty-footer">
-                <div id="table-responsive">
+                <div class="table-responsive">
                     {{ $dataTable->table() }}
                 </div>
             </div>

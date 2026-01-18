@@ -18,6 +18,11 @@ class BlogDataTable extends DataTable
             ->addColumn('checkbox', function($row){
                 return '<div class="form-check form-check-sm form-check-custom form-check-solid me-3"><input type="checkbox" name="checkbox" class="form-check-input" value="'. $row->id .'" /></div>';
             })
+            ->addColumn('drag_handle', fn($row) =>
+                '<div class="drag-handle" style="cursor: move; text-align: center;">
+                    <i class="fas fa-grip-vertical text-muted"></i>
+                </div>'
+            )
 
             // Render action-specific columns directly
             ->addColumn('actions', fn($row) => $this->renderActions($row))
@@ -28,6 +33,7 @@ class BlogDataTable extends DataTable
             // Render language-specific columns directly (e.g., name_en, name_ar)
             ->addColumn('name_en', fn($row) => $row->getTranslation('name','en') ?? '')
             ->addColumn('name_ar', fn($row) => $row->getTranslation('name','ar') ?? '')
+            ->addColumn('blog_category', fn($row) => $row->category->name ?? '-')
 
             // Render image columns directly (e.g., image, icon)
             ->addColumn('image', function($row){
@@ -40,6 +46,12 @@ class BlogDataTable extends DataTable
 
             ->filterColumn('name_ar', function($query, $keyword) {
                 $query->where('name->ar', 'like', '%'.$keyword.'%');
+            })
+            
+            ->filterColumn('blog_category', function($query, $keyword) {
+                $query->whereHas('category',function($q) use ($keyword) {
+                    $q->where('name->ar', 'like', '%'.$keyword.'%')->orWhere('name->en', 'like', '%'.$keyword.'%');
+                });
             })
 
             ->filterColumn('status', function($query, $keyword) {
@@ -59,10 +71,12 @@ class BlogDataTable extends DataTable
             })
 
             // Make sure to treat columns as raw HTML
-            ->rawColumns(['checkbox','actions', 'name_en', 'name_ar','image','status'])
-            ->setRowId('id');
-    }
+            ->rawColumns(['checkbox','actions','drag_handle', 'name_en', 'name_ar','image','status'])
+            ->setRowId('id')
+            ->setRowAttr(['data-id' => function($row) { return $row->id; }]);
 
+    }
+    
 
     // Render Actions in a modular and reusable way
     protected function renderActions($row): string
@@ -70,16 +84,31 @@ class BlogDataTable extends DataTable
         $editUrl = route('blogs.edit', $row->id);
         $routeName = 'blogs';
         $modelName = 'blogs';
-        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','routeName','modelName'))->render();
+        $showUrl = route('website.blog',$row->slug);
+        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','showUrl','routeName','modelName'))->render();
     }
 
 
-    // Render images in a modular and reusable way
-    protected function renderImage($imageName, $imageType, $width = 40)
+    protected function renderImage($imageName, $imageType, $width = 100): string
     {
-        $imageUrl = $imageName ? asset("uploads/$imageType/$imageName"): asset('assets/dashboard/media/noimage.png');
-        return '<div class="symbol symbol-circle symbol-50px overflow-hidden me-3"><div class="symbol-label"><img src="' . $imageUrl . '" border="0" width="' . $width . '" class="img-rounded" />  </div> </div>';
+        $imageUrl = $imageName ? asset("uploads/$imageType/$imageName") : asset('assets/dashboard/media/noimage.png');
+        $modalId = 'img-preview-' . md5($imageUrl);
+        return '
+            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                <div class="symbol-label">
+                    <img src="' . $imageUrl . '" width="' . $width . '" class="img-rounded cursor-pointer" style="cursor:pointer" onclick="document.getElementById(\'' . $modalId . '\').style.display = ' . "'block'" . '" />
+                </div>
+            </div>
+            <div id="' . $modalId . '" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);text-align:center;" onclick="this.style.display=\'none\'">
+                <img src="' . $imageUrl . '" style="max-width:90vw;max-height:90vh;margin-top:5vh;border-radius:10px;box-shadow:0 0 20px #000;" />
+            </div>';
     }
+    // Render images in a modular and reusable way
+    // protected function renderImage($imageName, $imageType, $width = 40)
+    // {
+    //     $imageUrl = $imageName ? asset("uploads/$imageType/$imageName"): asset('assets/dashboard/media/noimage.png');
+    //     return '<div class="symbol symbol-circle symbol-50px overflow-hidden me-3"><div class="symbol-label"><img src="' . $imageUrl . '" border="0" width="' . $width . '" class="img-rounded" />  </div> </div>';
+    // }
 
 
     protected function renderStatus($row)
@@ -93,7 +122,9 @@ class BlogDataTable extends DataTable
 
     public function query(Blog $model): QueryBuilder
     {
-        return $model->newQuery();
+        // return $model->with('category')->orderBy('order', 'asc')->newQuery();
+            return $model->with('category')->newQuery();
+
     }
 
     public function html(): HtmlBuilder{
@@ -102,15 +133,15 @@ class BlogDataTable extends DataTable
             ->setTableHeadClass('table align-middle table-row-dashed fs-6 gy-5')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->orderBy(1)
+            ->orderBy(2, 'asc')
             ->pageLength(50)
             ->lengthMenu([
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, 'All']
             ])
             ->selectStyleSingle()
-            ->responsive(true)
-            ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 select-all-records')
+            ->responsive(false)
+            ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 select-all-records sortable-table')
             ->parameters([
                 'dom' => '<"top-length"l><"top-buttons"B><"top-filter"f>rt<"bottom"ip>', // Corrected dom
                 'lengthChange' => true, // Ensure length menu is enabled
@@ -150,6 +181,10 @@ class BlogDataTable extends DataTable
                 ],
                 'autoWidth' => false,
                 'fixedHeader' => true,
+                'rowReorder' => [
+                    'selector' => '.drag-handle',
+                    'dataSrc' => 'order'
+                ]
             ]);
     }
 
@@ -164,9 +199,20 @@ class BlogDataTable extends DataTable
                 ->exportable(false)
                 ->printable(false),
 
+            Column::make('drag_handle')
+                ->data('drag_handle')
+                ->title('<i class="fas fa-sort"></i>')
+                ->orderable(false)
+                ->exportable(false)
+                ->printable(false)
+                ->addClass('text-center')
+                ->width('50px'),
+
             Column::make('id'),
+            // Column::make('order')->title('#')->searchable(false)->orderable(false),
             Column::make('name_en')->title(__('dash.name_en')), // Explicitly display name in English
             Column::make('name_ar')->title(__('dash.name_ar')), // Explicitly display name in Arabic
+            Column::make('blog_category')->title(__('dash.blog_category')), // Explicitly display name in Arabic
             Column::make('image')->title(__('dash.image')),
             Column::make('status')->title(__('dash.status'))->addClass('status-cell'),
             Column::make('actions')->title(__('dash.actions'))->addClass('text-end'),

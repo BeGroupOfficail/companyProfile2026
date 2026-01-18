@@ -10,18 +10,19 @@
 ])
 
 @php
+    $real_name = $name== 'course_image'?'image':$name;
     $imagePath =
-        $model && $model->$name
-            ? asset("uploads/$imageModelName/" . $model->$name)
+        $model && $model->$real_name
+            ? asset("uploads/$imageModelName/" . $model->$real_name)
             : Path::dashboardPath('media/svg/files/blank-image.svg');
 
     $imagePathDark =
-        $model && $model->$name
-            ? asset("uploads/$imageModelName/" . $model->$name)
+        $model && $model->$real_name
+            ? asset("uploads/$imageModelName/" . $model->$real_name)
             : Path::dashboardPath('media/svg/files/blank-image-dark.svg');
 @endphp
 
-<div class="card card-flush">
+<div class="card card-flush card-standard">
     <!--begin::Card header-->
     <div class="card-header">
         <!--begin::Card title-->
@@ -51,12 +52,10 @@
         <!--end::Image input placeholder style-->
 
         <!--begin::Image input-->
-        <div class="image-input image-input-empty image-input-outline {{ $uniqueClass }} mb-3"
-            data-kt-image-input="true">
+        <div class="image-input image-input-outline {{ $uniqueClass }} mb-3" data-kt-image-input="true">
             <!--begin::Preview existing image-->
-            <div class="image-input-wrapper w-150px h-150px">
+            <div class="image-input-wrapper w-150px h-150px" style="background-image: url('{{ $imagePath }}');">
             </div>
-            <!--end::Preview existing image-->
 
             <!--begin::Label-->
             <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -64,8 +63,8 @@
                 title="{{ $changeImageText ?? __('dash.Change image') }}">
                 <i class="ki-outline ki-pencil fs-7"></i>
                 <!--begin::Inputs-->
-                <input type="file" name="{{ $name }}" accept=".png, .jpg, .jpeg" />
                 <input type="hidden" name="{{ $name }}_remove" />
+                <input type="file" name="{{ $name }}" accept=".png, .jpg, .jpeg, .webp" />
                 <!--end::Inputs-->
             </label>
             <!--end::Label-->
@@ -89,13 +88,21 @@
         <!--end::Image input-->
 
         <!--begin::Description-->
-        <div class="text-muted fs-7">{{ __('dash.only') }} *.png, *.jpg, and *.jpeg
+        <div class="text-muted fs-7">{{ __('dash.only') }} *.png, *.jpg, and *.jpeg  *.webp
             {{ __('dash.image files are accepted') }}</div>
         <!--end::Description-->
         <!--begin::ALT input-->
-            <x-dashboard.partials.html.input name="alt_{{ $name }}" label="" :value="old('alt_' . $name, $model->{'alt_' . $name} ?? '')"
-                placeholder="{{ __('dash.alt') }} {{ __($name) }}" />
+        <x-dashboard.partials.html.input name="alt_{{ $real_name }}" label="" :value="old('alt_' . $real_name, $model->{'alt_' . $real_name} ?? '')"
+            placeholder="{{ __('dash.alt') }} {{ __($real_name) }}" />
         <!--end::ALT input-->
     </div>
     <!--end::Card body-->
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.image-input').forEach(function(el) {
+            new KTImageInput(el);
+        });
+    });
+</script>

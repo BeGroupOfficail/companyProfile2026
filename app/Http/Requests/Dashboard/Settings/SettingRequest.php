@@ -29,18 +29,14 @@ class SettingRequest extends FormRequest
             'primary_color'=>'nullable|regex:/^#([A-Fa-f0-9]{6})$/',
             'site_desc_en' => 'nullable|string',
             'site_desc_ar' => 'nullable|string',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:5000',
-            'dark_logo' => 'nullable|image|mimes:jpeg,png,jpg|max:5000',
-            'white_logo' => 'nullable|image|mimes:jpeg,png,jpg|max:5000',
-            'fav_icon' => 'nullable|image|mimes:jpeg,png,jpg|max:5000',
-            'certificate_example' => 'nullable|image|mimes:jpeg,png,jpg|max:5000',
-
-            'certificate_code' => 'nullable|string|max:100',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5000',
+            'dark_logo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5000',
+            'white_logo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5000',
+            'fav_icon' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5000',
             'alt_logo' => 'nullable|string|max:100',
             'alt_white_logo' => 'nullable|string|max:100',
             'alt_dark_logo' => 'nullable|string|max:100',
             'alt_fav_icon' => 'nullable|string|max:100',
-            'alt_certificate_example' => 'nullable|string|max:100',
 
             // Contact Information
             'phone1' => 'nullable|numeric',
@@ -51,6 +47,8 @@ class SettingRequest extends FormRequest
             'fax' => 'nullable|numeric  ',
             'address1' => 'nullable|string|max:250',
             'address2' => 'nullable|string|max:250',
+            'address_en_1' => 'nullable|string|max:250',
+            'address_en_2' => 'nullable|string|max:250',
             'google_map' => 'nullable|string',
 
             // Mail Settings
@@ -58,9 +56,16 @@ class SettingRequest extends FormRequest
             'mail_port' => 'nullable|integer|min:1|max:65535',
             'mail_from_address' => 'nullable|email|max:100',
             'mail_from_name' => 'nullable|string|max:100',
-            'mail_encryption' => 'nullable|string|max:10|in:tls,ssl,starttls',
+            'mail_encryption' => 'nullable|string|max:10|in:tls,ssl,starttls,smtp',
             'mail_username' => 'nullable|string|max:100',
             'mail_password' => 'nullable|string|max:100',
+
+            //Sms Settings
+            'sms_sender_name' => 'nullable|string|max:100',
+            'sms_app_id' => 'nullable|string|max:100',
+            'sms_app_sec' => 'nullable|string|max:100',
+            'sms_provider' => 'nullable|string|max:100',
+            'sms_user_name' => 'nullable|string|max:100',
 
             // Social Media Links
             'facebook_address' => 'nullable|url',
@@ -72,30 +77,14 @@ class SettingRequest extends FormRequest
             'linkedin_address' => 'nullable|url',
             'tumblr_address' => 'nullable|url',
             'flickr_address' => 'nullable|url',
-
-            // Captcha
-            'nocaptcha_sitekey' => 'nullable|string|max:250',
-            'nocaptcha_secret' => 'nullable|string|max:250',
-
-            // Mailchimp
-            'mailchimp_api_key' => 'nullable|string',
-            'mailchimp_list_name' => 'nullable|string',
-            'mailchimp_list_id' => 'nullable|string',
-
-            // Analytics & Pixels
-            'google_tag_manager_id' => 'nullable|string|max:250',
-            'google_tag_manager_for_body' => 'nullable|string',
-            'google_tag_manager_for_head' => 'nullable|string',
-            'facebook_pixel_for_body' => 'nullable|string',
-            'facebook_pixel_for_head' => 'nullable|string',
-            'tiktok_pixel_for_body' => 'nullable|string',
-            'tiktok_pixel_for_head' => 'nullable|string',
-
-            //stats numbers
-            'n_experience_years'=> 'nullable|integer',
-            'n_tours'=> 'nullable|integer',
-            'n_awrds'=> 'nullable|integer',
-            'n_travelers'=> 'nullable|integer',
+            'tiktok_address' => 'nullable|url',
+            'snapchat_address' => 'nullable|url',
+            'whatsapp_address' => 'nullable|url',
+            'working_hours'=> 'nullable|string',
+            'postal_code'=> 'nullable|string',
         ];
+
+
+
     }
 }

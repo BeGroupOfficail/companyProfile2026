@@ -1,7 +1,7 @@
-<x-dashboard.layout :title="__('dash.services')">
+<x-dashboard.layout :title="__('dash.edit_project')">
 
     <!--begin::Form-->
-    <form method="POST" action="{{route('services.update',$service->id)}}" class="form d-flex flex-column flex-lg-row" data-kt-redirect="{{route('services.index')}}" enctype="multipart/form-data">
+    <form method="POST" action="{{route('projects.update',$project->id)}}" class="form d-flex flex-column flex-lg-row" data-kt-redirect="{{route('projects.index')}}" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
         <!--begin::Aside column-->
@@ -16,8 +16,8 @@
                 :cancelImageText="'Cancel Image'"
                 :removeImageText="'Remove Image'"
                 :acceptedText="'image files are accepted'"
-                :model="$service"
-                :imageModelName="'services'"
+                :model="$project"
+                :imageModelName="'projects'"
             />
             <!--end::image -->
 
@@ -25,8 +25,8 @@
 
             <x-dashboard.partials.html.status_select
                 :model="'service'"
-                :selected="$service->status"
-                :modelObject="$service"
+                :selected="$project->status"
+                :modelObject="$project"
             />
 
             <!--end::Status-->
@@ -52,17 +52,17 @@
                                         <x-dashboard.partials.html.input
                                             name="name_{{ $lang }}"
                                             label="{{ __('dash.name') }} ({{ __($languageName) }})"
-                                            :value="old('name_' . $lang, $service->getTranslation('name', $lang) ?? '')"
+                                            :value="old('name_' . $lang, $project->getTranslation('name', $lang) ?? '')"
                                             placeholder="{{ __('dash.Enter the name in') }} {{ __($languageName) }}" />
                                     @endforeach
 
                                     <x-dashboard.partials.html.objects-select
-                                        name="parent_id"
-                                        title="{{ __('dash.parent') }}"
-                                        :options="$service_parents"
+                                        name="service_id"
+                                        title="{{ __('dash.services') }}"
+                                        :options="$services"
                                         :isTranslatable="true"
                                         :translatableValue="'name'"
-                                        :selectedValue="$service->parent_id"/>
+                                        :selectedValue="$project->service_id"/>
                                 </div>
 
                                 <div class="d-flex flex-wrap gap-5">
@@ -70,7 +70,7 @@
                                         <x-dashboard.partials.html.textarea
                                             name="short_desc_{{ $lang }}"
                                             label="{{ __('dash.short_desc') }} ({{ __($languageName) }})"
-                                            :value="old('short_desc_' . $lang, $service->getTranslation('short_desc', $lang) ?? '')"
+                                            :value="old('short_desc_' . $lang, $project->getTranslation('short_desc', $lang) ?? '')"
                                             placeholder="{{ __('dash.Enter the short dec in') }} {{ __($languageName) }}" />
                                     @endforeach
                                 </div>
@@ -81,7 +81,7 @@
                                     <x-dashboard.partials.html.textarea_with_editor
                                         name="long_desc_{{ $lang }}"
                                         label="{{ __('dash.long_desc') }} ({{ __($languageName) }})"
-                                        :value="old('long_desc_' . $lang, $service->getTranslation('long_desc', $lang) ?? '')"
+                                        :value="old('long_desc_' . $lang, $project->getTranslation('long_desc', $lang) ?? '')"
                                         placeholder="{{ __('dash.Enter the long dec in') }} {{ __($languageName) }}" />
                                 @endforeach
 
@@ -102,12 +102,12 @@
                                             <div class="d-flex mt-3">
                                                 <!--begin::Radio-->
                                                 <div class="form-check form-check-custom form-check-solid me-5">
-                                                    <input class="form-check-input" type="radio" value="1" name="home" @checked($service->home == 1) >
+                                                    <input class="form-check-input" type="radio" value="1" name="home" @checked($project->home == 1) >
                                                     <label class="form-check-label" for="home_yes">@lang('dash.yes')</label>
                                                 </div>
 
                                                 <div class="form-check form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="radio" value="0" name="home" @checked($service->home == 0)>
+                                                    <input class="form-check-input" type="radio" value="0" name="home" @checked($project->home == 0)>
                                                     <label class="form-check-label" for="home_no">@lang('dash.no')</label>
                                                 </div>
                                                 <!--end::Radio-->
@@ -133,12 +133,12 @@
                                             <div class="d-flex mt-3">
                                                 <!--begin::Radio-->
                                                 <div class="form-check form-check-custom form-check-solid me-5">
-                                                    <input class="form-check-input" type="radio" value="1" name="menu" @checked($service->menu == 1)>
+                                                    <input class="form-check-input" type="radio" value="1" name="menu" @checked($project->menu == 1)>
                                                     <label class="form-check-label" for="header_yes">@lang('dash.yes')</label>
                                                 </div>
 
                                                 <div class="form-check form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="radio" value="0" name="menu" @checked($service->menu == 0)>
+                                                    <input class="form-check-input" type="radio" value="0" name="menu" @checked($project->menu == 0)>
                                                     <label class="form-check-label" for="header_no">@lang('dash.no')</label>
                                                 </div>
                                                 <!--end::Radio-->

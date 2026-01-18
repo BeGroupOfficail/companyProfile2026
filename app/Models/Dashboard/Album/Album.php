@@ -17,9 +17,9 @@ class Album extends Model
 
     const ALBUMTYPES = [
         'general'=>'general',
-        'tours'=>'tours',
-        'destinations'=>'destinations',
-        'services'=>'services'
+        'about_album'=>'about_album',
+        'projects'=>'projects',
+        'services'=>'services',
     ];
 
     protected $table = 'albums';
@@ -37,7 +37,7 @@ class Album extends Model
         'type_value_id' => 'integer'
     ];
 
-    public $translatable = ['title','text']; // translatable attributes
+    public $translatable = ['title','text','slug']; // translatable attributes
 
 
     public function images(){

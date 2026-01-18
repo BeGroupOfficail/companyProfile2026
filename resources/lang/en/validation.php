@@ -160,6 +160,73 @@ return [
     'url' => 'The :attribute field must be a valid URL.',
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
+    'instructor_bag_file_file' => 'The instructor bag must be a valid file.',
+    'instructor_bag_file_mimes' => 'The instructor bag must be a file of type: pdf, doc, docx, xlsx, xls, csv, ppt, pptx.',
+    'instructor_bag_file_min' => 'The instructor bag must be at least 3.5 MB.',
+    'instructor_bag_file_max' => 'The instructor bag must not be greater than 12 MB.',
+
+    'student_bag_file_file' => 'The student bag must be a valid file.',
+    'student_bag_file_mimes' => 'The student bag must be a file of type: pdf, doc, docx, xlsx, xls, csv, ppt, pptx.',
+    'student_bag_file_min' => 'The student bag must be at least 3.5 MB.',
+    'student_bag_file_max' => 'The student bag must not be greater than 12 MB.',
+    'The number of days cannot exceed the date range of the course.' => 'The number of days cannot exceed the date range of the course.',
+    'The end time must be after the start time.' => 'The end time of the day must be after the start time.',
+    'The day date must be within the course start and end date.' => 'The day date must be within the course start and end date.',
+     'training_courses' => [
+        'required' => 'You must add at least one training course.',
+        'array' => 'Training courses must be an array.',
+
+        'course_id' => [
+            'required' => 'Each course must have a valid Course ID.',
+            'exists' => 'The selected course does not exist.',
+        ],
+
+        'start_date' => [
+            'required' => 'Each course must have a start date.',
+            'date' => 'The course start date must be valid.',
+        ],
+
+        'end_date' => [
+            'required' => 'Each course must have an end date.',
+            'date' => 'The course end date must be valid.',
+            'after_or_equal' => 'The end date must be after or equal to the start date.',
+        ],
+
+        'bag_ids' => [
+            'array' => 'Bags must be an array.',
+            'integer' => 'Each selected bag must be a valid number.',
+            'exists' => 'One or more selected bags do not exist.',
+        ],
+
+        'days' => [
+            'required' => 'Each course must contain at least one day.',
+            'array' => 'Days must be an array.',
+            'date' => [
+                'required' => 'Each day must have a valid date.',
+                'date' => 'The day date must be a valid date format.',
+            ],
+            'type' => [
+                'required' => 'Each day must have a type (online or offline).',
+                'in' => 'The day type must be either online or offline.',
+            ],
+            'learning_type' => [
+                'required' => 'Each day must have a learning type.',
+                'in' => 'The learning type must be theoretical or practical.',
+            ],
+            'center_id' => ['exists' => 'The selected center is invalid.'],
+            'hall_id' => ['exists' => 'The selected hall is invalid.'],
+            'meeting_link' => [
+                'string' => 'The meeting link must be a valid string.',
+                'max' => 'The meeting link may not exceed 255 characters.',
+            ],
+        ],
+
+        'custom' => [
+            'day_within_range' => 'The day date must be within the course start and end date.',
+            'time_after_start' => 'The end time must be after the start time.',
+            'days_exceed_range' => 'The number of days cannot exceed the course duration.',
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------

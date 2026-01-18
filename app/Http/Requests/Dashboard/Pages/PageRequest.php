@@ -24,11 +24,6 @@ class PageRequest extends FormRequest
             'long_text_en' => ['nullable','string'],
             'long_text_ar' => ['nullable','string'],
             'status' => ['nullable', 'in:published,inactive'],
-            'meta_title_en' => ['nullable','string','max:255'],
-            'meta_title_ar' => ['nullable','string','max:255'],
-            'meta_desc_ar' => ['nullable','string'],
-            'meta_desc_en' => ['nullable','string'],
-            'index' => ['nullable','boolean'],
             'home' => ['nullable', 'boolean'],
             'menu' => ['nullable', 'boolean'],
         ];

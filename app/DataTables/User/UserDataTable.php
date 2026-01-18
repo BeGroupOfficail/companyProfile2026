@@ -1,7 +1,6 @@
 <?php
 
 namespace App\DataTables\User;
-
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -15,8 +14,8 @@ class UserDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
 
-            ->addColumn('checkbox', function($row){
-                return '<div class="form-check form-check-sm form-check-custom form-check-solid me-3"><input type="checkbox" name="checkbox" class="form-check-input" value="'. $row->id .'" /></div>';
+            ->addColumn('checkbox', function ($row) {
+                return '<div class="form-check form-check-sm form-check-custom form-check-solid me-3"><input type="checkbox" name="checkbox" class="form-check-input" value="' . $row->id . '" /></div>';
             })
 
             // Render action-specific columns directly
@@ -27,13 +26,16 @@ class UserDataTable extends DataTable
 
             ->addColumn('name', fn($row) => $row->getNameAttribute())
 
-            // Render image columns directly (e.g., image, icon)
-            ->addColumn('image', function($row){
-                return $this->renderImage($row->image, 'categories', 100);
-            })
+            ->filterColumn('name', fn($query, $keyword) =>
+                $query->where('f_name', 'like', "%{$keyword}%")
+                    ->orWhere('l_name', 'like', "%{$keyword}%")
+            )
+            ->filterColumn('status', fn($query, $keyword) =>
+                $query->where('status', 'like', "%{$keyword}%")
+            )
 
             // Make sure to treat columns as raw HTML
-            ->rawColumns(['checkbox','actions','name','image','status'])
+            ->rawColumns(['checkbox', 'actions', 'name', 'status'])
             ->setRowId('id');
     }
 
@@ -44,47 +46,58 @@ class UserDataTable extends DataTable
         $routeName = 'users.users';
         $modelName = 'users';
         $has_status = 'no';
-        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','routeName','modelName','has_status'))->render();
+        return view('components.dashboard.partials.actions_dropdown', compact('editUrl', 'routeName', 'modelName', 'has_status'))->render();
     }
 
-
-    // Render images in a modular and reusable way
-    protected function renderImage($imageName, $imageType, $width = 40)
+    protected function renderImage($imageName, $imageType, $width = 100): string
     {
-        $imageUrl = $imageName ? asset("uploads/$imageType/$imageName"): asset('assets/dashboard/media/noimage.png');
-        return '<div class="symbol symbol-circle symbol-50px overflow-hidden me-3"><div class="symbol-label"><img src="' . $imageUrl . '" border="0" width="' . $width . '" class="img-rounded" />  </div> </div>';
+        $imageUrl = $imageName ? asset("uploads/$imageType/$imageName") : asset('assets/dashboard/media/noimage.png');
+        $modalId = 'img-preview-' . md5($imageUrl);
+        return '
+            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                <div class="symbol-label">
+                    <img src="' . $imageUrl . '" width="' . $width . '" class="img-rounded cursor-pointer" style="cursor:pointer" onclick="document.getElementById(\'' . $modalId . '\').style.display = ' . "'block'" . '" />
+                </div>
+            </div>
+            <div id="' . $modalId . '" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);text-align:center;" onclick="this.style.display=\'none\'">
+                <img src="' . $imageUrl . '" style="max-width:90vw;max-height:90vh;margin-top:5vh;border-radius:10px;box-shadow:0 0 20px #000;" />
+            </div>';
     }
+    // Render images in a modular and reusable way
+    // protected function renderImage($imageName, $imageType, $width = 40)
+    // {
+    //     $imageUrl = $imageName ? asset("uploads/$imageType/$imageName") : asset('assets/dashboard/media/noimage.png');
+    //     return '<div class="symbol symbol-circle symbol-50px overflow-hidden me-3"><div class="symbol-label"><img src="' . $imageUrl . '" border="0" width="' . $width . '" class="img-rounded" />  </div> </div>';
+    // }
 
 
     protected function renderStatus($row)
     {
         if ($row->status == 'active') {
-            return '<div class="badge badge-light-success">' . __('dash.active') . '</div>';
+            return '<div class="badge badge-light-success">' . __('dash.user_active') . '</div>';
         } elseif ($row->status == 'inactive') {
-            return '<div class="badge badge-light-warning">' . __('dash.inactive') . '</div>';
+            return '<div class="badge badge-light-warning">' . __('dash.user_inactive') . '</div>';
         } elseif ($row->status == 'blocked') {
             return '<div class="badge badge-light-danger">' . __('dash.blocked') . '</div>';
         }
     }
 
-    public function setType($type){
+    public function setType($type)
+    {
         $this->type = $type;
         return $this;
     }
 
     public function query(User $model): QueryBuilder
     {
-        $query = $model->newQuery()->where('id','!=',1);
 
-        if ($this->type) {
-            $query = $query->where('job_role', $this->type);
-        }
-        return  $query;
+        return $model->newQuery();
     }
 
-    public function html(): HtmlBuilder{
+    public function html(): HtmlBuilder
+    {
         return $this->builder()
-            ->setTableId('pages-table')
+            ->setTableId('users-table')
             ->setTableHeadClass('table align-middle table-row-dashed fs-6 gy-5')
             ->columns($this->getColumns())
             ->minifiedAjax()
@@ -103,19 +116,19 @@ class UserDataTable extends DataTable
                 'buttons' => [
                     [
                         'extend' => 'excel',
-                        'text' => '<i class="fas fa-file-excel"></i> '.__('dash.excel'),
+                        'text' => '<i class="fas fa-file-excel"></i> ' . __('dash.excel'),
                     ],
                     [
                         'extend' => 'pdf',
-                        'text' => '<i class="fas fa-file-pdf"></i> '.__('dash.pdf'),
+                        'text' => '<i class="fas fa-file-pdf"></i> ' . __('dash.pdf'),
                     ],
                     [
                         'extend' => 'print',
-                        'text' => '<i class="fas fa-print"></i> '.__('dash.print'),
+                        'text' => '<i class="fas fa-print"></i> ' . __('dash.print'),
                     ],
                     [
                         'extend' => 'reload',
-                        'text' => '<i class="fas fa-sync-alt"></i> '.__('dash.reload'),
+                        'text' => '<i class="fas fa-sync-alt"></i> ' . __('dash.reload'),
                     ],
                 ],
                 'language' => [
@@ -154,7 +167,6 @@ class UserDataTable extends DataTable
             Column::make('name')->title(__('dash.name')),
             Column::make('email')->title(__('dash.email')),
             Column::make('phone')->title(__('dash.phone')),
-            Column::make('image')->title(__('dash.image')),
             Column::make('status')->title(__('dash.status'))->addClass('status-cell'),
             Column::make('job_role')->title(__('dash.job_role'))->addClass('status-cell'),
             Column::make('actions')->title(__('dash.actions'))->addClass('text-end'),

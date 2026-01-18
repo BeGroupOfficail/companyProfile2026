@@ -1,7 +1,6 @@
 <x-authentication.layout :title="__('dash.Login')">
     <!--begin::Form-->
-    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="{{route('dashboard.home')}}" action="{{route('login')}}" method="POST">
-        <input type="hidden" name="login_type" value="admin">
+    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="{{route('dashboard.home')}}" action="{{route('dashboard.login')}}" method="POST">
         @csrf
         <!--begin::Heading-->
         <div class="text-center mb-11">
@@ -13,21 +12,18 @@
         </div>
         <!--begin::Heading-->
 
-
-{{--        <x-authentication.partials.social_login_options/>--}}
-
         <!--begin::Separator-->
         <div class="separator separator-content my-14">
-            <span class="w-125px text-gray-500 fw-semibold fs-7">{{__('dash.with email')}}</span>
+            <span class="">{{__('dash.with email')}}</span>
         </div>
         <!--end::Separator-->
 
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="text" placeholder="{{ __('dash.email') }}" name="email" autocomplete="off" class="form-control bg-transparent @error('email') is-invalid @enderror" />
+            <input type="email" placeholder="{{ __('dash.email') }}" name="email" autocomplete="off" class="form-control bg-transparent @error('email') is-invalid @enderror" />
             @error('email')
-                <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
@@ -63,14 +59,6 @@
         <!--begin::Wrapper-->
         <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
             <div></div>
-
-            @if (\Illuminate\Support\Facades\Route::has('password.request'))
-                <!--begin::Link-->
-{{--                <a href="{{ route('password.request') }}" class="link-primary">--}}
-{{--                    {{__('dash.Forgot Password ?')}}--}}
-{{--                </a>--}}
-                <!--end::Link-->
-            @endif
         </div>
         <!--end::Wrapper-->
 
@@ -91,16 +79,6 @@
             </button>
         </div>
         <!--end::Submit button-->
-
-        <!--begin::Sign up-->
-{{--        <div class="text-gray-500 text-center fw-semibold fs-6">--}}
-{{--            {{__('dash.Not a Member yet?')}}--}}
-
-{{--             <a href="{{route('register')}}" class="link-primary">--}}
-{{--                {{__('dash.Sign up')}}--}}
-{{--            </a>--}}
-{{--        </div>--}}
-        <!--end::Sign up-->
     </form>
     <!--end::Form-->
 </x-authentication.layout>

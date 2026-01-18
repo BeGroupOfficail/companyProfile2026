@@ -16,7 +16,6 @@ class RoleSeeder extends Seeder
     {
         // Create Super Admin role
         $role = Role::updateOrCreate(['name' => 'Super Admin','guard_name'=>'web']);
-        $instructorRole = Role::updateOrCreate(['name' => 'Instructor','guard_name'=>'web']);
 
         // sync all permission to super admin role
         $permissions = Permission::all();

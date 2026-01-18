@@ -20,10 +20,6 @@ return new class extends Migration
             $table->string('alt_image')->nullable();
             $table->string('banner')->nullable();
             $table->string('alt_banner')->nullable();
-            $table->json('slug')->nullable();
-            $table->json('meta_title',255)->nullable();
-            $table->json('meta_desc')->nullable();
-            $table->boolean('index')->nullable()->default(true);
             $table->timestamps();
         });
     }

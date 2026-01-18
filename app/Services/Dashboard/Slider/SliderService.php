@@ -3,6 +3,7 @@
 namespace App\Services\Dashboard\Slider;
 
 use App\Helper\Media;
+use App\Helper\SoftDeleteHelper;
 use App\Models\Dashboard\Category;
 use App\Models\Dashboard\Slider\Slider;
 use Illuminate\Support\Facades\DB;
@@ -65,27 +66,32 @@ class SliderService
         }
     }
 
-    public function deleteSliders($selectedIds){
-        $sliders = Slider::whereIn('id', $selectedIds)->get();
-
-        DB::beginTransaction();
-        try {
-            foreach ($sliders as $slider) {
-                // Delete associated image if it exists
+    public function deleteSliders($selectedIds)
+{
+    DB::beginTransaction();
+    try {
+        $trashedSliders = Slider::onlyTrashed()->whereIn('id', $selectedIds)->get();
+        $activeSliders = Slider::whereIn('id', $selectedIds)->get();
+        
+        if ($trashedSliders->isNotEmpty()) {
+            foreach ($trashedSliders as $slider) {
                 if ($slider->image) {
                     Media::removeFile('sliders', $slider->image);
                 }
             }
-            $deleted = Slider::whereIn('id', $selectedIds)->delete();
-
-            DB::commit();
-
-            return $deleted > 0;
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return false;
+            Slider::onlyTrashed()->whereIn('id', $trashedSliders->pluck('id'))->forceDelete();
         }
+        
+        if ($activeSliders->isNotEmpty()) {
+            SoftDeleteHelper::deleteWithEvents(Slider::class, $activeSliders->pluck('id')->toArray());
+        }
+        
+        DB::commit();
+        return true;
+        
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return false;
     }
+}
 }

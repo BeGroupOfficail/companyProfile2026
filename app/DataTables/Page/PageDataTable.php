@@ -15,8 +15,8 @@ class PageDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('checkbox', function($row){
-                return '<div class="form-check form-check-sm form-check-custom form-check-solid me-3"><input type="checkbox" name="checkbox" class="form-check-input" value="'. $row->id .'" /></div>';
+            ->addColumn('checkbox', function ($row) {
+                return '<div class="form-check form-check-sm form-check-custom form-check-solid me-3"><input type="checkbox" name="checkbox" class="form-check-input" value="' . $row->id . '" /></div>';
             })
 
             // Render action-specific columns directly
@@ -26,26 +26,24 @@ class PageDataTable extends DataTable
             ->addColumn('status', fn($row) => $this->renderStatus($row))
 
             // Render language-specific columns directly (e.g., name_en, name_ar)
-            ->addColumn('name_en', fn($row) => $row->getTranslation('name','en') ?? '')
-            ->addColumn('name_ar', fn($row) => $row->getTranslation('name','ar') ?? '')
-
-            ->filterColumn('name_en', function($query, $keyword) {
-                $query->where('name->en', 'like', '%'.$keyword.'%');
+            ->addColumn('name_en', fn($row) => $row->getTranslation('name', 'en') ?? '')
+            ->addColumn('name_ar', fn($row) => $row->getTranslation('name', 'ar') ?? '')
+            ->filterColumn('name_en', function ($query, $keyword) {
+                $query->where('name->en', 'like', '%' . $keyword . '%');
             })
 
-            ->filterColumn('name_ar', function($query, $keyword) {
-                $query->where('name->ar', 'like', '%'.$keyword.'%');
+            ->filterColumn('name_ar', function ($query, $keyword) {
+                $query->where('name->ar', 'like', '%' . $keyword . '%');
             })
 
-            ->filterColumn('status', function($query, $keyword) {
+            ->filterColumn('status', function ($query, $keyword) {
                 $query->where(function ($query) use ($keyword) {
                     $words = explode(' ', $keyword);
                     foreach ($words as $word) {
                         $query->orWhere(function ($query) use ($word) {
                             if (str_contains('%published%', $word) || str_contains('%منشور%', $word)) {
                                 $query->where('status', 'published');
-                            }
-                            elseif (str_contains('%inactive%', $word) || str_contains('%غير نشط%', $word)) {
+                            } elseif (str_contains('%inactive%', $word) || str_contains('%غير نشط%', $word)) {
                                 $query->where('status', 'inactive');
                             }
                         });
@@ -54,7 +52,7 @@ class PageDataTable extends DataTable
             })
 
             // Make sure to treat columns as raw HTML
-            ->rawColumns(['checkbox','actions', 'title_en', 'title_ar','status'])
+            ->rawColumns(['checkbox', 'actions', 'title_en', 'title_ar', 'status'])
             ->setRowId('id');
     }
 
@@ -65,11 +63,20 @@ class PageDataTable extends DataTable
         $editUrl = route('pages.edit', $row->id);
         $routeName = 'pages';
         $modelName = 'pages';
-        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','routeName','modelName'))->render();
+        $showUrl = route( 'website.page',$row->slug);
+        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','showUrl', 'routeName', 'modelName'))->render();
+    }
+
+    protected function renderView($row): string
+    {
+        $url = route('website.page', $row->slug);
+        $title= __('dash.view');
+        return "<a href='{$url}' title='{$title}' target='_blank'><i class='ki-outline ki-eye fs-2'></i></a>";
     }
 
 
-    protected function renderStatus($row){
+    protected function renderStatus($row)
+    {
         if ($row->status == 'published') {
             return '<div class="badge badge-light-success">' . __('dash.published') . '</div>';
         } elseif ($row->status == 'inactive') {
@@ -79,10 +86,11 @@ class PageDataTable extends DataTable
 
     public function query(Page $model): QueryBuilder
     {
-        return  $model->newQuery();
+        return $model->newQuery();
 
     }
-    public function html(): HtmlBuilder{
+    public function html(): HtmlBuilder
+    {
         return $this->builder()
             ->setTableId('pages-table')
             ->setTableHeadClass('table align-middle table-row-dashed fs-6 gy-5')
@@ -103,19 +111,19 @@ class PageDataTable extends DataTable
                 'buttons' => [
                     [
                         'extend' => 'excel',
-                        'text' => '<i class="fas fa-file-excel"></i> '.__('dash.excel'),
+                        'text' => '<i class="fas fa-file-excel"></i> ' . __('dash.excel'),
                     ],
                     [
                         'extend' => 'pdf',
-                        'text' => '<i class="fas fa-file-pdf"></i> '.__('dash.pdf'),
+                        'text' => '<i class="fas fa-file-pdf"></i> ' . __('dash.pdf'),
                     ],
                     [
                         'extend' => 'print',
-                        'text' => '<i class="fas fa-print"></i> '.__('dash.print'),
+                        'text' => '<i class="fas fa-print"></i> ' . __('dash.print'),
                     ],
                     [
                         'extend' => 'reload',
-                        'text' => '<i class="fas fa-sync-alt"></i> '.__('dash.reload'),
+                        'text' => '<i class="fas fa-sync-alt"></i> ' . __('dash.reload'),
                     ],
                 ],
                 'language' => [

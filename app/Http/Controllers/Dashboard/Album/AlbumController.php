@@ -6,9 +6,9 @@ use App\DataTables\Album\AlbumDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Albums\AlbumRequest;
 use App\Models\Dashboard\Album\Album;
-use App\Models\Dashboard\Destination\Destination;
-use App\Models\Dashboard\Service;
-use App\Models\Dashboard\Tour\Tour;
+use App\Models\Dashboard\Course\Course;
+use App\Models\Dashboard\Project\Project;
+use App\Models\Dashboard\Service\Service;
 use App\Services\Dashboard\Album\AlbumService;
 use Illuminate\Http\Request;
 
@@ -146,16 +146,12 @@ class AlbumController extends Controller
     public function getAlbumTypesValues($type){
         $values = [];
 
-        if($type == 'tours'){
-            $values = Tour::select('id','name')->get();
-        }
-
-        if($type == 'destinations'){
-            $values = Destination::select('id','name')->get();
-        }
-
         if($type == 'services'){
             $values = Service::select('id','name')->get();
+        }
+
+        if($type == 'projects'){
+            $values = Project::select('id','name')->get();
         }
         // add here any new model you want//
 

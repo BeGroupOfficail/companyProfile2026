@@ -1,4 +1,3 @@
-<!--Page Header Start-->
 <section class="page-header">
     <div class="page-header__bg"></div>
     <div class="container">
@@ -20,4 +19,3 @@
         </div>
     </div>
 </section>
-<!--Page Header End-->

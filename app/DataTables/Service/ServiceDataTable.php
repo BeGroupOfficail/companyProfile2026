@@ -2,8 +2,7 @@
 
 namespace App\DataTables\Service;
 
-use App\Models\Dashboard\Blog\Blog;
-use App\Models\Dashboard\Service;
+use App\Models\Dashboard\Service\Service;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -25,13 +24,13 @@ class ServiceDataTable extends DataTable
 
             // Render status-specific columns directly
             ->addColumn('status', fn($row) => $this->renderStatus($row))
-            
+
             // Render language-specific columns directly (e.g., name_en, name_ar)
             ->addColumn('name', fn($row) => $row->name?? '')
             ->addColumn('parent', fn($row) => $row->parent?->name ?? '')
             ->addColumn('home', fn($row) => $this->renderhome($row))
             ->addColumn('menu', fn($row) => $this->rendermenu($row))
-           
+
             // Render image columns directly (e.g., image, icon)
             ->addColumn('image', function($row){
                 return $this->renderImage($row->image, 'services', 100);
@@ -59,7 +58,7 @@ class ServiceDataTable extends DataTable
             })
 
             // Make sure to treat columns as raw HTML
-            ->rawColumns(['checkbox','actions', 'name_en', 'name_ar','image','status','home','menu'])
+            ->rawColumns(['checkbox','actions', 'name_en', 'name_ar','image','status','home','menu','view'])
             ->setRowId('id');
     }
 
@@ -70,16 +69,31 @@ class ServiceDataTable extends DataTable
         $editUrl = route('services.edit', $row->id);
         $routeName = 'services';
         $modelName = 'services';
-        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','routeName','modelName'))->render();
+        $showUrl = route( 'website.service-details',$row->slug);
+        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','showUrl','routeName','modelName'))->render();
     }
 
+    protected function renderImage($imageName, $imageType, $width = 100): string
+    {
+        $imageUrl = $imageName ? asset("uploads/$imageType/$imageName") : asset('assets/dashboard/media/noimage.png');
+        $modalId = 'img-preview-' . md5($imageUrl);
+        return '
+            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                <div class="symbol-label">
+                    <img src="' . $imageUrl . '" width="' . $width . '" class="img-rounded cursor-pointer" style="cursor:pointer" onclick="document.getElementById(\'' . $modalId . '\').style.display = ' . "'block'" . '" />
+                </div>
+            </div>
+            <div id="' . $modalId . '" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);text-align:center;" onclick="this.style.display=\'none\'">
+                <img src="' . $imageUrl . '" style="max-width:90vw;max-height:90vh;margin-top:5vh;border-radius:10px;box-shadow:0 0 20px #000;" />
+            </div>';
+    }
 
     // Render images in a modular and reusable way
-    protected function renderImage($imageName, $imageType, $width = 40)
-    {
-        $imageUrl = $imageName ? asset("uploads/$imageType/$imageName"): asset('assets/dashboard/media/noimage.png');
-        return '<div class="symbol symbol-circle symbol-50px overflow-hidden me-3"><div class="symbol-label"><img src="' . $imageUrl . '" border="0" width="' . $width . '" class="img-rounded" />  </div> </div>';
-    }
+    // protected function renderImage($imageName, $imageType, $width = 40)
+    // {
+    //     $imageUrl = $imageName ? asset("uploads/$imageType/$imageName"): asset('assets/dashboard/media/noimage.png');
+    //     return '<div class="symbol symbol-circle symbol-50px overflow-hidden me-3"><div class="symbol-label"><img src="' . $imageUrl . '" border="0" width="' . $width . '" class="img-rounded" />  </div> </div>';
+    // }
 
 
     protected function renderStatus($row)

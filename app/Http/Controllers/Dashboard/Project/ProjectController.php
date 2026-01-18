@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\Service;
+namespace App\Http\Controllers\Dashboard\Project;
 
-use App\DataTables\Service\ServiceDataTable;
+use App\DataTables\Project\ProjectDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\Service\ServiceRequest;
-use App\Models\Dashboard\Service\Service;
-use App\Services\Dashboard\Service\ServiceService;
+use App\Http\Requests\Dashboard\Project\ProjectRequest;
+use App\Models\Dashboard\Project\Project;
+use App\Services\Dashboard\Project\ProjectService;
 use Illuminate\Http\Request;
 
-class ServiceController extends Controller
+class ProjectController extends Controller
 {
-    protected $serviceService;
+    protected $projectService;
 
-    public function __construct(ServiceService $serviceService)
+    public function __construct(ProjectService $projectService)
     {
-        $this->serviceService = $serviceService;
+        $this->projectService = $projectService;
 
-        $this->middleware('can:services.read')->only('index');
-        $this->middleware('can:services.create')->only('store');
-        $this->middleware('can:services.update')->only('update');
-        $this->middleware('can:services.delete')->only('destroy');
+        $this->middleware('can:projects.read')->only('index');
+        $this->middleware('can:projects.create')->only('store');
+        $this->middleware('can:projects.update')->only('update');
+        $this->middleware('can:projects.delete')->only('destroy');
     }
 
-    public function index(ServiceDataTable $dataTable)
+    public function index(ProjectDataTable $dataTable)
     {
-        return $dataTable->render('Dashboard.Services.index');
+        return $dataTable->render('Dashboard.Projects.index');
     }
 
     /**
@@ -33,19 +33,19 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        $service_parents = $this->serviceService->create();
-        return view('Dashboard.Services.create', compact('service_parents'));
+        $services = $this->projectService->create();
+        return view('Dashboard.Projects.create', compact('services'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ServiceRequest $request)
+    public function store(ProjectRequest $request)
     {
         try {
             $dataValidated = $request->validated();
-            $this->serviceService->store($dataValidated);
-            return redirect()->route('services.index')->with(['success' => __('messages.your_item_added_successfully')]);
+            $this->projectService->store($dataValidated);
+            return redirect()->route('projects.index')->with(['success' => __('messages.your_item_added_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }
@@ -54,22 +54,22 @@ class ServiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Service $service)
+    public function edit(Project $project)
     {
-        $service_parents = $this->serviceService->edit($service);
-        return view('Dashboard.Services.edit', compact('service', 'service_parents'));
+        $services = $this->projectService->edit($project);
+        return view('Dashboard.Projects.edit', compact('project', 'services'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ServiceRequest $request, Service $service)
+    public function update(ProjectRequest $request, Project $project)
     {
         try {
             $dataValidated = $request->validated();
-            $this->serviceService->update($request, $dataValidated,  $service);
+            $this->projectService->update($request, $dataValidated,  $project);
 
-            return redirect()->route('services.index')->with(['success' => __('messages.your_item_added_successfully')]);
+            return redirect()->route('projects.index')->with(['success' => __('messages.your_item_added_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }
@@ -84,10 +84,10 @@ class ServiceController extends Controller
 
         $request->validate([
             'selectedIds' => ['array', 'min:1'],
-            'selectedIds.*' => ['exists:services,id']
+            'selectedIds.*' => ['exists:projects,id']
         ]);
 
-        $deleted = $this->serviceService->deleteServices($selectedIds);
+        $deleted = $this->projectService->deleteProjects($selectedIds);
 
         if (request()->ajax()) {
             if (!$deleted) {

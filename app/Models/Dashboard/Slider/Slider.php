@@ -10,7 +10,7 @@ class Slider extends Model
 {
 
     use HasFactory;
-    use softDeletes;
+    use SoftDeletes;
     use HandlesTranslationsAndMedia;
 
     protected $table = 'sliders';

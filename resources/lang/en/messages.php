@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'image' => 'Image',
     'id' => 'ID',
     'name' => 'Name',
     'name_ar' => 'Name Arabic',
@@ -58,6 +58,12 @@ return [
     'plans' => 'Plans',
     'add_plan' => 'Add Plan',
     'select_attributes' => 'Select Attributes',
-
-
+    'Tenant updated successfully.' => 'Tenant updated successfully.',
+    'Tenant created successfully. Now add reservations.' => 'Tenant created successfully. Now add reservations.',
+    'Reservation added successfully' => 'Reservation added successfully',
+    'Hall is not available for selected dates/times' => 'Hall is not available for selected dates/times',
+    'Tenant deleted successfully.' => 'Tenant deleted successfully.',
+    'Reservation status updated successfully' => 'Reservation status updated successfully',
+    'Failed to load halls' => 'Failed to load halls',
+    'Hall is available for selected dates' => 'Hall is available for selected dates',
 ];

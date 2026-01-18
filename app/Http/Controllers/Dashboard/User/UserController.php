@@ -8,8 +8,6 @@ use App\Http\Requests\Dashboard\User\User\UpdateUserRequest;
 use App\Models\User;
 use App\Services\Dashboard\User\UserService;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -19,23 +17,26 @@ class UserController extends Controller
     {
         $this->userService = $userService;
 
-        $this->middleware('can:users.read')->only('index');
-        $this->middleware('can:users.create')->only('store');
-        $this->middleware('can:users.update')->only('update');
-        $this->middleware('can:users.delete')->only('destroy');
-    }
+        $this->middleware(function ($request, $next) {
+            $this->middleware('can:users.read')->only('index');
+            $this->middleware('can:users.create')->only('store');
+            $this->middleware('can:users.update')->only('update');
+            $this->middleware('can:users.delete')->only('destroy');
 
+            return $next($request);
+        });
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index(Request$request , UserDataTable $dataTable)
+    public function index(Request $request, UserDataTable $dataTable)
     {
         $type = $request->input('type');
         if ($type) {
             $dataTable->setType($type);
         }
-
-        return $dataTable->render('Dashboard.Users.Users.index');
+        $job_roles= User::JOBRoles;
+        return $dataTable->render('Dashboard.Users.Users.index',compact('job_roles'));
     }
 
     /**
@@ -43,14 +44,14 @@ class UserController extends Controller
      */
     public function create()
     {
-        [$job_roles,$roles] = $this->userService->create();
-        return view('Dashboard.Users.Users.create', compact('job_roles','roles'));
+        [$job_roles, $roles] = $this->userService->create();
+        return view('Dashboard.Users.Users.create', compact('job_roles', 'roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(storeUserRequest $request)
+    public function store(StoreUserRequest $request)
     {
         try {
             $dataValidated = $request->validated();
@@ -76,8 +77,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        [$job_roles,$roles,$userRoles] = $this->userService->edit($user);
-        return view('Dashboard.Users.Users.edit', compact('user','roles','job_roles','userRoles'));
+        [$job_roles, $roles, $userRoles] = $this->userService->edit($user);
+        return view('Dashboard.Users.Users.edit', compact('user', 'roles', 'job_roles', 'userRoles'));
     }
 
     /**
@@ -87,10 +88,8 @@ class UserController extends Controller
     {
         try {
             $dataValidated = $request->validated();
-
             $this->userService->update($request, $dataValidated, $user);
-
-            return redirect()->route('users.users.index',['type'=>$request->type])->with(['success' => __('messages.your_item_added_successfully')]);
+            return redirect()->route('users.users.index', ['type' => $request->type])->with(['success' => __('messages.your_item_added_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }
@@ -105,7 +104,7 @@ class UserController extends Controller
 
         $request->validate([
             'selectedIds' => ['array', 'min:1'],
-            'selectedIds.*' => ['exists:users,id','not_in:1']
+            'selectedIds.*' => ['exists:users,id', 'not_in:1']
         ]);
 
         $deleted = $this->userService->deleteUsers($selectedIds);

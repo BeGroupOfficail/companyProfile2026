@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dashboard\ContactUs;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dashboard\ContactUs\ContactUs;
-use App\Models\Dashboard\Crm\CrmEmployee;
 use Illuminate\Http\Request;
 
 class ContactUsController extends Controller
@@ -16,11 +15,7 @@ class ContactUsController extends Controller
             $messages_query =$messages_query->where('seen',$request->status);
         }
         $messages = $messages_query->get();
-        $employees = CrmEmployee::with('user')->get()
-            ->mapWithKeys(function ($employee) {
-                return [$employee->id => $employee->user?->name];
-            })->toArray();
-        return view('Dashboard.ContactUs.index', compact('messages','employees'));
+        return view('Dashboard.ContactUs.index', compact('messages'));
     }
     public function show(ContactUs $contactUs){
         $contactUs->update(['seen'=>1]);

@@ -1,6 +1,5 @@
-@if(in_array($type,['main-menu','home','about-us','contact-us','tours','blogs',
-                    'categories','pages','destinations','blog-categories','services',
-                    ]) )
+@if(in_array($type,['main-menu','home','about-us','contact-us','blogs','portfolio',
+                    'pages','blog-categories','services','projects','images-gallery','clients']) )
 
 @elseif($type == 'link')
     <!--begin::Input-->
@@ -9,8 +8,8 @@
         <label class="form-label  text-nowrap required" for="link">@lang('dash.link')</label>
         <input type="text" name="link" id="link" class="form-control mb-2 @error('link') is-invalid @enderror" placeholder="{{ __('dash.Enter the link') }}" value="{{$menuItem->link??''}}">
         @error('link')
-            <div class="invalid-feedback">{{ $message }}</div>
-         @enderror
+        <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
     </div>
     <!--end::Input-->
 @else
@@ -37,7 +36,7 @@
                 <option value="{{ $value->id }}"
                         @selected(old('type_value_id', $menuItem->type_value_id ?? null) == $value->id)
                         data-lang="{{ $lang }}">
-                    {{ $value->getTranslation('name', $lang) }}
+                    {{ $value->getAttribute(array_keys($value->getAttributes())[1]) }}
                 </option>
             @endforeach
         </select>

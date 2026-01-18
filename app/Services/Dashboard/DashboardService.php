@@ -5,30 +5,24 @@ use App\Models\Dashboard\About\AboutValue;
 use App\Models\Dashboard\Album\Album;
 use App\Models\Dashboard\Blog\Blog;
 use App\Models\Dashboard\Blog\BlogCategory;
-use App\Models\Dashboard\Center\Center;
-use App\Models\Dashboard\Center\CenterHall;
 use App\Models\Dashboard\Client\Client;
-use App\Models\Dashboard\Course\Course;
-use App\Models\Dashboard\Course\Field;
-use App\Models\Dashboard\Course\Survey;
-use App\Models\Dashboard\Destination\Destination;
 use App\Models\Dashboard\Menu\Menu;
 use App\Models\Dashboard\Menu\MenuItem;
 use App\Models\Dashboard\Page\Page;
-use App\Models\Dashboard\Service;
+use App\Models\Dashboard\Project\Project;
+use App\Models\Dashboard\Service\Service;
 use App\Models\Dashboard\Slider\Slider;
 use App\Models\Dashboard\Testimonial\Testimonial;
-use App\Models\Dashboard\Tour\Tour;
-use App\Models\Dashboard\Training;
-use App\Models\StudentTraining;
+use App\Models\Dashboard\WebsiteStatistics\WebsiteStatistics;
 use App\Models\User;
+use App\Models\Website\StudentTraining;
 
 class DashboardService
 {
-    public function changeStatus($model,$ids)
+    public function changeStatus($model, $ids)
     {
         foreach ($ids as $id) {
-
+            if($id === 'on') continue;
 
             if ($model == 'services') {
                 $updatedModel = Service::find($id);
@@ -70,38 +64,25 @@ class DashboardService
                 $updatedModel = Testimonial::find($id);
             }
 
+            if ($model == 'website_statistics') {
+                $updatedModel = WebsiteStatistics::find($id);
+            }
+
+            if ($model == 'projects') {
+                $updatedModel = Project::find($id);
+            }
+
             if ($model == 'about_values') {
                 $updatedModel = AboutValue::find($id);
             }
 
-            if ($model == 'destinations') {
-                $updatedModel = Destination::find($id);
-            }
-
-            if ($model == 'tours') {
-                $updatedModel = Tour::find($id);
-            }
-
-            if ($model == 'instructors') {
-                $updatedModel = User::find($id);
-                $newStatus = $updatedModel->status== "inactive"?"active":"inactive";
-                $updatedModel->update(['status' => $newStatus]);
-                return ['newStatus'=>$newStatus];
-            }
 
             if ($updatedModel) {
                 $newStatus = $updatedModel->status == 'published' ? 'inactive' : 'published';
                 $updatedModel->update(['status' => $newStatus]);
             }
         }
-        return ['newStatus'=>$newStatus];
+        return ['newStatus' => $newStatus];
     }
 
-    public function dashboardStatistics()
-    {
-        $superAdminsCount = User::where('job_role','super_admin')->where('status','active')->count();
-
-
-        return [$superAdminsCount];
-    }
 }

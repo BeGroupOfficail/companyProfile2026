@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Dashboard\User\User;
 
+use App\Models\User;
+use App\Rules\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUserRequest extends FormRequest
@@ -25,15 +27,16 @@ class StoreUserRequest extends FormRequest
             'f_name' => 'required|string|max:255',
             'l_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'phone' => ['required', 'regex:/^05[0-9]{8}$/', 'unique:users,phone'],
-            'job_role' => 'required|in:admin,instructor,student',
+            'phone' => ['required', 'unique:users,phone',new PhoneNumber()],
+            'job_role' => 'required|in:' . implode(',',User::JOBRoles),
             'status' => 'required|in:active,inactive,blocked',
-            'ssn' => 'string|unique:users,ssn',
-            'nationality_id' => 'required|exists:nationalities,id',
+            'ssn' => 'nullable|string|unique:users,ssn',
+            'nationality_id' => 'nullable|exists:nationalities,id',
             'gender' => 'required|in:male,female',
             'password' => 'required|string|min:8|confirmed',
             'is_admin' => 'required|boolean',
             'roles.*' => 'exists:roles,name',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,gif,webp|max:2048',
         ];
     }
 

@@ -9,6 +9,8 @@ use App\Models\Dashboard\Blog\Blog;
 use App\Models\Dashboard\Blog\BlogCategory;
 use App\Models\Dashboard\Menu\MenuItem;
 use App\Models\Dashboard\Page\Page;
+use App\Models\Dashboard\Project\Project;
+use App\Models\Dashboard\Service\Service;
 use App\Services\Dashboard\Menu\MenuItemService;
 use Illuminate\Http\Request;
 
@@ -144,16 +146,40 @@ class MenuItemController extends Controller
             $values = Blog::select('id','name')->get();
         }
 
+        if($type == 'service'){
+            $values = Service::select('id','name')->get();
+        }
+
+        if($type == 'project'){
+            $values = Project::select('id','name')->get();
+        }
+
         if($type == 'page'){
             $values = page::select('id','name')->get();
         }
 
-        if($type == 'blog_category'){
+        if($type == 'blog-category'){
             $values = BlogCategory::select('id','name')->get();
         }
         // add here any new model you want//
 
         return $values;
+    }
+
+      public function updateOrder(Request $request)
+    {
+        try {
+            $order = $request->input('order');
+
+            foreach ($order as $item) {
+                MenuItem::where('id', $item['id'])
+                    ->update(['order' => $item['order']]);
+            }
+
+            return response()->json(['success' => true, 'message' => __('dash.order_updated_successfully')]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => __('dash.error_updating_order')], 500);
+        }
     }
 
 }

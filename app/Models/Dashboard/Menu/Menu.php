@@ -23,7 +23,10 @@ class Menu extends Model
 
 
     public function items(){
-        return $this->hasMany(MenuItem::class)->with('page','blog_category','blog')->orderBy('order','asc');
+        return $this->hasMany(MenuItem::class)->with('page','blog_category','blog')->orderBy('order','ASC');
+    }
+    public function published_items(){
+        return $this->hasMany(MenuItem::class)->where('status', 'published')->with('page','blog_category','blog')->orderBy('order','ASC');
     }
 
     protected static function booted()

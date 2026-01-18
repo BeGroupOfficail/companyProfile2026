@@ -49,11 +49,12 @@ class BlogController extends Controller
         try {
             $dataValidated = $request->validated();
 
-            $this->blogService->store($dataValidated);
+            $blog = $this->blogService->store($dataValidated);
 
-            return redirect()->route('blogs.index')->with(['success' => __('messages.your_item_added_successfully')]);
+            return redirect()->route('blogs.edit', $blog->id)
+                ->with(['success' => __('messages.your_item_added_successfully')]);
         } catch (\Exception $e) {
-            return redirect()->back()->with(['error' => $e->getMessage()]);
+            return redirect()->back ()->with(['error' => $e->getMessage()]);
         }
     }
 
@@ -71,6 +72,11 @@ class BlogController extends Controller
     public function edit(Blog $blog)
     {
         $blogCategories = $this->blogService->edit();
+                $blogFaq = Blog::with('blogFaqs')->find($blog->id);
+                foreach ($blogFaq->dashboard_blogFaqs as $faq) {
+                    $faq->question = $faq->getTranslation('question', app()->getLocale());
+                    $faq->answer = $faq->getTranslation('answer', app()->getLocale());
+                }
         return view('Dashboard.Blogs.edit', compact('blog','blogCategories'));
     }
 
@@ -99,7 +105,7 @@ class BlogController extends Controller
 
         $request->validate([
             'selectedIds' => ['array', 'min:1'],
-            'selectedIds.*' => ['exists:categories,id']
+            'selectedIds.*' => ['exists:blogs,id']
         ]);
 
         $deleted = $this->blogService->deleteBlogs($selectedIds);
@@ -123,6 +129,22 @@ class BlogController extends Controller
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
             return response()->json(['message' => __('dashDelete failed')], 500);
+        }
+    }
+
+    public function updateOrder(Request $request)
+    {
+        try {
+            $order = $request->input('order');
+
+            foreach ($order as $item) {
+                Blog::where('id', $item['id'])
+                    ->update(['order' => $item['order']]);
+            }
+
+            return response()->json(['success' => true, 'message' => __('dash.order_updated_successfully')]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => __('dash.error_updating_order')], 500);
         }
     }
 

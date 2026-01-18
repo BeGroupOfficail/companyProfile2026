@@ -19,13 +19,10 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('alt_image')->nullable();
             $table->json('slug')->nullable();
-            $table->json('meta_title')->nullable();
-            $table->json('meta_desc')->nullable();
             $table->enum('status', ['published', 'inactive'])->default('published');
             $table->foreignId('parent_id')->nullable()->constrained('services')->nullOnDelete();
             $table->boolean('home')->default(1);
             $table->boolean('menu')->default(1);
-            $table->boolean('index')->default(1);
             $table->timestamps();
         });
     }

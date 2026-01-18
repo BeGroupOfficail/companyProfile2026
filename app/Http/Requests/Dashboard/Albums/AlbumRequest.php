@@ -17,7 +17,7 @@ class AlbumRequest extends FormRequest
         $rules = [
             'title_en' => 'required|string|max:100',
             'title_ar' => 'required|string|max:100',
-            'text_ar' => 'required|string|max:255',
+            'text_en' => 'required|string|max:255',
             'text_ar' => 'required|string|max:255',
             'type' => 'required|string|max:50',
             'type_value_id' => 'nullable|integer',

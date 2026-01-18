@@ -74,13 +74,26 @@ class TestimonialDataTable extends DataTable
         return view('components.dashboard.partials.actions_dropdown', compact('editUrl','routeName','modelName'))->render();
     }
 
-
-    // Render images in a modular and reusable way
-    protected function renderImage($imageName, $imageType, $width = 40)
+    protected function renderImage($imageName, $imageType, $width = 100): string
     {
-        $imageUrl = $imageName ? asset("uploads/$imageType/$imageName"): asset('assets/dashboard/media/noimage.png');
-        return '<div class="symbol symbol-circle symbol-50px overflow-hidden me-3"><div class="symbol-label"><img src="' . $imageUrl . '" border="0" width="' . $width . '" class="img-rounded" />  </div> </div>';
+        $imageUrl = $imageName ? asset("uploads/$imageType/$imageName") : asset('assets/dashboard/media/noimage.png');
+        $modalId = 'img-preview-' . md5($imageUrl);
+        return '
+            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                <div class="symbol-label">
+                    <img src="' . $imageUrl . '" width="' . $width . '" class="img-rounded cursor-pointer" style="cursor:pointer" onclick="document.getElementById(\'' . $modalId . '\').style.display = ' . "'block'" . '" />
+                </div>
+            </div>
+            <div id="' . $modalId . '" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);text-align:center;" onclick="this.style.display=\'none\'">
+                <img src="' . $imageUrl . '" style="max-width:90vw;max-height:90vh;margin-top:5vh;border-radius:10px;box-shadow:0 0 20px #000;" />
+            </div>';
     }
+    // Render images in a modular and reusable way
+    // protected function renderImage($imageName, $imageType, $width = 40)
+    // {
+    //     $imageUrl = $imageName ? asset("uploads/$imageType/$imageName"): asset('assets/dashboard/media/noimage.png');
+    //     return '<div class="symbol symbol-circle symbol-50px overflow-hidden me-3"><div class="symbol-label"><img src="' . $imageUrl . '" border="0" width="' . $width . '" class="img-rounded" />  </div> </div>';
+    // }
 
 
     protected function renderStatus($row)

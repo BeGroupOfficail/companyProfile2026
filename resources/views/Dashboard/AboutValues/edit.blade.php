@@ -70,13 +70,22 @@
                                             :value="old('title_' . $lang, $aboutValue->getTranslation('title', $lang) ?? '')"
                                             placeholder="{{ __('dash.Enter the title in') }} {{ __($languageName) }}" />
                                     @endforeach
+                                </div>
 
+                                <div class="d-flex flex-wrap gap-5">
                                     <x-dashboard.partials.html.select
                                         :options="$types"
                                         :name="'type'"
                                         :title="__('dash.type')"
                                         :id="'type'"
                                         :selectedValue="$aboutValue->type" />
+
+                                    <x-dashboard.partials.html.input
+                                            name="order"
+                                            type="number"
+                                            label="{{ __('dash.order') }}"
+                                            :value="old('order', $aboutValue->order ?? '')"
+                                            placeholder="{{ __('dash.order') }}" />
                                 </div>
 
                                 @foreach(config('languages') as $lang => $languageName)

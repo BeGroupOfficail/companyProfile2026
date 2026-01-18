@@ -15,8 +15,8 @@ class AboutService
             // Handle translations for fields ('site_name', 'site_desc')
             $about->handleTranslations(
                 $dataValidated,
-                ['title', 'description','why_choose_us','slug', 'meta_title', 'meta_desc'], // custom fields
-                true // auto-generate slug
+                ['title', 'description','why_choose_us'], // custom fields
+                false // auto-generate slug
             );
 
             // Handle media uploads (banner and image)
@@ -24,8 +24,8 @@ class AboutService
                 request(), // Pass the current request
                 $dataValidated,
                 'about', // media type (storage folder)
-                ['image', 'banner'] // optional - specify which media fields to handle
-            );
+                ['image','image_en', 'banner','banner_en'] // optional - specify which media fields to handle
+                );
 
             DB::commit();
 

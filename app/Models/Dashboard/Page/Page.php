@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Spatie\Translatable\HasTranslations;
 
 class Page extends Model
 {
 
     use HasFactory;
-    use softDeletes;
+    use SoftDeletes;
     use HasTranslations;
     use HandlesTranslationsAndMedia;
 
@@ -73,5 +74,9 @@ class Page extends Model
                 }
             }
         });
+    }
+       public function getCustomLinkAttribute()
+    {
+        return LaravelLocalization::localizeUrl('page/' . $this->slug);
     }
 }

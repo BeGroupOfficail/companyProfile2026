@@ -2,33 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\LogRegUpdateAction;
-use App\Http\Controllers\Controller;
-use App\Services\Website\SeoService;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    public function showUserLogin(SeoService $seoService)
-    {
-        if (Auth::check()) {
-            return $this->handleRedirection();
-        }
-
-        if (!session()->has('url.intended')) {
-            session()->put('url.intended', url()->previous());
-        }
-
-        $seoData = $seoService->generateSeoData(
-            pageType: 'login',
-            additionalData: [],
-            schemaType: 'EducationalOrganization'
-        );
-
-        return view('designs.auth::login', ['login_type' => 'user','seoData'=>$seoData]);
-    }
 
     public function showAdminLogin()
     {
@@ -40,39 +20,24 @@ class LoginController extends Controller
             session()->put('url.intended', url()->previous());
         }
 
-        return view('auth.dashboard.login', ['login_type' => 'admin']);
+        return view('auth.dashboard.login');
     }
+
 
     public function login(Request $request)
     {
-
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|exists:users,email',
             'password' => 'required|string',
-            'login_type' => 'required|in:student,admin', // Add this validation
         ]);
-        $session_id = session()->get('session_id');
 
-
-        if (!Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
+        // Attempt authentication
+        if (!Auth::attempt(
+            ['email' => $request->email, 'password' => $request->password],
+            $request->filled('remember')
+        )) {
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
-        }
-
-        $user = Auth::user();
-        // Check login type against user role
-        if ($request->login_type === 'admin' && !$user->isAdmin() && !$user->isSuperAdmin()) {
-            Auth::logout();
-            throw ValidationException::withMessages([
-                'email' => __('auth.not_authorized'),
-            ]);
-        }
-
-        if ($request->login_type === 'student' && ($user->isAdmin() || $user->isSuperAdmin())) {
-            Auth::logout();
-            throw ValidationException::withMessages([
-                'email' => __('Admins must login through the admin login page'),
+                'login' => __('auth.failed'),
             ]);
         }
 
@@ -81,27 +46,6 @@ class LoginController extends Controller
 
     protected function handleRedirection()
     {
-        $intended = session()->pull('url.intended', null);
-
-        $user = auth()->user();
-
-        if ($intended) {
-            return redirect()->to($intended);
-        }
-
-        if ($user->isSuperAdmin()) {
-            return redirect()->intended('/dashboard');
-        }
-
-        if ($user->isAdmin()) {
-            return redirect()->intended('/dashboard');
-        }
-
-        if ($user->isStudent()) {
-            return redirect()->intended('/');
-        }
-
-        // For instructors and other roles
         return redirect()->intended('/dashboard');
     }
 

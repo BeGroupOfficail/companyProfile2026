@@ -59,7 +59,17 @@ return [
     'edit' => 'التعديل',
     'plans' => 'الخطط',
     'add_plan' => 'إضافة خطة',
-    'select_attributes' => 'الرجاء تحديد صفة'
-
-
+    'select_attributes' => 'الرجاء تحديد صفة',
+    'chapter created successfully' => 'تم انشاء الفصل بنجاح',
+    'chapter updated successfully' => 'تم تعديل الفصل بنجاح',
+    'an error has occurred. Please contact the developer to resolve the issue' => 'هناك مشكلة من فضلك تواصل مع المبرمجين',
+    'your_items_deleted_successfully' => 'تم الحذف بنجاح',
+    'Tenant updated successfully.' => 'تم تحديث المستأجر بنجاح.',
+    'Tenant created successfully. Now add reservations.' => 'تم إنشاء المستأجر بنجاح. الآن قم بإضافة الحجوزات.',
+    'Reservation added successfully' => 'تمت إضافة الحجز بنجاح',
+    'Hall is not available for selected dates/times' => 'القاعة غير متاحة في التواريخ/الأوقات المحددة',
+    'Reservation status updated successfully' => 'تم تحديث حالة الحجز بنجاح',
+    'Failed to load halls' => 'فشل في تحميل القاعات',
+    'Hall is available for selected dates' => 'القاعة متاحة في التواريخ المحددة',
+    'Resrervation deleted successfully' => 'تم حذف الحجز بنجاح',
 ];

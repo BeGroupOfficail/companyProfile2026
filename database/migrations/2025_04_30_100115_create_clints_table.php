@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('types');
             $table->string('image')->nullable();
             $table->string('alt_image')->nullable();
+            $table->string('link')->nullable();
             $table->enum('status', ['published', 'inactive'])->default('published');
+            $table->enum('home', ['published', 'inactive'])->default('published');
             $table->timestamps();
             $table->softDeletes();
         });

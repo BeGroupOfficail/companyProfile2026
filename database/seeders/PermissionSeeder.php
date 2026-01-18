@@ -14,7 +14,6 @@ class PermissionSeeder extends Seeder
     {
         $models = [
             'contact_us',
-            'questions',
             'menus',
             'menu_items',
             'about_us',
@@ -23,25 +22,19 @@ class PermissionSeeder extends Seeder
             'sliders',
             'pages',
             'services',
+            'projects',
             'blogs',
             'blog_categories',
             'clients',
             'testimonials',
-            'faqs',
             'seo',
             'settings',
-            'countries',
-            'regions',
-            'areas',
             'general_settings',
-            'website_designs',
+            'website_statistics',
             'messages',
             'users',
             'permissions',
             'roles',
-            'destinations',
-            'tours',
-
         ];
 
         $actions = ['read', 'create', 'update', 'delete'];

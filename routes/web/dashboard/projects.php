@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Dashboard\Service\ServiceController;
+use App\Http\Controllers\Dashboard\Project\ProjectController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('services', ServiceController::class);
+Route::resource('projects', ProjectController::class);

@@ -23,7 +23,7 @@
                                         name="name"
                                         label="{{ __('dash.name') }}"
                                         :value="old('name')"
-                                        placeholder="{{ __('dash.Enter permission name') }}" />
+                                        placeholder="{{ __('dash.Enter role name') }}" />
                                 </div>
 
 
@@ -55,54 +55,35 @@
                                                 </td>
                                             </tr>
                                             <!--end::Table row-->
+                                                @foreach($permissions as $permission)
+                                                    <!--begin::Table row-->
+                                                    <tr>
+                                                        <!--begin::Label-->
+                                                        <td class="text-gray-800">{{ $permission->name }}</td>
+                                                        <!--end::Label-->
 
-                                            @foreach($permissions as $permission)
-                                                <!--begin::Table row-->
-                                                <tr>
-                                                    <!--begin::Label-->
-                                                    <td class="text-gray-800">{{$permission->name}}</td>
-                                                    <!--end::Label-->
-
-                                                    <!--begin::Options-->
-                                                    <td>
-                                                        <!--begin::Wrapper-->
-                                                        <div class="d-flex">
-                                                            <!--begin::Checkbox-->
-                                                            <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-                                                                <input class="form-check-input" type="checkbox" value="{{$permission->name.'.read'}}" name="permissions[]">
-                                                                <span class="form-check-label">@lang('dash.Read')</span>
-                                                            </label>
-                                                            <!--end::Checkbox-->
-
-                                                            <!--begin::Checkbox-->
-                                                            <label class="form-check form-check-sm form-check-custom form-check-solid  me-5 me-lg-20">
-                                                                <input class="form-check-input" type="checkbox" value="{{$permission->name.'.create'}}" name="permissions[]">
-                                                                <span class="form-check-label">@lang('dash.Create')</span>
-                                                            </label>
-                                                            <!--end::Checkbox-->
-
-                                                            <!--begin::Checkbox-->
-                                                            <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-                                                                <input class="form-check-input" type="checkbox" value="{{$permission->name.'.update'}}" name="permissions[]">
-                                                                <span class="form-check-label">@lang('dash.update')</span>
-                                                            </label>
-                                                            <!--end::Checkbox-->
-
-                                                            <!--begin::Checkbox-->
-                                                            <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-                                                                <input class="form-check-input" type="checkbox" value="{{$permission->name.'.delete'}}" name="permissions[]">
-                                                                <span class="form-check-label">@lang('dash.delete')</span>
-                                                            </label>
-                                                            <!--end::Checkbox-->
-
-                                                        </div>
-                                                        <!--end::Wrapper-->
-                                                    </td>
-                                                    <!--end::Options-->
-                                                </tr>
-                                                <!--end::Table row-->
-                                            @endforeach
-
+                                                        <!--begin::Options-->
+                                                        <td>
+                                                            <!--begin::Wrapper-->
+                                                            <div class="d-flex">
+                                                                @foreach($permission->actions as $action)
+                                                                    <!--begin::Checkbox-->
+                                                                    <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
+                                                                        <input class="form-check-input" type="checkbox" 
+                                                                            value="{{ $permission->name . '.' . $action }}" 
+                                                                            name="permissions[]"
+                                                                            @if(isset($rolePermissions) && in_array($permission->name . '.' . $action, $rolePermissions)) checked @endif>
+                                                                        <span class="form-check-label">@lang('dash.' . ucfirst($action))</span>
+                                                                    </label>
+                                                                    <!--end::Checkbox-->
+                                                                @endforeach
+                                                            </div>
+                                                            <!--end::Wrapper-->
+                                                        </td>
+                                                        <!--end::Options-->
+                                                    </tr>
+                                                    <!--end::Table row-->
+                                                @endforeach
                                             </tbody>
                                             <!--end::Table body-->
                                         </table>

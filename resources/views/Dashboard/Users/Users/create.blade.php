@@ -19,11 +19,26 @@
             />
             <!--end::image -->
 
-            <!--begin::Status-->
-
-            <x-dashboard.partials.html.status_select
-                :model="'users'"
-            />
+            <!--begin::Status-->            
+            <div class="card card-flush card-standard">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h2>{{ __('dash.status') }}</h2>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+                            data-placeholder="Select an option" name="status">
+                        <option></option>
+                        <option value="active">{{ __("dash.user_active") }}</option>
+                        <option value="inactive">{{ __("dash.user_inactive") }}</option>
+                        <option value="blocked">{{ __("dash.user_blocked") }}</option>
+                    </select>
+                    <div class="text-muted fs-7">
+                        {{ __('dash.Set the') }}  {{ __('dash.status') }}.
+                    </div>
+                </div>
+            </div>
 
             <!--end::Status-->
         </div>
@@ -77,6 +92,16 @@
                                         placeholder="{{ __('dash.phone') }}" />
 
                                     <x-dashboard.partials.html.password_input/>
+                                </div>
+                                 <div class="d-flex flex-wrap gap-5">
+                                    <label class="form-label">{{ trans('dash.choose_gender') }}</label>
+                                    <select class="form-control select2" name="gender" required>
+                                        <option value="male">{{ trans('dash.male') }}</option>
+                                        <option value="female">{{ trans('dash.female') }}</option>
+                                    </select>
+                                        @error('gender')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                 </div>
 
                             </div>

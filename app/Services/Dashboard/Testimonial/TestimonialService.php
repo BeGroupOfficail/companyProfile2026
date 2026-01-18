@@ -3,6 +3,7 @@
 namespace App\Services\Dashboard\Testimonial;
 
 use App\Helper\Media;
+use App\Helper\SoftDeleteHelper;
 use App\Models\Dashboard\Testimonial\Testimonial;
 use Illuminate\Support\Facades\DB;
 
@@ -96,26 +97,30 @@ class TestimonialService
         }
     }
 
-    public function deleteTestimonials($selectedIds){
-        $testimonials = Testimonial::whereIn('id', $selectedIds)->get();
-
+    public function deleteTestimonials($selectedIds)
+    {
         DB::beginTransaction();
         try {
-            foreach ($testimonials as $testimonial) {
-                // Delete associated image if it exists
-                if ($testimonial->image) {
-                    Media::removeFile('testimonials', $testimonial->image);
+            $trashedTestimonials = Testimonial::onlyTrashed()->whereIn('id', $selectedIds)->get();
+            $activeTestimonials = Testimonial::whereIn('id', $selectedIds)->get();
+            
+            if ($trashedTestimonials->isNotEmpty()) {
+                foreach ($trashedTestimonials as $testimonial) {
+                    if ($testimonial->image) {
+                        Media::removeFile('testimonials', $testimonial->image);
+                    }
                 }
+                Testimonial::onlyTrashed()->whereIn('id', $trashedTestimonials->pluck('id'))->forceDelete();
             }
-            $deleted = Testimonial::whereIn('id', $selectedIds)->delete();
-
+            
+            if ($activeTestimonials->isNotEmpty()) {
+                SoftDeleteHelper::deleteWithEvents(Testimonial::class, $activeTestimonials->pluck('id')->toArray());
+            }
             DB::commit();
-
-            return $deleted > 0;
-
+            return true;
+            
         } catch (\Exception $e) {
             DB::rollBack();
-
             return false;
         }
     }

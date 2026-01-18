@@ -17,7 +17,7 @@ class MenuItemSeeder extends Seeder
         $menuitems = [
             ['name'=>['en' => 'Home', 'ar' => 'الرئيسية'],'types'=>'home','link'=>''],
             ['name'=>['en' => 'Services', 'ar' => 'الخدمات'],'types'=>'services','link'=>''],
-            ['name'=>['en' => 'About Us', 'ar' => 'عن حلال'],'types'=>'about-us','link'=>''],
+            ['name'=>['en' => 'About Us', 'ar' => 'عن الموقع'],'types'=>'about-us','link'=>''],
             ['name'=>['en' => 'Blogs', 'ar' => 'المقالات'],'types'=>'blogs','link'=>''],
             ['name'=>['en' => 'Contact Us', 'ar' => 'تواصل معنا'],'types'=>'contact-us','link'=>''],
         ];

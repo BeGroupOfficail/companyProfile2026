@@ -1,17 +1,12 @@
 <?php
 
 namespace App\Services\Dashboard\Setting;
-
-use App\Helper\Media;
-use App\Models\Dashboard\Setting\HomepageSection;
-use App\Models\Dashboard\Setting\WebsiteDesign;
 use Illuminate\Support\Facades\DB;
 
 class SettingService
 {
     public function update($request, $dataValidated, $general_setting){
         DB::beginTransaction();
-
         try {
             // Elements to remove from the validated data
             $elementsToRemove = ['site_name_en', 'site_desc_en', 'site_name_ar', 'site_desc_ar'];
@@ -21,7 +16,6 @@ class SettingService
 
             // Update the settings with the new validated data
             $general_setting->update($data);
-
             // Handle translations for fields ('site_name', 'site_desc')
             $general_setting->handleTranslations(
                 $dataValidated,
@@ -45,36 +39,4 @@ class SettingService
             throw $e;
         }
     }
-
-    public function updateWebsiteDesign($request){
-        DB::beginTransaction();
-        try{
-            // Find the website design by its ID
-            $websiteDesign = WebsiteDesign::find($request->website_design_id);
-            if (!$websiteDesign) {
-                throw new \Exception('Website design not found.');
-            }
-            $websiteDesign->update(['is_active' => true]);
-
-            // Deactivate all homepage sections
-            $updatedRows = HomepageSection::query()->update(['is_active' => false]);
-
-            // Loop through the array of selected section IDs and activate them
-            $selectedSectionIds = $request->selectedSectionIds; // assuming this is an array
-            $sections = HomepageSection::whereIn('id', $selectedSectionIds)->get();
-
-            foreach ($sections as $section) {
-                $section->update(['is_active' => true]);
-            }
-
-            // Commit the transaction
-            DB::commit();
-        } catch(\Exception $e) {
-            // Rollback if any error occurs
-            DB::rollBack();
-            \Log::error('Error updating website design: ' . $e->getMessage());
-            throw $e;
-        }
-    }
-
 }

@@ -20,10 +20,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('alt_image')->nullable();
             $table->json('slug')->nullable();
-            $table->json('meta_title',255)->nullable();
-            $table->json('meta_desc')->nullable();
             $table->enum('status', ['published', 'inactive'])->default('published');
-            $table->boolean('index')->nullable()->default(true);
             $table->timestamps();
             $table->softDeletes();
 

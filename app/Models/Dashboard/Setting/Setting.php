@@ -3,6 +3,7 @@
 namespace App\Models\Dashboard\Setting;
 
 use App\Traits\HandlesTranslationsAndMedia;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Translatable\HasTranslations;
@@ -11,6 +12,11 @@ class Setting extends Model
 {
     use HasTranslations;
     use HandlesTranslationsAndMedia;
+
+     const SMSPROVIDERS= [
+        'Msegat'=>'Msegat',
+        'Jawaly'=>'Jawaly',
+    ];
 
     protected $fillable = [
         'site_name',
@@ -27,16 +33,18 @@ class Setting extends Model
         'alt_fav_icon',
         'phone1',
         'phone2',
+        'phone3',
+        'side_phone',
+        'side_whatsapp',
         'telephone',
         'contact_email',
         'support_email',
         'fax',
         'address1',
         'address2',
+        'address_en_1',
+        'address_en_2',
         'google_map',
-        'certificate_code',
-        'certificate_example',
-        'alt_certificate_example',
 
         // Mail settings
         'mail_host',
@@ -49,6 +57,13 @@ class Setting extends Model
         'mail_username',
         'mail_password',
 
+        //sms settings
+        'sms_sender_name',
+        'sms_app_id',
+        'sms_app_sec',
+        'sms_provider',
+        'sms_user_name',
+
         // Social media
         'facebook_address',
         'twitter_address',
@@ -59,33 +74,13 @@ class Setting extends Model
         'linkedin_address',
         'tumblr_address',
         'flickr_address',
+        'tiktok_address',
+        'snapchat_address',
+        'whatsapp_address',
 
-        // Captcha
-        'nocaptcha_sitekey',
-        'nocaptcha_secret',
-
-        // Mailchimp
-        'mailchimp_api_key',
-        'mailchimp_list_name',
-        'mailchimp_list_id',
-
-        // Analytics
-        'google_tag_manager_id',
-        'google_tag_manager_for_body',
-        'google_tag_manager_for_head',
-        'facebook_pixel_for_body',
-        'facebook_pixel_for_head',
-        'tiktok_pixel_for_body',
-        'tiktok_pixel_for_head',
-
-        //stats numbers
-        'n_experience_years',
-        'n_tours',
-        'n_travelers',
-        'n_awrds',
     ];
 
-    public $translatable = ['site_name','site_desc']; // translatable attributes
+    public $translatable = ['site_name','site_desc'];
 
     protected static function booted(){
         static::saved(function () {
@@ -96,5 +91,4 @@ class Setting extends Model
             Cache::forget('settings');
         });
     }
-
 }

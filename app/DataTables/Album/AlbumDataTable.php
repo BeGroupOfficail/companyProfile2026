@@ -34,7 +34,7 @@ class AlbumDataTable extends DataTable
 
             // Render language-specific columns directly (e.g., name_en, name_ar)
             ->addColumn('title_en', fn($row) => $row->getTranslation('title','en') ?? '')
-            ->addColumn('title_en', fn($row) => $row->getTranslation('title','ar') ?? '')
+            ->addColumn('title_ar', fn($row) => $row->getTranslation('title','ar') ?? '')
 
             // Make sure to treat columns as raw HTML
             ->rawColumns(['checkbox','actions', 'title_en', 'title_ar','status','album_type','upload_files'])
@@ -202,7 +202,7 @@ class AlbumDataTable extends DataTable
 
             Column::make('id'),
             Column::make('title_en')->title(__('dash.title_en')), // Explicitly display name in English
-            Column::make('title_en')->title(__('dash.title_en')), // Explicitly display name in Arabic
+            Column::make('title_ar')->title(__('dash.title_ar')), // Explicitly display name in Arabic
             Column::make('album_type')->title(__('dash.album_type')),
             Column::make('upload_files')->title(__('dash.upload_files')),
             Column::make('status')->title(__('dash.status'))->addClass('status-cell'),

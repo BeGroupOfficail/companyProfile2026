@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('company')->nullable();
             $table->string('image')->nullable();
             $table->string('alt_image')->nullable();
+            $table->boolean('home')->default(false);
             $table->enum('status', ['published', 'inactive'])->default('published');
             $table->timestamps();
             $table->softDeletes();

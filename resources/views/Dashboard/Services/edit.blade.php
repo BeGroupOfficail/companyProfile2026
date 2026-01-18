@@ -35,22 +35,6 @@
 
         <!--begin::Main column-->
         <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
-            <!--begin:::Tabs-->
-            <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-n2">
-                <!--begin:::Tab item-->
-                <li class="nav-item">
-                    <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#tab1">{{ __('dash.main info') }}</a>
-                </li>
-                <!--end:::Tab item-->
-                <!--begin:::Tab item-->
-                <li class="nav-item">
-                    <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#tab3">{{ __('dash.seo info') }}</a>
-                </li>
-                <!--end:::Tab item-->
-
-            </ul>
-            <!--end:::Tabs-->
-
             <!--begin::Tab content-->
             <div class="tab-content">
                 <!--begin::Tab pane-->
@@ -64,14 +48,6 @@
                             <div class="card-body pt-0">
 
                                 <div class="d-flex flex-wrap gap-5">
-                                    <x-dashboard.partials.html.objects-select
-                                        name="parent_id"
-                                        title="{{ __('dash.parent') }}"
-                                        :options="$service_parents"
-                                        :isTranslatable="true"
-                                        :translatableValue="'name'"
-                                        :selectedValue="$service->parent_id"/>
-
                                     @foreach(config('languages') as $lang => $languageName)
                                         <x-dashboard.partials.html.input
                                             name="name_{{ $lang }}"
@@ -79,6 +55,14 @@
                                             :value="old('name_' . $lang, $service->getTranslation('name', $lang) ?? '')"
                                             placeholder="{{ __('dash.Enter the name in') }} {{ __($languageName) }}" />
                                     @endforeach
+
+                                    <x-dashboard.partials.html.objects-select
+                                        name="parent_id"
+                                        title="{{ __('dash.parent') }}"
+                                        :options="$service_parents"
+                                        :isTranslatable="true"
+                                        :translatableValue="'name'"
+                                        :selectedValue="$service->parent_id"/>
                                 </div>
 
                                 <div class="d-flex flex-wrap gap-5">
@@ -90,6 +74,8 @@
                                             placeholder="{{ __('dash.Enter the short dec in') }} {{ __($languageName) }}" />
                                     @endforeach
                                 </div>
+
+                                <hr class="low-opacity">
 
                                 @foreach(config('languages') as $lang => $languageName)
                                     <x-dashboard.partials.html.textarea_with_editor
@@ -170,73 +156,6 @@
                     </div>
                 </div>
                 <!--end::Tab pane-->
-
-
-                <!--begin::Tab pane-->
-                <div class="tab-pane" id="tab3" role="tab-panel">
-                    <div class="d-flex flex-column gap-7 gap-lg-10">
-
-                        <!--begin::Inventory-->
-                        <div class="card card-flush py-4">
-                            <!--begin::Card header-->
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <h2>{{__('dash.seo info')}}</h2>
-                                </div>
-                            </div>
-                            <!--end::Card header-->
-
-                            <!--begin::Card body-->
-                            <div class="card-body pt-0">
-
-                                <div class="d-flex flex-wrap gap-5">
-                                    @foreach(config('languages') as $lang => $languageName)
-                                        <x-dashboard.partials.html.input
-                                            name="slug_{{ $lang }}"
-                                            label="{{ __('dash.slug') }} ({{ __($languageName) }})"
-                                            :value="old('slug_' . $lang, $service->getTranslation('slug', $lang) ?? '')"
-                                            placeholder="{{ __('dash.Enter the slug in') }} {{ __($languageName) }}" />
-                                    @endforeach
-                                </div>
-
-                                <hr class="low-opacity">
-
-                                <div class="d-flex flex-wrap gap-5">
-                                    @foreach(config('languages') as $lang => $languageName)
-                                        <x-dashboard.partials.html.input
-                                            name="meta_title_{{ $lang }}"
-                                            label="{{ __('dash.meta_title') }} ({{ __($languageName) }})"
-                                            :value="old('meta_title_' . $lang, $service->getTranslation('meta_title', $lang) ?? '')"
-                                            placeholder="{{ __('dash.Enter the meta title in') }} {{ __($languageName) }}" />
-                                    @endforeach
-                                </div>
-
-                                <div class="d-flex flex-wrap gap-5">
-                                    @foreach(config('languages') as $lang => $languageName)
-                                        <x-dashboard.partials.html.textarea
-                                            name="meta_desc_{{ $lang }}"
-                                            label="{{ __('dash.meta_desc') }} ({{ __($languageName) }})"
-                                            :value="old('meta_desc_' . $lang, $service->getTranslation('meta_desc', $lang) ?? '')"
-                                            placeholder="{{ __('dash.Enter the meta desc in') }} {{ __($languageName) }}" />
-                                    @endforeach
-                                </div>
-
-                                <x-dashboard.partials.html.checkbox
-                                    :name="'index'"
-                                    :label="__('dash.Allow index')"
-                                    :option="'Yes'"
-                                    :description="__('dash.Allow index to make google robot crawling this url')"
-                                    :model="$service" />
-
-                            </div>
-                            <!--end::Card header-->
-                        </div>
-                        <!--end::Inventory-->
-
-                    </div>
-                </div>
-                <!--end::Tab pane-->
-
             </div>
             <!--end::Tab content-->
 

@@ -3,6 +3,7 @@
 namespace App\Services\Dashboard\BlogCategory;
 
 use App\Helper\Media;
+use App\Helper\SoftDeleteHelper;
 use App\Models\Dashboard\Blog\BlogCategory;
 use Illuminate\Support\Facades\DB;
 
@@ -33,7 +34,7 @@ class BlogCategoryService
             // Handle translations for fields (name, slug, meta_title, meta_desc, desc)
             $blogCategory->handleTranslations(
                 $dataValidated,
-                ['name', 'slug', 'meta_title', 'meta_desc', 'short_desc','long_desc'], // custom fields
+                ['name', 'slug', 'short_desc','long_desc'], // custom fields
                 true // auto-generate slug
             );
 
@@ -61,7 +62,6 @@ class BlogCategoryService
             // Update the category data (status, index, etc.)
             $data = [
                 'status' => $dataValidated['status'],
-                'index' => $dataValidated['index']?? 0,
                 'home' => $dataValidated['home']??0,
                 'menu' => $dataValidated['menu']??0,
             ];
@@ -72,7 +72,7 @@ class BlogCategoryService
             // Handle translations for fields (name, slug, meta_title, meta_desc, desc)
             $blogCategory->handleTranslations(
                 $dataValidated,
-                ['name', 'slug', 'meta_title', 'meta_desc', 'short_desc','long_desc'], // custom fields
+                ['name', 'slug', 'short_desc','long_desc'], // custom fields
                 true // auto-generate slug
             );
 
@@ -104,7 +104,7 @@ class BlogCategoryService
                     Media::removeFile('blog_categories', $blogCategory->image);
                 }
             }
-            $deleted = BlogCategory::whereIn('id', $selectedIds)->delete();
+            $deleted = SoftDeleteHelper::deleteWithEvents(BlogCategory::class, $selectedIds);
 
             DB::commit();
 

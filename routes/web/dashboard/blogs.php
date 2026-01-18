@@ -11,3 +11,6 @@ Route::resource('blog-categories', BlogCategoryController::class);
 
 Route::delete('/destroy-blog-faqs', [BlogController::class, 'blogFaqDestroy'])->name('blog-faqs.destroy');
 
+Route::post('/blogs/update-order', [BlogController::class, 'updateOrder'])->name('blogs.update-order');
+Route::post('/blog-category/update-order', [BlogCategoryController::class, 'updateOrder'])->name('blog-categories.update-order');
+

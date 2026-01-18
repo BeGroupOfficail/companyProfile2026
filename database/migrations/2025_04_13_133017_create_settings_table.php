@@ -29,6 +29,8 @@ return new class extends Migration
             $table->string('fax', 20)->nullable();
             $table->string('address1', 250)->nullable();
             $table->string('address2', 250)->nullable();
+            $table->string('address_en_1', 250)->nullable();
+            $table->string('address_en_2', 250)->nullable();
             $table->mediumText('google_map')->nullable();
 
             // Mail settings
@@ -40,43 +42,26 @@ return new class extends Migration
             $table->string('mail_username', 100)->nullable();
             $table->string('mail_password', 100)->nullable();
 
+            //sms settings//
+            $table->string('sms_sender_name')->nullable();
+            $table->string('sms_app_id')->nullable();
+            $table->string('sms_app_sec')->nullable();
+            $table->string('sms_provider')->nullable();
+            $table->string('sms_user_name')->nullable();
+
             // Social media
             $table->text('facebook_address')->nullable();
             $table->text('twitter_address')->nullable();
             $table->text('threads_address')->nullable();
             $table->text('youtube_address')->nullable();
+            $table->text('tiktok_address')->nullable();
             $table->text('instagram_address')->nullable();
             $table->text('pinterest_address')->nullable();
             $table->text('linkedin_address')->nullable();
             $table->text('tumblr_address')->nullable();
             $table->text('flickr_address')->nullable();
-
-            // Captcha
-            $table->string('nocaptcha_sitekey', 150)->nullable();
-            $table->string('nocaptcha_secret', 150)->nullable();
-
-            // Mailchimp
-            $table->tinyText('mailchimp_api_key')->nullable();
-            $table->tinyText('mailchimp_list_name')->nullable();
-            $table->tinyText('mailchimp_list_id')->nullable();
-
-            // Analytics
-            $table->string('google_tag_manager_id',100)->nullable();
-            $table->text('google_tag_manager_for_body')->nullable();
-            $table->text('google_tag_manager_for_head')->nullable();
-
-            $table->text('facebook_pixel_for_body')->nullable();
-            $table->text('facebook_pixel_for_head')->nullable();
-
-            $table->text('tiktok_pixel_for_body')->nullable();
-            $table->text('tiktok_pixel_for_head')->nullable();
-
-            $table->string('n_experience_years')->nullable();
-            $table->string('n_awrds')->nullable();
-            $table->string('n_tours')->nullable();
-            $table->string('n_travelers')->nullable();
-
-
+            $table->text('whatsapp_address')->nullable();
+            $table->text('snapchat_address')->nullable();
             $table->timestamps();
         });
     }

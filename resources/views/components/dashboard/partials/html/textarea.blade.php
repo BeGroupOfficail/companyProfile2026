@@ -7,7 +7,7 @@
     <textarea
     {{$required ??''}}
         name="{{ $name }}"
-        id="{{ $name }}"
+        id="{{ $id ?? $name }}"
         class="form-control mb-2 @error($name) is-invalid @enderror"
         placeholder="{{ $placeholder ?? '' }}"
         rows="{{ $rows ?? 4 }}">{{ old($name, $value ?? '') }}</textarea>

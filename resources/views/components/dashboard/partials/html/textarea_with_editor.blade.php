@@ -1,4 +1,4 @@
-<div class="fv-row w-100 flex-md-root">
+<div class="fv-row w-{{ $width?? 100}} flex-md-root">
     <!--begin::Label-->
     <label class="form-label" for="{{ $name }}">{{ $label }}</label>
     <!--end::Label-->

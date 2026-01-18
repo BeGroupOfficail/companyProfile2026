@@ -1,9 +1,9 @@
-<x-dashboard.layout :title="__('dash.services')">
+<x-dashboard.layout :title="__('dash.projects')">
 
     <!--begin::Card-->
     <div class="card">
 
-        <x-dashboard.partials.card_header :title="'services'" :routeName="'services'" :modelName="'services'"/>
+        <x-dashboard.partials.card_header :title="'projects'" :routeName="'projects'" :modelName="'projects'"/>
 
         <!--begin::Card body-->
         <div class="card-body py-4">

@@ -48,13 +48,6 @@
                     <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#tab2">{{ __('dash.faqs') }}</a>
                 </li>
                 <!--end:::Tab item-->
-
-                <!--begin:::Tab item-->
-                <li class="nav-item">
-                    <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#tab3">{{ __('dash.seo info') }}</a>
-                </li>
-                <!--end:::Tab item-->
-
             </ul>
             <!--end:::Tabs-->
 
@@ -71,6 +64,16 @@
                             <div class="card-body pt-0">
 
                                 <div class="d-flex flex-wrap gap-5">
+                                    @foreach(config('languages') as $lang => $languageName)
+                                        <x-dashboard.partials.html.input
+                                            name="name_{{ $lang }}"
+                                            label="{{ __('dash.name') }} ({{ __($languageName) }})"
+                                            :value="old('name_' . $lang, $blog->getTranslation('name', $lang) ?? '')"
+                                            placeholder="{{ __('dash.Enter the name in') }} {{ __($languageName) }}" />
+                                    @endforeach
+                                </div>
+
+                                <div class="d-flex flex-wrap gap-5">
                                     <x-dashboard.partials.html.objects-select
                                         name="blog_category_id"
                                         title="{{ __('dash.blog_category') }}"
@@ -79,13 +82,12 @@
                                         :translatableValue="'name'"
                                         :selectedValue="$blog->blog_category_id"/>
 
-                                    @foreach(config('languages') as $lang => $languageName)
-                                        <x-dashboard.partials.html.input
-                                            name="name_{{ $lang }}"
-                                            label="{{ __('dash.name') }} ({{ __($languageName) }})"
-                                            :value="old('name_' . $lang, $blog->getTranslation('name', $lang) ?? '')"
-                                            placeholder="{{ __('dash.Enter the name in') }} {{ __($languageName) }}" />
-                                    @endforeach
+                                    <x-dashboard.partials.html.input
+                                        name="order_date"
+                                        type="date"
+                                        label="{{ __('dash.order_date') }}"
+                                        :value="old('order_date', Carbon\Carbon::parse($blog?->order_date)?->format('Y-m-d'))"
+                                        placeholder="{{ __('dash.Enter the order date') }}" />
                                 </div>
 
                                 <div class="d-flex flex-wrap gap-5">
@@ -184,18 +186,10 @@
 
                         <!--begin::General options-->
                         <div class="card card-flush py-4">
-                            <!--begin::Card header-->
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <h2>{{ __('dash.faqs') }} </h2>
-                                </div>
-                            </div>
-                            <!--end::Card header-->
-
                             <!--begin::Card body-->
                             <div class="card-body pt-0">
-                                @if($blog->blogFaqs()->count() > 0)
-                                    @foreach($blog->blogFaqs as $key=>$blogFaq)
+                                @if($blog->dashboard_blogFaqs()->count() > 0)
+                                    @foreach($blog->dashboard_blogFaqs as $key=>$blogFaq)
                                         <div class="faqs-dev">
                                             <input type="hidden" name="faq_ids[]" value="{{ $blogFaq->id }}">
                                             <div class="d-flex flex-wrap gap-5">
@@ -277,72 +271,6 @@
                     </div>
                 </div>
                 <!--end::Tab pane-->
-
-                <!--begin::Tab pane-->
-                <div class="tab-pane" id="tab3" role="tab-panel">
-                    <div class="d-flex flex-column gap-7 gap-lg-10">
-
-                        <!--begin::Inventory-->
-                        <div class="card card-flush py-4">
-                            <!--begin::Card header-->
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <h2>{{__('dash.seo info')}}</h2>
-                                </div>
-                            </div>
-                            <!--end::Card header-->
-
-                            <!--begin::Card body-->
-                            <div class="card-body pt-0">
-
-                                <div class="d-flex flex-wrap gap-5">
-                                    @foreach(config('languages') as $lang => $languageName)
-                                        <x-dashboard.partials.html.input
-                                            name="slug_{{ $lang }}"
-                                            label="{{ __('dash.slug') }} ({{ __($languageName) }})"
-                                            :value="old('slug_' . $lang, $blog->getTranslation('slug', $lang) ?? '')"
-                                            placeholder="{{ __('dash.Enter the slug in') }} {{ __($languageName) }}" />
-                                    @endforeach
-                                </div>
-
-                                <hr class="low-opacity">
-
-                                <div class="d-flex flex-wrap gap-5">
-                                    @foreach(config('languages') as $lang => $languageName)
-                                        <x-dashboard.partials.html.input
-                                            name="meta_title_{{ $lang }}"
-                                            label="{{ __('dash.meta_title') }} ({{ __($languageName) }})"
-                                            :value="old('meta_title_' . $lang, $blog->getTranslation('meta_title', $lang) ?? '')"
-                                            placeholder="{{ __('dash.Enter the meta title in') }} {{ __($languageName) }}" />
-                                    @endforeach
-                                </div>
-
-                                <div class="d-flex flex-wrap gap-5">
-                                    @foreach(config('languages') as $lang => $languageName)
-                                        <x-dashboard.partials.html.textarea
-                                            name="meta_desc_{{ $lang }}"
-                                            label="{{ __('dash.meta_desc') }} ({{ __($languageName) }})"
-                                            :value="old('meta_desc_' . $lang, $blog->getTranslation('meta_desc', $lang) ?? '')"
-                                            placeholder="{{ __('dash.Enter the meta desc in') }} {{ __($languageName) }}" />
-                                    @endforeach
-                                </div>
-
-                                <x-dashboard.partials.html.checkbox
-                                    :name="'index'"
-                                    :label="__('dash.Allow index')"
-                                    :option="'Yes'"
-                                    :description="__('dash.Allow index to make google robot crawling this url')"
-                                    :model="$blog" />
-
-                            </div>
-                            <!--end::Card header-->
-                        </div>
-                        <!--end::Inventory-->
-
-                    </div>
-                </div>
-                <!--end::Tab pane-->
-
             </div>
             <!--end::Tab content-->
 
@@ -418,7 +346,7 @@
                                 // If it's an existing FAQ, make AJAX call
                                 if (!isNew) {
                                     $.ajax({
-                                        url: '{{ route("blog-faqs.destroy") }}', // Make sure this route exists
+                                        url: '{{ route('blog-faqs.destroy') }}', // Make sure this route exists
                                         method: 'POST', // Laravel prefers POST for delete with _method
                                         data: {
                                             _token: '{{ csrf_token() }}',

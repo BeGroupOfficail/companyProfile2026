@@ -1,13 +1,14 @@
 <a href="{{ $accept_url }}" title="@lang('dash.accept')"
-    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" id="btn_accept">
+    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 btn_accept" >
     <i class="ki-outline ki-check-square text-gray-900 fs-2tx"></i>
 </a>
 
 
 <script>
-    $('#btn_accept').on('click', function(e) {
+    $('.btn_accept').on('click', function(e) {
         e.preventDefault();
         var $btn = $(this);
+        var acceptUrl = $btn.attr('href');
         Swal.fire({
             title: '@lang('dash.are_you_sure')',
             text: '{{ trans('dash.confirm_accept') }}',
@@ -18,7 +19,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: "{{ $accept_url }}",
+                    url: acceptUrl,
                     type: "GET",
                     success: function(response) {
                         Swal.fire({

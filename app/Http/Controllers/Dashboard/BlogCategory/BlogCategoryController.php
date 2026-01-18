@@ -97,7 +97,7 @@ class BlogCategoryController extends Controller
 
         $request->validate([
             'selectedIds' => ['array', 'min:1'],
-            'selectedIds.*' => ['exists:categories,id']
+            'selectedIds.*' => ['exists:blog_categories,id']
         ]);
 
         $deleted = $this->blogCategoryService->deleteBlogCategories($selectedIds);
@@ -110,6 +110,21 @@ class BlogCategoryController extends Controller
         }
         if (!$deleted) {
             return redirect()->back()->withErrors($delete ?? __('messages.an error has occurred. Please contact the developer to resolve the issue'));
+        }
+    }
+    public function updateOrder(Request $request)
+    {
+        try {
+            $order = $request->input('order');
+
+            foreach ($order as $item) {
+                BlogCategory::where('id', $item['id'])
+                    ->update(['order' => $item['order']]);
+            }
+
+            return response()->json(['success' => true, 'message' => __('dash.order_updated_successfully')]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => __('dash.error_updating_order')], 500);
         }
     }
 

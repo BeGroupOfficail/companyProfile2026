@@ -1,7 +1,7 @@
-<x-dashboard.layout :title="__('dash.add')">
+<x-dashboard.layout :title="__('dash.add_project')">
 
     <!--begin::Form-->
-    <form method="post" action="{{route('services.store')}}" class="form d-flex flex-column flex-lg-row" data-kt-redirect="{{route('services.index')}}" enctype="multipart/form-data">
+    <form method="post" action="{{route('projects.store')}}" class="form d-flex flex-column flex-lg-row" data-kt-redirect="{{route('projects.index')}}" enctype="multipart/form-data">
         @csrf
         <!--begin::Aside column-->
         <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
@@ -21,7 +21,7 @@
             <!--begin::Status-->
 
             <x-dashboard.partials.html.status_select
-                :model="'servics'"
+                :model="'projects'"
             />
 
             <!--end::Status-->
@@ -54,8 +54,8 @@
 
                                     <x-dashboard.partials.html.objects-select
                                         name="parent_id"
-                                        title="{{ __('dash.parent') }}"
-                                        :options="$service_parents"
+                                        title="{{ __('dash.service') }}"
+                                        :options="$services"
                                         :isTranslatable="true"
                                         :translatableValue="'name'" />
                                 </div>
@@ -157,7 +157,7 @@
 
             <div class="d-flex justify-content-end">
                 <!--begin::Button-->
-                <a href="{{route('services.index')}}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{__('dash.Cancel')}}</a>
+                <a href="{{route('projects.index')}}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{__('dash.Cancel')}}</a>
                 <!--end::Button-->
 
                 <!--begin::Button-->

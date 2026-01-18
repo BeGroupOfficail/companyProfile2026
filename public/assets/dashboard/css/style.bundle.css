@@ -512,7 +512,8 @@ select:disabled {
 [type=reset],
 [type=submit],
 button {
-    -webkit-appearance: button
+    -webkit-appearance: button;
+    appearance: button
 }
 
 [type=button]:not(:disabled),
@@ -573,6 +574,7 @@ legend+* {
 
 [type=search] {
     -webkit-appearance: textfield;
+    appearance: textfield;
     outline-offset: -2px
 }
 
@@ -586,6 +588,7 @@ legend+* {
 
 ::file-selector-button {
     font: inherit;
+    appearance: button;
     -webkit-appearance: button
 }
 
@@ -841,7 +844,7 @@ progress {
     flex-wrap: wrap;
     margin-top: calc(-1 * var(--bs-gutter-y));
     margin-inline-end: calc(-.5 * var(--bs-gutter-x));
-    margin-inline-start: calc(-.5 * var(--bs-gutter-x))
+    margin-inline-start: calc(-.5 * var(--bs-gutter-x));
 }
 
 .row>* {
@@ -3313,7 +3316,7 @@ textarea.form-control-lg {
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
-    width: 100%
+    width: 100%;
 }
 
 .input-group>.form-control,
@@ -55498,6 +55501,13 @@ code:not([class*=language-]).code-dark {
     transform: rotateZ(270deg)
 }
 
+
+
+.swal2-icon.swal2-success.swal2-icon-show {
+    direction:ltr
+}
+
+
 @media (min-width:992px) {
 
     div,
@@ -61311,7 +61321,7 @@ body {
     }
 
     [data-kt-app-sidebar-secondary-enabled=true][data-kt-app-sidebar-secondary-collapse-mobile=on] {
-        --bs-app-sidebar-secondary-width-actual: calc(280px - 100px - 0px - 0px - 0px - 0px <<<<<<< HEAD <<<<<<< HEAD);
+        --bs-app-sidebar-secondary-width-actual: calc(280px - 100px - 0px - 0px - 0px - 0px );
         --bs-app-sidebar-secondary-width: 0px
     }
 
@@ -62247,7 +62257,7 @@ body {
         display: none !important
     }
 }
- 
+
 
 .app-sidebar-secondary {
     width: var(--bs-app-sidebar-secondary-width)
@@ -62291,7 +62301,7 @@ body {
 
 [data-kt-app-sidebar-secondary-enabled=true][data-kt-app-sidebar-secondary-collapse=on] .app-sidebar-secondary-collapse-mobile-d-flex {
     display: flex !important
-} 
+}
 
 .app-sidebar-panel {
     transition: none;
@@ -63185,7 +63195,7 @@ body {
     }
 }
 
- 
+
 
 .app-sidebar-secondary {
     width: var(--bs-app-sidebar-secondary-width)
@@ -63229,7 +63239,7 @@ body {
 
 [data-kt-app-sidebar-secondary-enabled=true][data-kt-app-sidebar-secondary-collapse=on] .app-sidebar-secondary-collapse-mobile-d-flex {
     display: flex !important
-} 
+}
 
 .app-sidebar-panel {
     transition: none;
@@ -64118,4 +64128,3 @@ body {
         display: none !important
     }
 }
- 

@@ -3,6 +3,7 @@
 namespace App\Services\Dashboard\Album;
 
 use App\Helper\Media;
+use App\Helper\SoftDeleteHelper;
 use App\Models\Dashboard\Album\Album;
 use Illuminate\Support\Facades\DB;
 
@@ -94,8 +95,7 @@ class AlbumService
 
         DB::beginTransaction();
         try {
-
-            $deleted = Album::whereIn('id', $selectedIds)->delete();
+            $deleted = SoftDeleteHelper::deleteWithEvents(Album::class, $selectedIds);
 
             DB::commit();
 

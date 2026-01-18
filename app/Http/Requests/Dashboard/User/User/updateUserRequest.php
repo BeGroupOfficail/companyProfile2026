@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Dashboard\User\User;
 
+use App\Models\User;
+use App\Rules\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 
-class updateUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,20 +23,22 @@ class updateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $user =  $this->route('user'); ;
+        $user =  $this->route('user');
+        $is_auth_user=auth()->id() == $user->id;
         return [
             'f_name' => 'required|string|max:255',
             'l_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'phone' => ['required', 'regex:/^05[0-9]{8}$/', 'unique:users,phone,' . $user->id],
-            'job_role' => 'required|in:admin,instructor,student',
-            'status' => 'required|in:active,inactive,blocked',
-            'ssn' => 'string|unique:users,ssn',
-            'nationality_id' => 'required|exists:nationalities,id',
+            'phone' => ['required', new PhoneNumber(), 'unique:users,phone,' . $user->id],
+            'job_role' => $is_auth_user ? 'nullable|in:' . implode(',',User::JOBRoles) : 'required|in:' . implode(',',User::JOBRoles),
+            'status' => $is_auth_user ?'nullable|in:active,inactive,blocked':'required|in:active,inactive,blocked',
+             'ssn' => 'nullable|unique:users,ssn',
+             'nationality_id' => 'nullable|exists:nationalities,id',
             'gender' => 'required|in:male,female',
-//            'password' => 'nullable|string|min:8|confirmed',
-            'is_admin' => 'required|boolean',
+            'password' => 'nullable|string|min:8|confirmed',
+            'is_admin' => $is_auth_user ? 'nullable|boolean' : 'required|boolean',
             'roles.*' => 'exists:roles,name',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,gif,webp|max:2048',
         ];
     }
 

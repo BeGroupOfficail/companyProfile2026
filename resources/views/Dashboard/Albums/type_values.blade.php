@@ -1,4 +1,4 @@
-@if($type == 'general')
+@if(in_array($type,['about_album', 'general']))
 @else
     <!--begin::Form Group-->
     <div class="mb-4">

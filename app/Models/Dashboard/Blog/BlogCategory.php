@@ -3,10 +3,12 @@
 namespace App\Models\Dashboard\Blog;
 
 use App\Traits\HandlesTranslationsAndMedia;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Spatie\Translatable\HasTranslations;
 
 class BlogCategory extends Model
@@ -50,6 +52,9 @@ class BlogCategory extends Model
                 Cache::forget('header_blog_categories');
             }
         });
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('order', 'asc');
+        });
     }
 
     public function resolveRouteBinding($value, $field = null)
@@ -62,5 +67,10 @@ class BlogCategory extends Model
 
     public function public_blogs(){
         return $this->hasMany(Blog::class)->where('status','published')->with('category');
+    }
+
+    public function getCustomLinkAttribute()
+    {
+        return LaravelLocalization::localizeUrl('blog-category/' . $this->slug);
     }
 }

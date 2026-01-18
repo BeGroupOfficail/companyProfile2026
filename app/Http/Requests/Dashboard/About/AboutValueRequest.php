@@ -26,6 +26,7 @@ class AboutValueRequest extends FormRequest
             'title_en' => ['required', 'string', 'max:255'],
             'title_ar' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:50'],
+            'order' => 'required|integer',
             'image' => ['nullable', 'image', 'mimes:jpeg,png,gif,bmp,webp', 'max:3096'],
             'alt_image' => ['nullable', 'string', 'max:255'],
             'icon' => ['nullable', 'image', 'mimes:jpeg,png,gif,bmp,webp', 'max:3096'],

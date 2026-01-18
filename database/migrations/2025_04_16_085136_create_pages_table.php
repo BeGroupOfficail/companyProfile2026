@@ -13,19 +13,15 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
+            $table->json('slug')->nullable();
             $table->json('name')->nullable();;
             $table->json('short_desc')->nullable();
             $table->json('long_text')->nullable();
             $table->enum('status', ['published', 'inactive'])->default('inactive');
-            $table->json('slug')->nullable();
-            $table->json('meta_title')->nullable();
-            $table->json('meta_desc')->nullable();
-            $table->boolean('index')->default(false);
             $table->timestamps();
             $table->softDeletes();
 
             $table->index('status');
-            $table->index('index');
         });
     }
 

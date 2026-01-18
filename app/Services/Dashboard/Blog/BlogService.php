@@ -3,6 +3,7 @@
 namespace App\Services\Dashboard\Blog;
 
 use App\Helper\Media;
+use App\Helper\SoftDeleteHelper;
 use App\Models\Dashboard\Blog\Blog;
 use App\Models\Dashboard\Blog\BlogCategory;
 use App\Models\Dashboard\Blog\BlogFaq;
@@ -16,25 +17,27 @@ class BlogService
     }
     public function create()
     {
-        $blogCategories = BlogCategory::select('id','name')->get();
+        $blogCategories = BlogCategory::select('id', 'name')->get();
         return $blogCategories;
     }
 
     public function edit()
     {
-        $blogCategories = BlogCategory::select('id','name')->get();
+        $blogCategories = BlogCategory::select('id', 'name')->get();
         return $blogCategories;
     }
 
-    public function store($dataValidated){
+    public function store($dataValidated)
+    {
         DB::beginTransaction();
 
         try {
             // Add other non-translatable fields here
             $data = [
                 'status' => $dataValidated['status'],
-                'home' => $dataValidated['home']??0,
-                'menu' => $dataValidated['menu']??0,
+                'home' => $dataValidated['home'] ?? 0,
+                'menu' => $dataValidated['menu'] ?? 0,
+                'order_date'=> $dataValidated['order_date'] ?? now(),
                 'blog_category_id' => $dataValidated['blog_category_id'],
             ];
 
@@ -43,7 +46,7 @@ class BlogService
             // Handle translations for fields (name, slug, meta_title, meta_desc, desc)
             $blog->handleTranslations(
                 $dataValidated,
-                ['name', 'slug', 'meta_title', 'meta_desc', 'short_desc','long_desc'], // custom fields
+                ['name', 'slug', 'short_desc', 'long_desc'], // custom fields
                 true // auto-generate slug
             );
 
@@ -64,7 +67,8 @@ class BlogService
         }
     }
 
-    public function update($request, $dataValidated, $blog){
+    public function update($request, $dataValidated, $blog)
+    {
         DB::beginTransaction();
 
         try {
@@ -72,9 +76,9 @@ class BlogService
             $data = [
                 'status' => $dataValidated['status'],
                 'blog_category_id' => $dataValidated['blog_category_id'],
-                'index' => $dataValidated['index']?? 0,
-                'home' => $dataValidated['home']??0,
-                'menu' => $dataValidated['menu']??0,
+                'order_date'=> $dataValidated['order_date'] ?? now(),
+                'home' => $dataValidated['home'] ?? 0,
+                'menu' => $dataValidated['menu'] ?? 0,
             ];
 
             // Update the category with the new validated data
@@ -83,7 +87,7 @@ class BlogService
             // Handle translations for fields (name, slug, meta_title, meta_desc, desc)
             $blog->handleTranslations(
                 $dataValidated,
-                ['name', 'slug', 'meta_title', 'meta_desc', 'short_desc','long_desc'], // custom fields
+                ['name', 'slug', 'short_desc', 'long_desc'], // custom fields
                 true // auto-generate slug
             );
 
@@ -107,23 +111,26 @@ class BlogService
         }
     }
 
-    public function deleteBlogs($selectedIds){
-        $blogs = Blog::whereIn('id', $selectedIds)->get();
+    public function deleteBlogs($selectedIds)
+    {
 
         DB::beginTransaction();
         try {
-            foreach ($blogs as $blog) {
-                // Delete associated image if it exists
-                if ($blog->image) {
-                    Media::removeFile('blogs', $blog->image);
+            $trashedBlogs = Blog::onlyTrashed()->whereIn('id', $selectedIds)->get();
+            $activeBlogs = Blog::whereIn('id', $selectedIds)->get();
+            if ($trashedBlogs->isNotEmpty()) {
+                foreach ($trashedBlogs as $blog) {
+                    if ($blog->image) {
+                        Media::removeFile('blogs', $blog->image);
+                    }
                 }
+                Blog::onlyTrashed()->whereIn('id', $trashedBlogs->pluck('id'))->forceDelete();
             }
-            $deleted = Blog::whereIn('id', $selectedIds)->delete();
-
+            if ($activeBlogs->isNotEmpty()) {
+                SoftDeleteHelper::deleteWithEvents(Blog::class, $activeBlogs->pluck('id')->toArray());
+            }
             DB::commit();
-
-            return $deleted > 0;
-
+            return true;
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -132,13 +139,13 @@ class BlogService
     }
 
 
+
     protected function processBlogFaqs(Blog $blog, array $data)
     {
         $languages = config('languages');
         $faqIds = $data['faq_ids'] ?? [];
         $existingFaqIds = $blog->blogFaqs()->pluck('id')->toArray();
 
-        // Process each FAQ entry
         foreach ($faqIds as $index => $faqId) {
             $faqData = [
                 'blog_id' => $blog->id,
@@ -148,18 +155,29 @@ class BlogService
 
             // Collect translations for each language
             foreach ($languages as $lang => $languageName) {
-                $faqData['question'][$lang] = $data["question_{$lang}"][$index] ?? null;
-                $faqData['answer'][$lang] = $data["answer_{$lang}"][$index] ?? null;
+                $faqData['question'][$lang] = trim($data["question_{$lang}"][$index] ?? '');
+                $faqData['answer'][$lang] = trim($data["answer_{$lang}"][$index] ?? '');
             }
 
-            // Update existing or create new FAQ
+            // Check if all questions & answers are empty
+            $allEmpty = empty(array_filter($faqData['question'])) && empty(array_filter($faqData['answer']));
+
             if (!empty($faqId)) {
                 $faq = BlogFaq::find($faqId);
                 if ($faq) {
-                    $this->updateFaq($faq, $faqData);
+                    // Update only if not completely empty
+                    if (!$allEmpty) {
+                        $this->updateFaq($faq, $faqData);
+                    } else {
+                        // Delete if it exists but user cleared it
+                        $faq->delete();
+                    }
                 }
             } else {
-                $this->createFaq($blog, $faqData);
+                // Create only if not empty
+                if (!$allEmpty) {
+                    $this->createFaq($blog, $faqData);
+                }
             }
         }
 
@@ -169,6 +187,7 @@ class BlogService
             BlogFaq::whereIn('id', $faqsToDelete)->delete();
         }
     }
+
 
     protected function updateFaq(BlogFaq $faq, array $data)
     {

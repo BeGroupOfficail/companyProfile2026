@@ -21,7 +21,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->boolean('is_admin')->default(false);
             $table->enum('status', ['active', 'inactive','blocked'])->default('inactive');
-            $table->enum('job_role', ['super_admin', 'instructor','student','other'])->default('student');
+            $table->enum('gender', ['male', 'female'])->default('female');
+            $table->enum('job_role', ['super_admin','patient','receptionist','other'])->default('patient');
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

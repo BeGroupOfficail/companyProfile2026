@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Website;
 
+use App\Rules\PhoneNumber;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContactUsRequest extends FormRequest
@@ -17,16 +19,16 @@ class ContactUsRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
             'name' => 'required|max:150',
-            'email' => 'required|email',
-            'message' => 'required|string|max:255',
-            'title' => 'required|string|max:150',
-            'phone' => ['required', 'regex:/^05[0-9]{8}$/'],
+            'email' => 'nullable|email',
+            'message' => 'required|string|max:150',
+            'title' => 'nullable|string|max:150',
+            'phone' => ['required',new PhoneNumber()],
         ];
     }
     public function messages(): array

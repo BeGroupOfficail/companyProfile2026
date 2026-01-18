@@ -9,12 +9,11 @@ class HomepageSectionsSeeder extends Seeder
 {
     public function run()
     {
-
         $sections = [
             [
                 'order' => '1',
                 'title' => [
-                    'en' => 'slidersSection',
+                    'en' => 'sliders',
                     'ar' => ' شرائح العرض',
                 ],
                 'image' => '',
@@ -24,7 +23,7 @@ class HomepageSectionsSeeder extends Seeder
             [
                 'order' => '2',
                 'title' => [
-                    'en' => 'aboutSection',
+                    'en' => 'about',
                     'ar' => 'عن الموقع',
                 ],
                 'image' => '',
@@ -34,18 +33,19 @@ class HomepageSectionsSeeder extends Seeder
             [
                 'order' => '3',
                 'title' => [
-                    'en' => 'servicesSection',
+                    'en' => 'services',
                     'ar' => 'الخدمات',
                 ],
                 'image' => '',
                 'alt_image' => '',
                 'is_active' => true,
             ],
+
             [
                 'order' => '4',
                 'title' => [
-                    'en' => 'popularToursSection',
-                    'ar' => 'الرحلات الاكثر شهرة',
+                    'en' => 'projects',
+                    'ar' => 'المشاريع',
                 ],
                 'image' => '',
                 'alt_image' => '',
@@ -54,8 +54,8 @@ class HomepageSectionsSeeder extends Seeder
             [
                 'order' => '5',
                 'title' => [
-                    'en' => 'offersSection',
-                    'ar' => 'عروض الرحلات',
+                    'en' => 'our_speciality',
+                    'ar' => 'تخصصاتنا',
                 ],
                 'image' => '',
                 'alt_image' => '',
@@ -64,8 +64,8 @@ class HomepageSectionsSeeder extends Seeder
             [
                 'order' => '6',
                 'title' => [
-                    'en' => 'howItWorksSection',
-                    'ar' => 'كيف يعمل',
+                    'en' => 'statistics',
+                    'ar' => 'الاحصائيات والارقام',
                 ],
                 'image' => '',
                 'alt_image' => '',
@@ -74,57 +74,24 @@ class HomepageSectionsSeeder extends Seeder
             [
                 'order' => '7',
                 'title' => [
-                    'en' => 'whyChooseUsSection',
-                    'ar' => 'لماذا تختارنا',
+                    'en' => 'clients',
+                    'ar' => 'العملاء',
                 ],
                 'image' => '',
                 'alt_image' => '',
                 'is_active' => true,
             ],
+
             [
                 'order' => '8',
                 'title' => [
-                    'en' => 'blogsSection',
-                    'ar' => 'المقالات',
+                    'en' => 'contact_us',
+                    'ar' => 'تواصل معنا',
                 ],
                 'image' => '',
                 'alt_image' => '',
                 'is_active' => true,
             ],
-            [
-                'order' => '9',
-                'title' => [
-                    'en' => 'instagramSection',
-                    'ar' => 'الانستجرام',
-                ],
-                'image' => '',
-                'alt_image' => '',
-                'is_active' => true,
-            ],
-
-            [
-                'order' => '10',
-                'title' => [
-                    'en' => 'popularDestinationSection',
-                    'ar' => 'افضل الوجهات',
-                ],
-                'image' => '',
-                'alt_image' => '',
-                'is_active' => true,
-            ],
-
-            [
-                'order' => '11',
-                'title' => [
-                    'en' => 'numbersSection',
-                    'ar' => 'الاحصائيات والارقام',
-                ],
-                'image' => '',
-                'alt_image' => '',
-                'is_active' => true,
-            ],
-
-
 
 
         ];

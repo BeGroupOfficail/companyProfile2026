@@ -27,7 +27,11 @@ class AboutUs extends Model
         'description',
         'why_choose_us',
         'image',
+        'image_en',
+        'banner_en',
         'alt_image',
+        'alt_image_en',
+        'alt_banner_en',
         'banner',
         'alt_banner',
     ];

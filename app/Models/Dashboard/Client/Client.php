@@ -26,12 +26,14 @@ class Client extends Model
         'alt_image',
         'image',
         'status',
+        'home',
+        'link',
     ];
 
     const TYPES = [
         'clients'=>'clients',
-        'partners'=>'partners',
-        'accreditations'=>'accreditations'
+//        'partners'=>'partners',
+//        'accreditations'=>'accreditations'
     ];
 
     public $translatable = ['name','desc']; // translatable attributes

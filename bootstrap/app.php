@@ -15,7 +15,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
 
         // Register new middleware like this
-        $middleware->append(\App\Http\Middleware\ApplyWebsiteDesignMiddleware::class);
 
         $middleware->prependToGroup('auth-admin', [
             Authenticate::class,
@@ -33,7 +32,6 @@ return Application::configure(basePath: dirname(__DIR__))
     })
 
     ->withProviders([
-        App\Providers\MailConfigServiceProvider::class,
         // You can add more providers here if needed
     ])
 

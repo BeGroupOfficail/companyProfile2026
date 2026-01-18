@@ -7,7 +7,7 @@
             @if (LaravelLocalization::getCurrentLocale() == 'en')
                 <img data-kt-element="current-lang-flag" class="w-20px h-20px rounded me-3" src="{{ Path::dashboardPath('media/flags/united-states.svg') }}" alt="en lang flag" />
             @elseif(LaravelLocalization::getCurrentLocale() == 'ar')
-                <img data-kt-element="current-lang-flag" class="w-20px h-20px rounded me-3" src="{{ Path::dashboardPath('media/flags/saudi-arabia.svg') }}" alt="ar lang flag" />
+                <img data-kt-element="current-lang-flag" class="w-20px h-20px rounded me-3" src="{{ Path::dashboardPath('media/flags/egypt.svg') }}" alt="ar lang flag" />
             @endif
             <span data-kt-element="current-lang-name" class="me-1">{{LaravelLocalization::getCurrentLocaleName()}}</span>
             <i class="ki-outline ki-down fs-5 text-muted rotate-180 m-0"></i>
@@ -47,7 +47,7 @@
     <!--begin::Links-->
     <div class="d-flex fw-semibold text-primary fs-base gap-5">
         @foreach ($pages->take(3) as $page)
-            <a href="{{ LaravelLocalization::localizeUrl('pages/' . $page->slug) }}" target="_blank">{{ $page->name }}</a>
+            <a href="{{ LaravelLocalization::localizeUrl('page/' . $page->slug) }}" target="_blank">{{ $page->name }}</a>
         @endforeach
     </div>
     <!--end::Links-->

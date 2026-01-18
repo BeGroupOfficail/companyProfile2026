@@ -17,24 +17,23 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             MenuSeeder::class,
             MenuItemSeeder::class,
-            WebsiteDesignSeeder::class,
             HomepageSectionsSeeder::class,
             AboutUsSeeder::class,
             AboutValuesSeeder::class,
             PermissionSeeder::class,
             RoleSeeder::class,
-            SeoTableSeeder::class,
         ]);
 
         $user = User::updateOrcreate([
             'email' => 'super.admin@system.com',
-            'phone' => '9665123456789',
+            'phone' => '01033675628',
         ],[
             'f_name' => 'Super',
             'l_name' => 'Admin',
             'password' => bcrypt('admin100200??'),
             'is_admin' => true,
             'status' => 'active',
+            'gender' => 'male',
             'job_role' => 'super_admin',
         ]);
         $user->syncRoles('Super Admin');

@@ -17,6 +17,7 @@ class AboutValue extends Model
         'title',
         'description',
         'type',
+        'order',
         'image',
         'alt_image',
         'icon',
@@ -34,7 +35,12 @@ class AboutValue extends Model
     public $translatable = ['title','description'];
 
      const TYPES=[
-        'mission_and_vision'=>'mission_and_vision',
-        'working_steps'=>'working_steps'
+         'mission_and_vision'=>'mission_and_vision',
+         'our_speciality'=>'our_speciality',
+//        'benefits'=>'benefits',
+//        'working_steps'=>'working_steps',
+//        'target_audiance'=>'target_audiance',
+
+
     ];
 }

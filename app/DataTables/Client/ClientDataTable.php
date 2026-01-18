@@ -24,6 +24,7 @@ class ClientDataTable extends DataTable
 
             // Render status-specific columns directly
             ->addColumn('status', fn($row) => $this->renderStatus($row))
+            ->addColumn('home', fn($row) => $this->renderHome($row))
 
             // Render language-specific columns directly (e.g., name_en, name_ar)
             ->addColumn('name_en', fn($row) => $row->getTranslation('name','en') ?? '')
@@ -61,7 +62,7 @@ class ClientDataTable extends DataTable
             })
 
             // Make sure to treat columns as raw HTML
-            ->rawColumns(['checkbox','actions', 'name_en', 'name_ar','image','status','type'])
+            ->rawColumns(['checkbox','actions', 'name_en', 'name_ar','image','status','home','type'])
             ->setRowId('id');
     }
 
@@ -89,6 +90,15 @@ class ClientDataTable extends DataTable
         if ($row->status == 'published') {
             return '<div class="badge badge-light-success">' . __('dash.published') . '</div>';
         } elseif ($row->status == 'inactive') {
+            return '<div class="badge badge-light-danger">' . __('dash.inactive') . '</div>';
+        }
+    }
+
+    protected function renderHome($row)
+    {
+        if ($row->home == 'published') {
+            return '<div class="badge badge-light-success">' . __('dash.published') . '</div>';
+        } elseif ($row->home == 'inactive') {
             return '<div class="badge badge-light-danger">' . __('dash.inactive') . '</div>';
         }
     }
@@ -172,6 +182,7 @@ class ClientDataTable extends DataTable
             Column::make('type')->title(__('dash.type')),
             Column::make('image')->title(__('dash.image')),
             Column::make('status')->title(__('dash.status'))->addClass('status-cell'),
+            Column::make('home')->title(__('dash.home'))->addClass('status-cell'),
             Column::make('actions')->title(__('dash.actions'))->addClass('text-end'),
         ];
     }

@@ -3,9 +3,12 @@
 namespace App\Services\Dashboard\Menu;
 
 use App\Helper\Media;
+use App\Helper\SoftDeleteHelper;
 use App\Models\Dashboard\Menu\Menu;
 use App\Models\Dashboard\Menu\MenuItem;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+
 
 class MenuItemService
 {
@@ -103,8 +106,8 @@ class MenuItemService
         DB::beginTransaction();
         try {
 
-            $deleted = MenuItem::where('id', $selectedId)->delete();
-
+            $deleted = SoftDeleteHelper::deleteWithEvents(MenuItem::class, $selectedId);
+            Cache::forget('head_menu');
             DB::commit();
 
             return $deleted > 0;

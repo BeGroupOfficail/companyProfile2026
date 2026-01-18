@@ -57,28 +57,8 @@ class SettingSeeder extends Seeder
             'tumblr_address' => null,
             'flickr_address' => null,
 
-            // Captcha
-            'nocaptcha_sitekey' => null,
-            'nocaptcha_secret' => null,
 
-            // Mailchimp
-            'mailchimp_api_key' => null,
-            'mailchimp_list_name' => null,
-            'mailchimp_list_id' => null,
 
-            // Analytics & Pixels
-            'google_tag_manager_id' => null,
-            'google_tag_manager_for_body' => null,
-            'google_tag_manager_for_head' => null,
-            'facebook_pixel_for_body' => null,
-            'facebook_pixel_for_head' => null,
-            'tiktok_pixel_for_body' => null,
-            'tiktok_pixel_for_head' => null,
-
-            'n_experience_years'=>null,
-            'n_awrds'=>null,
-            'n_tours'=>null,
-            'n_travelers'=>null,
 
             // Timestamps
             'created_at' => now(),

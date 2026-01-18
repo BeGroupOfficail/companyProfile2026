@@ -3,7 +3,6 @@
 namespace App\Services\Dashboard\Service;
 
 use App\Helper\Media;
-use App\Helper\SoftDeleteHelper;
 use App\Models\Dashboard\Service\Service;
 use Illuminate\Support\Facades\DB;
 
@@ -32,7 +31,6 @@ class ServiceService
                 'status' => data_get($dataValidated, 'status'),
                 'home' => data_get($dataValidated, 'home', 0),
                 'menu' => data_get($dataValidated, 'menu', 0),
-                'index' => data_get($dataValidated, 'index', 0),
             ];
 
             $service = Service::create($data);
@@ -40,7 +38,7 @@ class ServiceService
             // Handle translations for fields (name, slug, meta_title, meta_desc, desc)
             $service->handleTranslations(
                 $dataValidated,
-                ['name', 'slug', 'meta_title', 'meta_desc', 'short_desc', 'long_desc'], // custom fields
+                ['name', 'slug', 'short_desc', 'long_desc'], // custom fields
                 true // auto-generate slug
             );
 
@@ -63,7 +61,6 @@ class ServiceService
 
     public function update($request, $dataValidated, Service $service)
     {
-        // dd($dataValidated);
         DB::beginTransaction();
 
         try {
@@ -73,20 +70,16 @@ class ServiceService
                 'status' => data_get($dataValidated, 'status'),
                 'home' => data_get($dataValidated, 'home', 0),
                 'menu' => data_get($dataValidated, 'menu', 0),
-                'index' => data_get($dataValidated, 'index', 0),
                 'alt_image' => data_get($dataValidated, 'alt_image'),
-
             ];
-
 
             // Update the category with the new validated data
             $service->update($data);
-            // dd($service);
 
             // Handle translations for fields (name, slug, meta_title, meta_desc, desc)
             $service->handleTranslations(
                 $dataValidated,
-                ['name', 'slug', 'meta_title', 'meta_desc', 'short_desc', 'long_desc'], // custom fields
+                ['name', 'slug', 'short_desc', 'long_desc'], // custom fields
                 true // auto-generate slug
             );
 
@@ -123,10 +116,6 @@ class ServiceService
                     ->whereIn('id', $trashedServices->pluck('id'))
                     ->forceDelete();
             }
-            if ($activeServices->isNotEmpty()) {
-                SoftDeleteHelper::deleteWithEvents(Service::class, $activeServices->pluck('id')->toArray());
-            }
-
             DB::commit();
             return true;
         } catch (\Exception $e) {

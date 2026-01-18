@@ -54,7 +54,7 @@
                             <!--begin::Card footer-->
                             <div class="card-footer flex-wrap pt-0">
                                 <a href="{{route('users.roles.edit',$role->id)}}" class="btn btn-light btn-active-primary">@lang('dash.edit_role')</a>
-                                @if($key != 0)<a href="javascript:;" class="btn btn-light btn-active-danger btn_delete_role_card" data-id="{{$role->id}}" data-delete_route="{{ route('users.roles.destroy',$role->id) }}">@lang('dash.delete_role')</a>@endif
+                                @if($key != 0 && $role->name!='crm_employee')<a href="javascript:;" class="btn btn-light btn-active-danger btn_delete_role_card" data-id="{{$role->id}}" data-delete_route="{{ route('users.roles.destroy',$role->id) }}">@lang('dash.delete_role')</a>@endif
                             </div>
                             <!--end::Card footer-->
                         </div>

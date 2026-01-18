@@ -65,7 +65,6 @@ class ServiceController extends Controller
      */
     public function update(ServiceRequest $request, Service $service)
     {
-        // dd($request->all());
         try {
             $dataValidated = $request->validated();
             $this->serviceService->update($request, $dataValidated,  $service);

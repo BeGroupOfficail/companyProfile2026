@@ -38,8 +38,20 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::whereNotLike('name', '%.%')->get();
-        return view('Dashboard.Users.Roles.create',compact('permissions'));
+        $basePermissions = Permission::whereNotLike('name', '%.%')->get();
+        $permissions = $basePermissions->map(function($permission) {
+            $childPermissions = Permission::where('name', 'like', $permission->name . '.%')->get();
+            $actions = $childPermissions->map(function($child) use ($permission) {
+                return str_replace($permission->name . '.', '', $child->name);
+            })->toArray();
+            
+            return (object)[
+                'name' => $permission->name,
+                'actions' => $actions
+            ];
+        });
+        
+        return view('Dashboard.Users.Roles.create', compact('permissions'));
     }
 
     /**
@@ -71,9 +83,21 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $permissions = Permission::whereNotLike('name', '%.%')->get();
-        $rolePermissions= $role->permissions()->pluck('name')->toArray();
-        return view('Dashboard.Users.Roles.edit', compact('role','permissions','rolePermissions'));
+        $basePermissions = Permission::whereNotLike('name', '%.%')->get();
+        $permissions = $basePermissions->map(function($permission) {
+            $childPermissions = Permission::where('name', 'like', $permission->name . '.%')->get();
+            $actions = $childPermissions->map(function($child) use ($permission) {
+                return str_replace($permission->name . '.', '', $child->name);
+            })->toArray();
+            
+            return (object)[
+                'name' => $permission->name,
+                'actions' => $actions
+            ];
+        });
+        
+        $rolePermissions = $role->permissions()->pluck('name')->toArray();        
+        return view('Dashboard.Users.Roles.edit', compact('role', 'permissions', 'rolePermissions'));
     }
 
     /**

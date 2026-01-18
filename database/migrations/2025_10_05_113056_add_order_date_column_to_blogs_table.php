@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('blogs', function (Blueprint $table) {
-            $table->dateTime('order_date')->nullable()->after('index');
+            $table->dateTime('order_date')->nullable()->after('slug');
         });
 
         // Update existing records

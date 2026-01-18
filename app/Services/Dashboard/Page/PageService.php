@@ -34,7 +34,7 @@ class PageService
             // Handle translations for fields (name, slug, meta_title, meta_desc, desc)
             $page->handleTranslations(
                 $dataValidated,
-                ['name', 'slug', 'meta_title', 'meta_desc', 'short_desc','long_text'], // custom fields
+                ['name','slug','short_desc','long_text'], // custom fields
                 true // auto-generate slug
             );
 
@@ -65,7 +65,7 @@ class PageService
             // Handle translations for fields (name, slug, meta_title, meta_desc, desc)
             $page->handleTranslations(
                 $dataValidated,
-                ['name', 'slug', 'meta_title', 'meta_desc', 'short_desc','long_text'], // custom fields
+                ['name', 'slug', 'short_desc','long_text'], // custom fields
                 true // auto-generate slug
             );
 
@@ -78,22 +78,30 @@ class PageService
         }
     }
 
-    public function deletePages($selectedIds){
-        $pages = Page::whereIn('id', $selectedIds)->get();
+    public function deletePages($selectedIds)
+{
+    DB::beginTransaction();
+    try {
+        // Get trashed pages for permanent deletion
+        $trashedPages = Page::onlyTrashed()->whereIn('id', $selectedIds)->get();
 
-        DB::beginTransaction();
-        try {
+        // Get active pages for soft deletion
+        $activePages = Page::whereIn('id', $selectedIds)->get();
 
-            $deleted = Page::whereIn('id', $selectedIds)->delete();
-
-            DB::commit();
-
-            return $deleted > 0;
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return false;
+        // Handle permanently deleting trashed pages
+        if ($trashedPages->isNotEmpty()) {
+            Page::onlyTrashed()
+                ->whereIn('id', $trashedPages->pluck('id'))
+                ->forceDelete();
         }
+
+
+        DB::commit();
+        return true;
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return false;
     }
+}
 }

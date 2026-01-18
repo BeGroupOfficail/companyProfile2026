@@ -3,6 +3,7 @@
 namespace App\Services\Dashboard\About;
 
 use App\Helper\Media;
+use App\Helper\SoftDeleteHelper;
 use App\Models\Dashboard\About\AboutValue;
 use Illuminate\Support\Facades\DB;
 
@@ -28,6 +29,7 @@ class AboutValueService
             $data = [
                 'status' => $dataValidated['status'],
                 'type' => $dataValidated['type'],
+                'order' => $dataValidated['order'],
             ];
 
             $aboutValue = AboutValue::create($data);
@@ -64,6 +66,7 @@ class AboutValueService
             $data = [
                 'status' => $dataValidated['status'],
                 'type' => $dataValidated['type'],
+                'order' => $dataValidated['order'],
                 'index' => $dataValidated['index']?? 0,
             ];
 
@@ -109,8 +112,7 @@ class AboutValueService
                     Media::removeFile('about_values', $aboutValue->icon);
                 }
             }
-            $deleted = AboutValue::whereIn('id', $selectedIds)->delete();
-
+            $deleted = SoftDeleteHelper::deleteWithEvents(AboutValue::class, $selectedIds);
             DB::commit();
 
             return $deleted > 0;

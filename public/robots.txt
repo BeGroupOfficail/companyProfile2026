@@ -1,2 +1,22 @@
 User-agent: *
-Disallow:
+Disallow: /dashboard/
+Disallow: *client-request?course=*
+Disallow: /ajax/
+Allow: /
+
+# EN Sitemaps
+Sitemap: http://be-lms.test/sitemaps/en/static.xml
+Sitemap: http://be-lms.test/sitemaps/en/courses.xml
+Sitemap: http://be-lms.test/sitemaps/en/categories.xml
+Sitemap: http://be-lms.test/sitemaps/en/blogs.xml
+Sitemap: http://be-lms.test/sitemaps/en/services.xml
+
+# AR Sitemaps
+Sitemap: http://be-lms.test/sitemaps/ar/static.xml
+Sitemap: http://be-lms.test/sitemaps/ar/courses.xml
+Sitemap: http://be-lms.test/sitemaps/ar/categories.xml
+Sitemap: http://be-lms.test/sitemaps/ar/blogs.xml
+Sitemap: http://be-lms.test/sitemaps/ar/services.xml
+
+# Main Sitemap Index (includes all above)
+Sitemap: http://be-lms.test/sitemap.xml
