@@ -32,6 +32,8 @@ return Application::configure(basePath: dirname(__DIR__))
     })
 
     ->withProviders([
+        App\Providers\MailConfigServiceProvider::class,
+        App\Providers\SmsConfigServiceProvider::class,
         // You can add more providers here if needed
     ])
 

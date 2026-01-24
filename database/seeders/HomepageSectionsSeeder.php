@@ -85,6 +85,17 @@ class HomepageSectionsSeeder extends Seeder
             [
                 'order' => '8',
                 'title' => [
+                    'en' => 'blogs',
+                    'ar' => 'المقالات',
+                ],
+                'image' => '',
+                'alt_image' => '',
+                'is_active' => true,
+            ],
+
+            [
+                'order' => '9',
+                'title' => [
                     'en' => 'contact_us',
                     'ar' => 'تواصل معنا',
                 ],
