@@ -84,6 +84,16 @@
                                     @endforeach
                                 </div>
 
+                                <div class="d-flex flex-wrap gap-5">
+                                    @foreach(config('languages') as $lang => $languageName)
+                                        <x-dashboard.partials.html.input
+                                            name="badges_{{ $lang }}"
+                                            label="{{ __('dash.badges') }} ({{ __($languageName) }})"
+                                            :value="old('badges_' . $lang, $about->getTranslation('badges', $lang) ?? '')"
+                                            placeholder="{{ __('dash.Enter the badges in') }} {{ __($languageName) }}" />
+                                    @endforeach
+                                </div>
+
                                 @foreach(config('languages') as $lang => $languageName)
                                     <x-dashboard.partials.html.textarea_with_editor
                                         name="description_{{ $lang }}"

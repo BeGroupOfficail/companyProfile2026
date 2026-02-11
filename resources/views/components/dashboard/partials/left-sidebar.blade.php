@@ -17,7 +17,7 @@
             <!--begin:home page Menu item-->
             <div data-kt-menu-trigger="click" class="menu-item  menu-accordion">
                 <!--begin:Menu link-->
-                <a href="{{ url('/') }}" class="menu-link" target="_blank"><span class="menu-icon"><i
+                <a href="https://kola-contractions.netlify.app/en" class="menu-link" target="_blank"><span class="menu-icon"><i
                             class="ki-outline primary-color ki-icon fs-2"></i></span>
                     <span class="menu-title">{{ __('dash.website') }}</span>
                     <span class="menu-arrow d-none"></span>

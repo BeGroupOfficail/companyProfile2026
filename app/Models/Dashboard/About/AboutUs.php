@@ -34,6 +34,7 @@ class AboutUs extends Model
         'alt_banner_en',
         'banner',
         'alt_banner',
+        'badges'
     ];
 
     /**
@@ -45,7 +46,8 @@ class AboutUs extends Model
         'title' => 'array',
         'description' => 'array',
         'why_choose_us' => 'array',
+        'badges'=> 'array',
     ];
 
-    public $translatable = ['title','description','why_choose_us','slug','meta_title','meta_desc'];
+    public $translatable = ['title','description','why_choose_us','slug','meta_title','meta_desc','badges'];
 }
