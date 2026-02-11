@@ -15,7 +15,7 @@ class AboutService
             // Handle translations for fields ('site_name', 'site_desc')
             $about->handleTranslations(
                 $dataValidated,
-                ['title', 'description','why_choose_us'], // custom fields
+                ['title', 'description','why_choose_us','badges'], // custom fields
                 false // auto-generate slug
             );
 

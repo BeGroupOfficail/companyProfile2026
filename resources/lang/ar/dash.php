@@ -2401,7 +2401,19 @@
         'View All' => 'عرض الكل',
         'No blogs found' => 'لا توجد مدونات',
         'No messages found' => 'لا توجد رسائل',
-
+        'badges' => 'الشارات',
+        'badges_en' => 'الشارات (الإنجليزية)',
+        'badges_ar' => 'الشارات (العربية)',
+        'Enter the badges in' => 'ادخل الشارات ب',
+        'Enter the badges in' => 'ادخل الشارات ب',
+        'Separate badges using - (Example: Fast - Secure - Trusted)'=> 'افصل الشارات باستخدام - (مثال: سريع - آمن - موثوق)',
+        'Enter the type in'=> 'ادخل النوع ب',
+        'Enter the location in'=> 'ادخل الموقع ب',
+        'Enter the area in'=> 'ادخل المنطقة ب',
+        'Enter the client in'=> 'ادخل العميل ب',
+        'Enter the badges in'=> 'ادخل الشارات ب',
+        'The project must have at least one image'=> 'يجب على المشروع أن يكون له على الأقل صورة.',
+        'Home data loaded successfully' => 'تم تحميل بيانات الصفحة الرئيسية بنجاح',
     ];
 
 

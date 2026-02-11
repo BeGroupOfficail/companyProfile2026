@@ -90,7 +90,8 @@
                                             name="badges_{{ $lang }}"
                                             label="{{ __('dash.badges') }} ({{ __($languageName) }})"
                                             :value="old('badges_' . $lang, $about->getTranslation('badges', $lang) ?? '')"
-                                            placeholder="{{ __('dash.Enter the badges in') }} {{ __($languageName) }}" />
+                                            placeholder="{{ __('dash.Enter the badges in') }} {{ __($languageName) }}" 
+                                            hint="{{ __('dash.Separate badges using - (Example: Fast - Secure - Trusted)') }}"/>
                                     @endforeach
                                 </div>
 

@@ -37,6 +37,9 @@
         @if(isset($inputId)) id="{{ $inputId }}" @endif
         placeholder="{{ $placeholder ?? '' }}" {{ $required ?? '' }} {{ $disabled ?? '' }}
         @isset($min) min="{{ $min??''}}"@endisset @isset($max) max="{{$max??''}}"@endisset>
+        @if(isset($hint))
+            <small class="text-muted d-block mt-1">{{ $hint }}</small>
+        @endif
     @error($errorName ?? $name)
         <div class="invalid-feedback">{{ $message }}</div>
     @enderror

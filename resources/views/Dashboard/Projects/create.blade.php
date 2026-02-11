@@ -7,16 +7,17 @@
         <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
 
             <!--begin::image-->
-             <x-dashboard.partials.html.image_input
-                :title="'Upload Image'"
-                :name="'image'"
+            <x-dashboard.partials.html.gallery_input
+                :title="'Project Gallery'"
+                :name="'images'"
+                :title="'Upload Images'"
                 :description="'Only *.png, *.jpg, and *.jpeg image files are accepted.'"
-                :changeImageText="'Change Image'"
-                :cancelImageText="'Cancel Image'"
-                :removeImageText="'Remove Image'"
-                :acceptedText="'image files are accepted'"
+                :changeImageText="'Add Images'"
+                :cancelImageText="'Cancel'"
+                :removeImageText="'Remove'"
             />
             <!--end::image -->
+            
 
             <!--begin::Status-->
 
@@ -58,6 +59,57 @@
                                         :options="$services"
                                         :isTranslatable="true"
                                         :translatableValue="'name'" />
+                                </div>
+                                <div class="d-flex flex-wrap gap-5">
+
+                                    @foreach(config('languages') as $lang => $languageName)
+                                        <x-dashboard.partials.html.input
+                                            name="type_{{ $lang }}"
+                                            label="{{ __('dash.type') }} ({{ __($languageName) }})"
+                                            :value="old('type_' . $lang, '')"
+                                            placeholder="{{ __('dash.Enter the type in') }} {{ __($languageName) }}" />
+                                    @endforeach
+                                </div>
+                                <div class="d-flex flex-wrap gap-5">
+
+                                    @foreach(config('languages') as $lang => $languageName)
+                                        <x-dashboard.partials.html.input
+                                            name="location_{{ $lang }}"
+                                            label="{{ __('dash.location') }} ({{ __($languageName) }})"
+                                            :value="old('location_' . $lang, '')"
+                                            placeholder="{{ __('dash.Enter the location in') }} {{ __($languageName) }}" />
+                                    @endforeach
+                                </div>
+                                <div class="d-flex flex-wrap gap-5">
+
+                                    @foreach(config('languages') as $lang => $languageName)
+                                        <x-dashboard.partials.html.input
+                                            name="area_{{ $lang }}"
+                                            label="{{ __('dash.area') }} ({{ __($languageName) }})"
+                                            :value="old('area_' . $lang, '')"
+                                            placeholder="{{ __('dash.Enter the area in') }} {{ __($languageName) }}" />
+                                    @endforeach
+                                </div>
+                                <div class="d-flex flex-wrap gap-5">
+
+                                    @foreach(config('languages') as $lang => $languageName)
+                                        <x-dashboard.partials.html.input
+                                            name="client_{{ $lang }}"
+                                            label="{{ __('dash.client') }} ({{ __($languageName) }})"
+                                            :value="old('client_' . $lang, '')"
+                                            placeholder="{{ __('dash.Enter the client in') }} {{ __($languageName) }}" />
+                                    @endforeach
+                                </div>
+                                <div class="d-flex flex-wrap gap-5">
+
+                                    @foreach(config('languages') as $lang => $languageName)
+                                        <x-dashboard.partials.html.input
+                                            name="badges_{{ $lang }}"
+                                            label="{{ __('dash.badges') }} ({{ __($languageName) }})"
+                                            :value="old('badges_' . $lang, '')"
+                                            placeholder="{{ __('dash.Enter the badges in') }} {{ __($languageName) }}" 
+                                            hint="{{ __('dash.Separate badges using - (Example: Fast - Secure - Trusted)') }}"/>
+                                    @endforeach
                                 </div>
 
 

@@ -29,6 +29,8 @@ class AboutRequest extends FormRequest
             'alt_banner_en' => ['nullable', 'string', 'max:255'],
             'banner' => ['nullable', 'image', 'mimes:jpeg,png,gif,bmp,webp', 'max:5000'],
             'alt_banner' => ['nullable', 'string', 'max:255'],
+            'badges_en' => 'nullable|string|max:255',
+            'badges_ar' => 'nullable|string|max:255',
         ];
     }
 }

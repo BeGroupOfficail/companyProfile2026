@@ -15,7 +15,7 @@ class Project extends Model
     use HasFactory, HasTranslations, HandlesTranslationsAndMedia, SoftDeletes;
 
     protected $guarded = [];
-    public $translatable = ['name', 'short_desc', 'long_desc', 'slug'];
+    public $translatable = ['name', 'short_desc', 'long_desc', 'slug', 'type', 'location', 'area', 'client', 'badges'];
 
     public function service()
     {
@@ -32,6 +32,10 @@ class Project extends Model
     public function getCustomLinkAttribute()
     {
         return LaravelLocalization::localizeUrl('projects/' . $this->slug);
+    }
+    public function images()
+    {
+        return $this->hasMany(ProjectImage::class);
     }
 
 }
