@@ -2347,4 +2347,11 @@ return  [
         'Min 1 image is required-Max size 3MB' => 'Min 1 image is required-Max size 3MB',
         'Add Images' => 'Add Images',
         'Upload Images' => 'Upload Images',
+        'The phone number is not valid for the selected country.' => 'The phone number is not valid for the selected country.',
+        'Please select a country.' => 'Please select a country.',
+        'invalid_country_code' => 'Invalid country code.',
+        'invalid_phone' => 'Invalid phone number.',
+        'use_national_number_only' => 'Please enter the local phone number only without the country code.',
+        'new'=> 'New',
+        'reason for connect' => 'Reason for connect',
     ];

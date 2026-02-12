@@ -28,13 +28,13 @@ class ContactUsRequest extends FormRequest
             'email' => 'nullable|email',
             'message' => 'required|string|max:150',
             'title' => 'nullable|string|max:150',
-            'phone' => ['required',new PhoneNumber()],
+            'phone' => ['required','regex:/^\+?[0-9]{7,15}$/'],
         ];
     }
     public function messages(): array
     {
         return [
-            'phone.regex' => __('home.The phone number must be a valid Saudi number (e.g., 0501234567).'),
+            'phone.regex' => __('dash.The phone number is not valid'),
         ];
     }
 }

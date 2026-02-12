@@ -2417,4 +2417,10 @@
         'Min 1 image is required-Max size 3MB' => 'يجب على المشروع أن يكون له على الأقل صورة. الحجم الأقصى 3 ميجا بايت',
         'Add Images' => 'أضف صور',
         'Upload Images' => 'رفع الصور',
+        'The phone number is not valid for the selected country.' => 'رقم الهاتف غير صحيح للدولة المحددة.',
+        'Please select a country.' => 'يرجى اختيار الدولة.',
+        'invalid_country_code' => 'رمز الدولة غير صحيح.',
+        'invalid_phone' => 'رقم الهاتف غير صحيح.',
+        'use_national_number_only' => 'يرجى إدخال رقم الهاتف المحلي فقط بدون رمز الدولة',   
+        'new'=> 'جديد',
     ];
