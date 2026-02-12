@@ -84,8 +84,8 @@ class BlogDataTable extends DataTable
         $editUrl = route('blogs.edit', $row->id);
         $routeName = 'blogs';
         $modelName = 'blogs';
-        $showUrl = route('website.blog',$row->slug);
-        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','showUrl','routeName','modelName'))->render();
+        // $showUrl = route('website.blog',$row->slug);
+        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','routeName','modelName'))->render();
     }
 
 

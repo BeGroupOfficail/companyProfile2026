@@ -12,7 +12,7 @@ class ServiceResource extends JsonResource
         return [
             'id'         => $this->id,
             'name'       => $this->name,
-            'slug'       => $this->slug,
+            // 'slug'       => $this->slug,
             'short_desc' => $this->short_desc,
             'image_url'  => $this->image ? asset("uploads/services/{$this->image}") : null,
             'alt_image'  => $this->alt_image,

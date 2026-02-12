@@ -68,8 +68,8 @@ class ProjectDataTable extends DataTable
         $editUrl = route('projects.edit', $row->id);
         $routeName = 'projects';
         $modelName = 'projects';
-        $showUrl = route( 'website.project-details',$row->slug);
-        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','showUrl','routeName','modelName'))->render();
+        // $showUrl = route( 'website.project-details',$row->slug);
+        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','routeName','modelName'))->render();
     }
 
     protected function renderImage($imageName, $imageType, $width = 100): string

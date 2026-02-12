@@ -2344,4 +2344,7 @@ return  [
         'Enter the badges in'=> 'Enter the badges in',
         'The project must have at least one image' => 'The project must have at least one image.',
         'Home data loaded successfully' => 'Home data loaded successfully',
+        'Min 1 image is required-Max size 3MB' => 'Min 1 image is required-Max size 3MB',
+        'Add Images' => 'Add Images',
+        'Upload Images' => 'Upload Images',
     ];

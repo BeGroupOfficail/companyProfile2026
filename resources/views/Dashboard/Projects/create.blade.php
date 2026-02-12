@@ -15,6 +15,7 @@
                 :changeImageText="'Add Images'"
                 :cancelImageText="'Cancel'"
                 :removeImageText="'Remove'"
+                :label2="__('dash.Min 1 image is required-Max size 3MB')"
             />
             <!--end::image -->
             

@@ -51,7 +51,7 @@ class HomeController extends Controller
 
         // ── Build response ───────────────────────────────────────
         $data = [
-            'sliders'      => SliderResource::collection($sliders),
+            'home'      => ["description" => $settings->site_desc,"sliders"=>SliderResource::collection($sliders)],
             'about'        => $about ? AboutResource::make($about) : null,
             'statistics'   => StatisticResource::collection($statistics),
             'services'     => ServiceResource::collection($services),

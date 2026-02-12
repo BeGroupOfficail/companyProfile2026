@@ -2414,6 +2414,7 @@
         'Enter the badges in'=> 'ادخل الشارات ب',
         'The project must have at least one image'=> 'يجب على المشروع أن يكون له على الأقل صورة.',
         'Home data loaded successfully' => 'تم تحميل بيانات الصفحة الرئيسية بنجاح',
+        'Min 1 image is required-Max size 3MB' => 'يجب على المشروع أن يكون له على الأقل صورة. الحجم الأقصى 3 ميجا بايت',
+        'Add Images' => 'أضف صور',
+        'Upload Images' => 'رفع الصور',
     ];
-
-

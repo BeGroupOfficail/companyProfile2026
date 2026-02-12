@@ -7,6 +7,7 @@
     'changeImageText' => null,
     'cancelImageText' => null,
     'removeImageText' => null,
+    'label2' => null,
 ])
 
 <div class="card card-flush card-standard">
@@ -22,10 +23,12 @@
 
     <!--begin::Card body-->
     <div class="card-body pt-0">
+        @if (isset($label2))
+            <span class="text-danger">{{ $label2 }}</span>
+        @endif
         <!--begin::Description-->
         <div class="text-muted fs-7 mb-4">{{ __('dash.only') }} *.png, *.jpg, *.jpeg, *.webp {{ __('dash.image files are accepted') }}</div>
         <!--end::Description-->
-
         <!--begin::Input-->
         <div class="mb-4">
              <label class="btn btn-primary">

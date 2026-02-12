@@ -27,6 +27,7 @@ use App\Models\Dashboard\ContactUs\ContactUs;
 use App\Http\Requests\Website\ContactUsRequest;
 use App\Models\Dashboard\Setting\HomepageSection;
 use App\Models\Dashboard\WebsiteStatistics\WebsiteStatistics;
+use Illuminate\Support\Facades\Auth;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 class HomeController extends Controller
 {
@@ -38,21 +39,26 @@ class HomeController extends Controller
 
     public function index()
     {
-        $lang = app()->getLocale();
+        // $lang = app()->getLocale();
 
-        $homepageSections = HomepageSection::where('is_active', '1')->orderBy('order')->get();
-        $sliders = Slider::where('lang', $lang)->where('status', 'published')->get();
-        $services = Service::where('status', 'published')->where('home',1)->take(4)->get();
-        $clients = Client::where('status', 'published')->where('home', 'published')->get();
-        $recentProjectAlbums = Album::where('status', 'published')->where('type','projects')->take(6)->get();
-        $projects_album = Album::with('images')->where('status', 'published')->where('type', 'project')->first();
-        $aboutUs = AboutUs::first();
-        $about_values = AboutValue::where('status', 'published')->get();
-        $websiteStatistics = WebsiteStatistics::where('status', 'published')->get();
-        $blogs = Blog::with('category')->where('status', 'published')->where('home', 1)->latest()->limit(6)->get();
-        $testimonials = Testimonial::where('status', 'published')->get();
+        // $homepageSections = HomepageSection::where('is_active', '1')->orderBy('order')->get();
+        // $sliders = Slider::where('lang', $lang)->where('status', 'published')->get();
+        // $services = Service::where('status', 'published')->where('home',1)->take(4)->get();
+        // $clients = Client::where('status', 'published')->where('home', 'published')->get();
+        // $recentProjectAlbums = Album::where('status', 'published')->where('type','projects')->take(6)->get();
+        // $projects_album = Album::with('images')->where('status', 'published')->where('type', 'project')->first();
+        // $aboutUs = AboutUs::first();
+        // $about_values = AboutValue::where('status', 'published')->get();
+        // $websiteStatistics = WebsiteStatistics::where('status', 'published')->get();
+        // $blogs = Blog::with('category')->where('status', 'published')->where('home', 1)->latest()->limit(6)->get();
+        // $testimonials = Testimonial::where('status', 'published')->get();
 
-        return view('website.home',compact('homepageSections','sliders','services','projects_album','clients','aboutUs','about_values','websiteStatistics','testimonials','recentProjectAlbums','projects_album','blogs'));
+        // return view('website.home',compact('homepageSections','sliders','services','projects_album','clients','aboutUs','about_values','websiteStatistics','testimonials','recentProjectAlbums','projects_album','blogs'));
+        // return redirect()->away('https://kola-contractions.netlify.app/en');
+        if(Auth::check()){
+            return view('dashboard.home');
+        }
+        return view('auth.dashboard.login');
     }
 
     public function about_us()

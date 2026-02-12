@@ -14,12 +14,12 @@ class AboutResource extends JsonResource
         return [
             'title'          => $this->title,
             'description'    => $this->description,
-            'why_choose_us'  => $this->why_choose_us,
+            // 'why_choose_us'  => $this->why_choose_us,
             'badges'         => $this->parseBadges($locale),
             'image_url'      => $this->resolveImageUrl('about_us', 'image', $locale),
-            'banner_url'     => $this->resolveImageUrl('about_us', 'banner', $locale),
+            // 'banner_url'     => $this->resolveImageUrl('about_us', 'banner', $locale),
             'alt_image'      => $locale === 'en' ? ($this->alt_image_en ?? $this->alt_image) : $this->alt_image,
-            'alt_banner'     => $locale === 'en' ? ($this->alt_banner_en ?? $this->alt_banner) : $this->alt_banner,
+            // 'alt_banner'     => $locale === 'en' ? ($this->alt_banner_en ?? $this->alt_banner) : $this->alt_banner,
         ];
     }
 

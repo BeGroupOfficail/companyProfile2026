@@ -69,8 +69,8 @@ class ServiceDataTable extends DataTable
         $editUrl = route('services.edit', $row->id);
         $routeName = 'services';
         $modelName = 'services';
-        $showUrl = route( 'website.service-details',$row->slug);
-        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','showUrl','routeName','modelName'))->render();
+        // $showUrl = route( 'website.service-details',$row->slug);
+        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','routeName','modelName'))->render();
     }
 
     protected function renderImage($imageName, $imageType, $width = 100): string

@@ -63,8 +63,8 @@ class PageDataTable extends DataTable
         $editUrl = route('pages.edit', $row->id);
         $routeName = 'pages';
         $modelName = 'pages';
-        $showUrl = route( 'website.page',$row->slug);
-        return view('components.dashboard.partials.actions_dropdown', compact('editUrl','showUrl', 'routeName', 'modelName'))->render();
+        // $showUrl = route( 'website.page',$row->slug);
+        return view('components.dashboard.partials.actions_dropdown', compact('editUrl', 'routeName', 'modelName'))->render();
     }
 
     protected function renderView($row): string
