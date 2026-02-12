@@ -7,6 +7,7 @@ use App\Http\Requests\Website\ContactUsRequest;
 use App\Models\Dashboard\ContactUs\ContactUs;
 use App\Factories\MessageSender\MessageSenderFactory;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 use function App\Helper\apiResponse;
 
@@ -45,7 +46,7 @@ class ContactController extends Controller
 
         } catch (Exception $e) {
 
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
 
             return apiResponse(
                 500,
