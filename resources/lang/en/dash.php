@@ -2354,4 +2354,17 @@ return  [
         'use_national_number_only' => 'Please enter the local phone number only without the country code.',
         'new'=> 'New',
         'reason for connect' => 'Reason for connect',
+        'all_sections'=>'All Sections',
+        'Sections' => 'Sections',
+        'sub_sections' => 'Sub Sections',
+        'sub_section_items' => 'Sub Section Items',
+        'key'=>'Key',
+        'sort_order'=>'Sort Order',
+        'Sub Sections'=>'Sub Sections',
+        'layout'=>'Layout',
+        'title_desc' => 'Title and Description',
+        'title_only' => 'Title Only',
+        'Sub Section Items'=>'Sub Section Items',
+        'sub_section' => 'Sub Section',
+        
     ];

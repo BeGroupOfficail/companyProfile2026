@@ -16,6 +16,8 @@ use App\Models\Dashboard\Service\Service;
 use App\Models\Dashboard\Setting\Setting;
 use App\Models\Dashboard\Slider\Slider;
 use App\Models\Dashboard\WebsiteStatistics\WebsiteStatistics;
+use App\Models\Dashboard\Sections\CompanySection;
+use App\Http\Resources\SectionResource;
 use Illuminate\Support\Facades\Cache;
 
 use function App\Helper\apiResponse;
@@ -49,6 +51,16 @@ class HomeController extends Controller
         // ── Settings (contact + social) ──────────────────────────
         $settings = Cache::rememberForever('settings', fn() => Setting::first());
 
+        // ── Sections ─────────────────────────────────────────────
+        $sections = CompanySection::where('is_active', 1)
+            ->with(['subSections' => function($query) {
+                $query->orderBy('sort_order')->with(['items' => function($q) {
+                    $q->orderBy('sort_order');
+                }]);
+            }])
+            ->orderBy('sort_order')
+            ->get();
+
         // ── Build response ───────────────────────────────────────
         $data = [
             'home'      => ["description" => $settings->site_desc,"sliders"=>SliderResource::collection($sliders)],
@@ -56,6 +68,7 @@ class HomeController extends Controller
             'statistics'   => StatisticResource::collection($statistics),
             'services'     => ServiceResource::collection($services),
             'projects'     => ProjectResource::collection($projects),
+            'sections'     => SectionResource::collection($sections),
             'contact'      => $settings ? ContactInfoResource::make($settings) : null,
             'social_links' => $settings ? SocialLinksResource::make($settings) : [],
         ];

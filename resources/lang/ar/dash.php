@@ -2423,4 +2423,16 @@
         'invalid_phone' => 'رقم الهاتف غير صحيح.',
         'use_national_number_only' => 'يرجى إدخال رقم الهاتف المحلي فقط بدون رمز الدولة',   
         'new'=> 'جديد',
-    ];
+        'all_sections'=>'كل الاقسام',
+        'Sections' => 'الاقسام',
+        'sub_sections' => 'الاقسام الفرعية',
+        'sub_section_items' => 'عناصر القسم الفرعي',
+        'key'=>'الكود',
+        'sort_order'=>'ترتيب',
+        'Sub Sections'=>'الاقسام الفرعية',
+        'layout' => 'التصميم',
+        'title_desc' => 'العنوان و التفاصيل',
+        'title_only' => 'العنوان فقط',
+        'Sub Section Items'=>'عناصر القسم الفرعي',
+        'sub_section' => 'القسم الفرعي',
+    ];  

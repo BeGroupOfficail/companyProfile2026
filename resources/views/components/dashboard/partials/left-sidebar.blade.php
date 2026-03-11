@@ -106,6 +106,73 @@
                 <!--end:Menu item-->
             @endcan
 
+            @can('sections.read')
+                <!--begin:Sections Menu item-->
+                <div data-kt-menu-trigger="click"
+                    class="menu-item {{ in_array(request()->segment(3), ['sections', 'sub-sections', 'sub-section-items']) ? 'here show ' : '' }} menu-accordion">
+
+                    <!--begin:Menu link-->
+                    <span class="menu-link"><span class="menu-icon"><i
+                                class="ki-outline primary-color ki-layer fs-2"></i></span>
+                        <span class="menu-title">{{ __('dash.sections') }}</span>
+                        <span class="menu-arrow d-none"></span>
+                    </span>
+                    <!--end:Menu link-->
+
+                    <!--begin:Menu sub-->
+                    <div class="menu-sub menu-sub-accordion">
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link {{ request()->segment(3) == 'sections' ? 'active' : '' }}"
+                                href="{{ route('sections.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">{{ __('dash.all_sections') }}</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+
+                    </div>
+                    <!--end:Menu sub-->
+
+                    <!--begin:Menu sub-->
+                    <div class="menu-sub menu-sub-accordion">
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link {{ request()->segment(3) == 'sub-sections' ? 'active' : '' }}"
+                                href="{{ route('sub-sections.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">{{ __('dash.sub_sections') }}</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+
+                    </div>
+                    <!--end:Menu sub-->
+
+                    <!--begin:Menu sub-->
+                    <div class="menu-sub menu-sub-accordion">
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link {{ request()->segment(3) == 'sub-section-items' ? 'active' : '' }}"
+                                href="{{ route('sub-section-items.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">{{ __('dash.sub_section_items') }}</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+
+                    </div>
+                    <!--end:Menu sub-->
+                </div>
+                <!--end:Sections item-->
+            @endcan
+
             @can('about_us.read')
                 <!--begin:About About item-->
                 <div data-kt-menu-trigger="click"
