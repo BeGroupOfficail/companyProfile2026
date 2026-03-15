@@ -26,13 +26,13 @@ class SubSectionController extends Controller
 
     public function index(SubSectionsDataTable $dataTable)
     {
-        return $dataTable->render('Dashboard.sub_sections.index');
+        return $dataTable->render('Dashboard.Sections.sub_sections.index');
     }
 
     public function create()
     {
         $sections = CompanySection::all();
-        return view('Dashboard.sub_sections.create', compact('sections'));
+        return view('Dashboard.Sections.sub_sections.create', compact('sections'));
     }
 
     public function store(SubSectionRequest $request)
@@ -49,7 +49,7 @@ class SubSectionController extends Controller
     public function edit(CompanySubSection $subSection)
     {
         $sections = CompanySection::all();
-        return view('Dashboard.sub_sections.edit', compact('subSection', 'sections'));
+        return view('Dashboard.Sections.sub_sections.edit', compact('subSection', 'sections'));
     }
 
     public function update(SubSectionRequest $request, CompanySubSection $subSection)

@@ -25,12 +25,12 @@ class SectionController extends Controller
 
     public function index(SectionsDataTable $dataTable)
     {
-        return $dataTable->render('Dashboard.sections.index');
+        return $dataTable->render('Dashboard.Sections.index');
     }
 
     public function create()
     {
-        return view('Dashboard.sections.create');
+        return view('Dashboard.Sections.create');
     }
 
     public function store(SectionRequest $request)
@@ -46,7 +46,7 @@ class SectionController extends Controller
 
     public function edit(CompanySection $section)
     {
-        return view('Dashboard.sections.edit', compact('section'));
+        return view('Dashboard.Sections.edit', compact('section'));
     }
 
     public function update(SectionRequest $request, CompanySection $section)
