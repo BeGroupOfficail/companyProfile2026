@@ -9,6 +9,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
@@ -27,13 +28,14 @@ return Application::configure(basePath: dirname(__DIR__))
             'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
             'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
             'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
+            'setLocale'               => \App\Http\Middleware\SetLocale::class,
         ]);
 
     })
 
     ->withProviders([
-        App\Providers\MailConfigServiceProvider::class,
-        App\Providers\SmsConfigServiceProvider::class,
+        // App\Providers\MailConfigServiceProvider::class,
+        // App\Providers\SmsConfigServiceProvider::class,
         // You can add more providers here if needed
     ])
 

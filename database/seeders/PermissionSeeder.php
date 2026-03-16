@@ -35,6 +35,9 @@ class PermissionSeeder extends Seeder
             'users',
             'permissions',
             'roles',
+            'sections',
+            'sub_sections',
+            'sub_section_items',
         ];
 
         $actions = ['read', 'create', 'update', 'delete'];

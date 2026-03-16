@@ -37,5 +37,6 @@ Route::prefix(LaravelLocalization::setLocale() . '/dashboard')
         require base_path('routes/web/dashboard/contactUs.php');
         require base_path('routes/web/dashboard/websiteStatistics.php');
         require base_path('routes/web/dashboard/projects.php');
+        require base_path('routes/web/dashboard/sections.php');
+        require base_path('routes/web/dashboard/seo.php');
     });
-

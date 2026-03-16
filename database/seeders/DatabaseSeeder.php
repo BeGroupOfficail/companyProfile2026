@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             AboutValuesSeeder::class,
             PermissionSeeder::class,
             RoleSeeder::class,
+            CountrySeeder::class,
+            CompanyHomeSeeder::class,
         ]);
 
         $user = User::updateOrcreate([
