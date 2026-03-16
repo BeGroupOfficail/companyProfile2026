@@ -51,6 +51,24 @@ class HomeController extends Controller
         // ── Settings (contact + social) ──────────────────────────
         $settings = Cache::rememberForever('settings', fn() => Setting::first());
 
+        // ── SEO ──────────────────────────────────────────────────
+        $seoService = app(\App\Services\Dashboard\Seo\CompanySeoService::class);
+        $seo = $seoService->getSeo();
+        $seoData = [
+            'meta_tags' => [
+                'content_type' => $seo->content_type,
+                'title' => $seo->getTranslation('title', app()->getLocale()) ?? '',
+                'author' => $seo->getTranslation('author', app()->getLocale()) ?? '',
+                'description' => $seo->getTranslation('description', app()->getLocale()) ?? '',
+                'canonical' => $seo->getTranslation('canonical', app()->getLocale()) ?? '',
+                'robots' => $seo->robots,
+            ],
+            'open_graph' => $seo->open_graph ?? new \stdClass(),
+            'twitter_card' => $seo->twitter_card ?? new \stdClass(),
+            'hreflang_tags' => $seo->hreflang_tags ?? new \stdClass(),
+            'schema' => $seo->schema ?? [],
+        ];
+
         // ── Sections ─────────────────────────────────────────────
         $sections = CompanySection::where('is_active', 1)
             ->with(['subSections' => function($query) {
@@ -71,6 +89,7 @@ class HomeController extends Controller
             'sections'     => SectionResource::collection($sections),
             'contact'      => $settings ? ContactInfoResource::make($settings) : null,
             'social_links' => $settings ? SocialLinksResource::make($settings) : [],
+            'seo'          => $seoData,
         ];
 
         return apiResponse(200, $data, __('dash.Home data loaded successfully'));

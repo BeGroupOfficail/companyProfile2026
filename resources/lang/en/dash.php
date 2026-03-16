@@ -2366,5 +2366,15 @@ return  [
         'title_only' => 'Title Only',
         'Sub Section Items'=>'Sub Section Items',
         'sub_section' => 'Sub Section',
-        
-    ];
+        'company_seo'=>'Company SEO',
+        'meta_tags'=>'Meta Tags',
+        'open_graph'=>'Open Graph',
+        'twitter_card'=>'Twitter Card',
+        'hreflang_tags'=>'Hreflang Tags',
+        'schema'=>'Schema',
+        'content_type' => 'Content Type',
+        'robots' => 'Robots',
+        'canonical' => 'Canonical',
+        'author' => 'Author',
+        'hreflang' => 'Hreflang',
+];

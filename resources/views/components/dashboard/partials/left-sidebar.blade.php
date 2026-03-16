@@ -113,7 +113,7 @@
 
                     <!--begin:Menu link-->
                     <span class="menu-link"><span class="menu-icon"><i
-                                class="ki-outline primary-color ki-layer fs-2"></i></span>
+                                class="ki-outline primary-color ki-element-11 fs-2 "></i></span>
                         <span class="menu-title">{{ __('dash.sections') }}</span>
                         <span class="menu-arrow d-none"></span>
                     </span>
@@ -512,6 +512,21 @@
             @endcan
 
             @can('settings.read')
+                <!--begin:Company Seo Menu item-->
+                <div data-kt-menu-trigger="click"
+                    class="menu-item {{ in_array(request()->segment(3), ['company-seo']) ? 'here show' : '' }} menu-accordion">
+                    <!--begin:Menu link-->
+                    <a href="{{ route('company-seo.edit') }}" class="menu-link">
+                        <span class="menu-icon">
+                            <i class="ki-outline primary-color ki-magnifier fs-2"></i>
+                        </span>
+                        <span class="menu-title">{{ __('dash.company_seo') ?? 'Company SEO' }}</span>
+                        <span class="menu-arrow d-none"></span>
+                    </a>
+                    <!--end:Menu link-->
+                </div>
+                <!--end:Company Seo item-->
+
                 <!--begin:settings Menu item-->
                 <div data-kt-menu-trigger="click"
                     class="menu-item menu-accordion {{ in_array(request()->segment(4), ['general-settings']) || request()->segment(4) == 'home-sections' ? 'here show ' : '' }}">
