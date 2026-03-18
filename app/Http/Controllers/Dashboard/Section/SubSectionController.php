@@ -31,8 +31,9 @@ class SubSectionController extends Controller
 
     public function create()
     {
-        $sections = CompanySection::all();
-        return view('Dashboard.Sections.sub_sections.create', compact('sections'));
+        // $sections = CompanySection::all();
+        return view('Dashboard.Sections.sub_sections.create');
+        // return view('Dashboard.Sections.sub_sections.create', compact('sections'));
     }
 
     public function store(SubSectionRequest $request)
@@ -48,8 +49,9 @@ class SubSectionController extends Controller
 
     public function edit(CompanySubSection $subSection)
     {
-        $sections = CompanySection::all();
-        return view('Dashboard.Sections.sub_sections.edit', compact('subSection', 'sections'));
+        // $sections = CompanySection::all();
+        return view('Dashboard.Sections.sub_sections.edit', compact('subSection'));
+        // return view('Dashboard.Sections.sub_sections.edit', compact('subSection', 'sections'));
     }
 
     public function update(SubSectionRequest $request, CompanySubSection $subSection)

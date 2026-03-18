@@ -29,6 +29,8 @@ class ContactUsRequest extends FormRequest
             'message' => 'required|string|max:150',
             'title' => 'nullable|string|max:150',
             'phone' => ['required','regex:/^\+?[0-9]{7,15}$/'],
+            'job_title' => 'nullable|string|max:150',
+            'company_name' => 'nullable|string|max:150',
         ];
     }
     public function messages(): array

@@ -23,9 +23,10 @@ class SubSectionService
 
         try {
             $data = [
-                'section_id' => $dataValidated['section_id'],
+                // 'section_id' => $dataValidated['section_id'],
                 'layout' => $dataValidated['layout'],
                 'sort_order' => $dataValidated['sort_order'],
+                'key' => $dataValidated['key'],
             ];
 
             $subSection = CompanySubSection::create($data);
@@ -51,9 +52,10 @@ class SubSectionService
 
         try {
             $data = [
-                'section_id' => $dataValidated['section_id'],
+                // 'section_id' => $dataValidated['section_id'],
                 'layout' => $dataValidated['layout'],
                 'sort_order' => $dataValidated['sort_order'],
+                'key' => $dataValidated['key'],
             ];
 
             $subSection->update($data);

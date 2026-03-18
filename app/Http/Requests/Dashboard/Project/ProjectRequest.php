@@ -50,6 +50,7 @@ class ProjectRequest extends FormRequest
             'client_ar'=> ['nullable', 'string'],
             'badges_en'=> ['nullable', 'string'],
             'badges_ar'=> ['nullable', 'string'],
+            'date' => ['nullable', 'date'],
         ];
 
         if ($this->isMethod('post')) {

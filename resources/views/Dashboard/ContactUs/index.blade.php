@@ -95,27 +95,53 @@
                                         <p class="text-gray-800 fw-normal fs-6 lh-lg mb-0">{{ $message->message }}</p>
                                     </div>
 
-                                    <div class="row mb-5">
-                                        <div class="col-md-6 mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <i class="ki-outline ki-phone fs-4 text-muted me-3"></i>
-                                                <div>
-                                                    <span class="text-muted fs-7 d-block">{{ __('dash.phone') }}</span>
-                                                    {{ $message->phone }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <i class="ki-outline ki-message fs-4 text-muted me-3"></i>
-                                                <div>
-                                                    <span class="text-muted fs-7 d-block">{{ __('dash.email') }}</span>
-                                                    <a href="mailto:{{ $message->email }}"
-                                                        class="text-gray-800 fs-6 fw-semibold text-hover-primary">{{ $message->email }}</a>
-                                                </div>
+                                <div class="row mb-5">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <i class="ki-outline ki-phone fs-4 text-muted me-3"></i>
+                                            <div>
+                                                <span class="text-muted fs-7 d-block">{{ __('dash.phone') }}</span>
+                                                {{ $message->phone }}
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <i class="ki-outline ki-message fs-4 text-muted me-3"></i>
+                                            <div>
+                                                <span class="text-muted fs-7 d-block">{{ __('dash.email') }}</span>
+                                                <a href="mailto:{{ $message->email }}"
+                                                class="text-gray-800 fs-6 fw-semibold text-hover-primary">
+                                                {{ $message->email }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @if(isset($message->company_name))
+                                    <div class="col-md-6 mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <i class="ki-outline ki-briefcase fs-4 text-muted me-3"></i>
+                                            <div>
+                                                <span class="text-muted fs-7 d-block">{{ __('dash.company_name') }}</span>
+                                                {{ $message->company_name }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @if(isset($message->job_title))
+                                    <div class="col-md-6 mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <i class="ki-outline ki-user fs-4 text-muted me-3"></i>
+                                            <div>
+                                                <span class="text-muted fs-7 d-block">{{ __('dash.job_title') }}</span>
+                                                {{ $message->job_title }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
 
                                     <div class="d-flex flex-stack">
                                         <div class="d-flex align-items-center">

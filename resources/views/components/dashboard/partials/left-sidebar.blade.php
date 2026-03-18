@@ -122,7 +122,7 @@
                     <!--begin:Menu sub-->
                     <div class="menu-sub menu-sub-accordion">
 
-                        <!--begin:Menu item-->
+                        {{-- <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link {{ request()->segment(3) == 'sections' ? 'active' : '' }}"
@@ -131,7 +131,7 @@
                                 <span class="menu-title">{{ __('dash.all_sections') }}</span>
                             </a>
                             <!--end:Menu link-->
-                        </div>
+                        </div> --}}
 
                     </div>
                     <!--end:Menu sub-->

@@ -165,21 +165,22 @@ class CompanyHomeSeeder extends Seeder
     // ─── Sections ────────────────────────────────────────────────────
     private function seedSections(): void
     {
-        $section = CompanySection::create([
-            'key'       => 'executions',
-            'is_active' => 1,
-            'sort_order' => 1,
-        ]);
+        // $section = CompanySection::create([
+        //     'key'       => 'executions',
+        //     'is_active' => 1,
+        //     'sort_order' => 1,
+        // ]);
 
-        $section->handleTranslations([
-            'title_en'       => 'How We Execute',
-            'title_ar'       => 'كيف ننفّذ',
-            'description_en' => 'Our execution standards define every project we deliver from start to handover.',
-            'description_ar' => 'معايير التنفيذ لدينا تحدد كل مشروع نسلّمه من البداية حتى التسليم.',
-        ], ['title', 'description'], false);
+        // $section->handleTranslations([
+        //     'title_en'       => 'How We Execute',
+        //     'title_ar'       => 'كيف ننفّذ',
+        //     'description_en' => 'Our execution standards define every project we deliver from start to handover.',
+        //     'description_ar' => 'معايير التنفيذ لدينا تحدد كل مشروع نسلّمه من البداية حتى التسليم.',
+        // ], ['title', 'description'], false);
 
         $subSections = [
             [
+                'key'         => 'standards',
                 'title'       => ['en' => 'Standards',                      'ar' => 'المعايير'],
                 'description' => ['en' => 'Execution Standard',             'ar' => 'معيار التنفيذ'],
                 'layout'      => 'title_desc',
@@ -193,6 +194,7 @@ class CompanyHomeSeeder extends Seeder
                 ],
             ],
             [
+                'key'         => 'step_by_step',
                 'title'       => ['en' => 'Step-by-Step Execution',         'ar' => 'التنفيذ خطوة بخطوة'],
                 'description' => ['en' => 'A clear phased approach to delivery', 'ar' => 'نهج واضح متعدد المراحل للتسليم'],
                 'layout'      => 'title_desc',
@@ -206,6 +208,7 @@ class CompanyHomeSeeder extends Seeder
                 ],
             ],
             [
+                'key'         => 'quality_control',
                 'title'       => ['en' => 'Our Quality Control Process',     'ar' => 'عملية ضبط جودتنا'],
                 'description' => ['en' => 'Zero-defect delivery framework',  'ar' => 'إطار التسليم بدون عيوب'],
                 'layout'      => 'title_desc',
@@ -219,6 +222,7 @@ class CompanyHomeSeeder extends Seeder
                 ],
             ],
             [
+                'key'         => 'project_risks',
                 'title'       => ['en' => 'How We Control Project Risks',    'ar' => 'كيف ندير مخاطر المشاريع'],
                 'description' => ['en' => 'Proactive risk management',       'ar' => 'إدارة المخاطر بشكل استباقي'],
                 'layout'      => 'title_desc',
@@ -235,7 +239,8 @@ class CompanyHomeSeeder extends Seeder
 
         foreach ($subSections as $i => $sub) {
             $subRecord = CompanySubSection::create([
-                'section_id' => $section->id,
+                // 'section_id' => $section->id,
+                'key'        => $sub['key'],
                 'layout'     => $sub['layout'],
                 'sort_order' => $i + 1
             ]);
