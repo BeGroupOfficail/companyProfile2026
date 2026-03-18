@@ -8,7 +8,7 @@
         <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
 
             <!--begin::Section-->
-            <div class="card card-flush py-4">
+            {{-- <div class="card card-flush py-4">
                 <div class="card-header">
                     <div class="card-title">
                         <h2>{{ __('dash.section') }}</h2>
@@ -23,7 +23,7 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
+            </div> --}}
             <!--end::Section-->
 
             <!--begin::Layout-->
@@ -67,6 +67,13 @@
                                         label="{{ __('dash.sort_order') }}"
                                         :value="old('sort_order', $subSection->sort_order)"
                                         placeholder="0" />
+                                    <x-dashboard.partials.html.input
+                                        name="key"
+                                        type="text"
+                                        label="{{ __('dash.key') }}"
+                                        placeholder="{{ __('dash.key') }}"
+                                        :value="old('key', $subSection->key)"
+                                        required="required"/>
                                 </div>
 
                                 <div class="d-flex flex-wrap gap-5 mt-5">
