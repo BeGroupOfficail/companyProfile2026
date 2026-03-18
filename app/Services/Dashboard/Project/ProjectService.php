@@ -33,6 +33,7 @@ class ProjectService
                 'status' => data_get($dataValidated, 'status'),
                 'home' => data_get($dataValidated, 'home', 0),
                 'menu' => data_get($dataValidated, 'menu', 0),
+                'date' => data_get($dataValidated, 'date'),
             ];
 
             // 1. Create Project
@@ -93,6 +94,7 @@ class ProjectService
                 'home' => data_get($dataValidated, 'home', 0),
                 'menu' => data_get($dataValidated, 'menu', 0),
                 'alt_image' => data_get($dataValidated, 'alt_image'),
+                'date' => data_get($dataValidated, 'date'),
             ];
 
             // Update the category with the new validated data

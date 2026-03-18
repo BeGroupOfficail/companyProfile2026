@@ -13,7 +13,9 @@ class ContactUs extends Model
         'message',
         'title',
         'reason_for_connect',
-        'seen'
+        'seen',
+        'job_title',
+        'company_name',
     ];
 
 

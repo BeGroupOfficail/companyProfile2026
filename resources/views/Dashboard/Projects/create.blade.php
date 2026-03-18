@@ -70,6 +70,12 @@
                                             :value="old('type_' . $lang, '')"
                                             placeholder="{{ __('dash.Enter the type in') }} {{ __($languageName) }}" />
                                     @endforeach
+                                    <x-dashboard.partials.html.input
+                                        name="date"
+                                        type="date"
+                                        label="{{ __('dash.date') }}"
+                                        :value="old('date')"
+                                    />
                                 </div>
                                 <div class="d-flex flex-wrap gap-5">
 

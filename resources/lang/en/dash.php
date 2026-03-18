@@ -2377,4 +2377,7 @@ return  [
         'canonical' => 'Canonical',
         'author' => 'Author',
         'hreflang' => 'Hreflang',
+        'company_name' => 'Company Name',
+        'job_title' => 'Job Title',
+        'location' => 'Location',
 ];

@@ -2446,4 +2446,7 @@
         'canonical'     => 'الرابط الأساسي (Canonical)',
         'author'        => 'المؤلف',
         'hreflang' => 'وسم Hreflang',
+        'company_name' => 'اسم الشركة',
+        'job_title' => 'المسمى الوظيفي',
+        'location' => 'الموقع',
     ];  
