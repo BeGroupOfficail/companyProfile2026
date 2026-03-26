@@ -4,6 +4,10 @@ use App\Http\Controllers\BotManController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
+
+Route::get('/', function () {
+    return redirect(LaravelLocalization::getCurrentLocale() ?? 'en');
+});
 // index and general  routes
 Route::prefix(LaravelLocalization::setLocale())
     ->middleware(['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'])

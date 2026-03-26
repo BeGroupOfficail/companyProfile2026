@@ -99,6 +99,11 @@ class ProjectController extends Controller
         if (!$deleted) {
             return redirect()->back()->withErrors($delete ?? __('messages.an error has occurred. Please contact the developer to resolve the issue'));
         }
+    }   
+
+    public function show(Project $project)
+    {
+        //
     }
 
 
