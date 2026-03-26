@@ -46,7 +46,7 @@ class LoginController extends Controller
 
     protected function handleRedirection()
     {
-        return redirect()->intended('/dashboard');
+        return redirect()->route('dashboard.home');
     }
 
     public function logout(Request $request)
@@ -59,6 +59,7 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         // Redirect to home only for students, otherwise to login
-        return $isStudent ? redirect('/') : redirect('dashboard/login');
+        // return $isStudent ? redirect('/') : redirect('dashboard/login');
+        return redirect()->route('dashboard.login');
     }
 }

@@ -56,7 +56,7 @@ class HomeController extends Controller
         // return view('website.home',compact('homepageSections','sliders','services','projects_album','clients','aboutUs','about_values','websiteStatistics','testimonials','recentProjectAlbums','projects_album','blogs'));
         // return redirect()->away('https://kola-contractions.netlify.app/en');
         if(Auth::check()){
-            return view('dashboard.home');
+            return view('Dashboard.home');
         }
         return view('auth.dashboard.login');
     }
