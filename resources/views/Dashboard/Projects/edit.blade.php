@@ -85,6 +85,16 @@
                                 <div class="d-flex flex-wrap gap-5">
                                     @foreach(config('languages') as $lang => $languageName)
                                         <x-dashboard.partials.html.input
+                                            name="scope_{{ $lang }}"
+                                            label="{{ __('dash.scope') }} ({{ __($languageName) }})"
+                                            :value="old('scope_' . $lang, $project->getTranslation('scope', $lang) ?? '')"
+                                            placeholder="{{ __('dash.Enter the scope in') }} {{ __($languageName) }}" />
+                                    @endforeach
+                                </div>
+
+                                <div class="d-flex flex-wrap gap-5">
+                                    @foreach(config('languages') as $lang => $languageName)
+                                        <x-dashboard.partials.html.input
                                             name="location_{{ $lang }}"
                                             label="{{ __('dash.location') }} ({{ __($languageName) }})"
                                             :value="old('location_' . $lang, $project->getTranslation('location', $lang) ?? '')"

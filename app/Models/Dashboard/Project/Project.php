@@ -15,7 +15,7 @@ class Project extends Model
     use HasFactory, HasTranslations, HandlesTranslationsAndMedia, SoftDeletes;
 
     protected $guarded = [];
-    public $translatable = ['name', 'short_desc', 'long_desc', 'slug', 'type', 'location', 'area', 'client', 'badges'];
+    public $translatable = ['name', 'short_desc', 'long_desc', 'slug', 'type', 'location', 'area', 'client', 'badges', 'scope'];
 
     public function service()
     {

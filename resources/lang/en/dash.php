@@ -2380,4 +2380,6 @@ return  [
         'company_name' => 'Company Name',
         'job_title' => 'Job Title',
         'location' => 'Location',
+        'scope' => 'Scope',
+        'Enter the scope in'=> 'Enter the scope in',
 ];

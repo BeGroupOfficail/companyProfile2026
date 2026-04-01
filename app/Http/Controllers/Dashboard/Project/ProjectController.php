@@ -44,7 +44,6 @@ class ProjectController extends Controller
     {
         try {
             $dataValidated = $request->validated();
-            // dd($dataValidated['date']);
             $this->projectService->store($dataValidated);
             return redirect()->route('projects.index')->with(['success' => __('messages.your_item_added_successfully')]);
         } catch (\Exception $e) {
