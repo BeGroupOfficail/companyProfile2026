@@ -51,6 +51,8 @@ class ProjectRequest extends FormRequest
             'badges_en'=> ['nullable', 'string'],
             'badges_ar'=> ['nullable', 'string'],
             'date' => ['nullable', 'date'],
+            'scope_ar'=> ['nullable', 'string'],
+            'scope_en'=> ['nullable', 'string'],
         ];
 
         if ($this->isMethod('post')) {

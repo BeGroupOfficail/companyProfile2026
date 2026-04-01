@@ -2449,4 +2449,6 @@
         'company_name' => 'اسم الشركة',
         'job_title' => 'المسمى الوظيفي',
         'location' => 'الموقع',
+        'scope' => 'النطاق',
+        'Enter the scope in' => 'ادخل النطاق ب',
     ];  

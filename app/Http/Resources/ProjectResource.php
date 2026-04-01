@@ -23,6 +23,7 @@ class ProjectResource extends JsonResource
             'area'          => $this->area,
             'client'        => $this->client,
             'badges'        => $this->parseBadges($locale),
+            'scope'         => $this->scope,
             'thumbnail_url' => $this->resolveThumbnail(),
             'images'        => ProjectImageResource::collection(
                 $this->whenLoaded('images')

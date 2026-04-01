@@ -42,7 +42,7 @@ class ProjectService
             // 2. Handle translations
             $project->handleTranslations(
                 $dataValidated,
-                ['name', 'slug', 'short_desc', 'long_desc', 'type', 'location', 'area', 'client', 'badges'], // custom fields
+                ['name', 'slug', 'short_desc', 'long_desc', 'type', 'location', 'area', 'client', 'badges', 'scope'], // custom fields
                 true // auto-generate slug
             );
 
@@ -103,7 +103,7 @@ class ProjectService
             // Handle translations
             $project->handleTranslations(
                 $dataValidated,
-                ['name', 'slug', 'short_desc', 'long_desc', 'type', 'location', 'area', 'client', 'badges'],
+                ['name', 'slug', 'short_desc', 'long_desc', 'type', 'location', 'area', 'client', 'badges', 'scope'],
                 true
             );
 
@@ -171,29 +171,46 @@ class ProjectService
     public function deleteProjects($selectedIds)
     {
         DB::beginTransaction();
+
         try {
-            $trashedProjects = Project::onlyTrashed()->whereIn('id', $selectedIds)->get();
-            
+            // 1. Get active projects (NOT deleted yet)
+            $activeProjects = Project::whereIn('id', $selectedIds)->get();
+
+            if ($activeProjects->isNotEmpty()) {
+                foreach ($activeProjects as $project) {
+                    $project->delete(); // 👈 soft delete
+                }
+            }
+
+            // 2. Get already trashed projects
+            $trashedProjects = Project::onlyTrashed()
+                ->whereIn('id', $selectedIds)
+                ->get();
+
             if ($trashedProjects->isNotEmpty()) {
                 foreach ($trashedProjects as $project) {
-                    // Delete Gallery Images
-                    foreach ($project->images as $image) {
-                        Media::removeFile('projects', $image->image);
-                        $image->delete();
+
+                    // 🧠 handle multiple images here
+                    if ($project->images) {
+                        foreach ($project->images as $image) {
+                            Media::removeFile('projects', $image->path);
+                        }
                     }
-                    
-                    // Delete Main Image if different (though it should be one of them)
+
+                    // fallback if still using single image
                     if ($project->image) {
                         Media::removeFile('projects', $project->image);
                     }
                 }
-                
+
                 Project::onlyTrashed()
                     ->whereIn('id', $trashedProjects->pluck('id'))
                     ->forceDelete();
             }
+
             DB::commit();
             return true;
+
         } catch (\Exception $e) {
             DB::rollBack();
             return false;
